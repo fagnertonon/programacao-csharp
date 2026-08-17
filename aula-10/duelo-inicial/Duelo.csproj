@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Duelo</RootNamespace>
+    <AssemblyName>Duelo</AssemblyName>
+
+    <!--
+      Aplicativo de CONSOLE - nao tem tela, nao tem Designer.
+      Sem nenhum pacote NuGet: compila em maquina sem internet.
+    -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
