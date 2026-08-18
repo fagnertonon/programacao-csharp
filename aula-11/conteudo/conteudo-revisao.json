@@ -1,0 +1,536 @@
+{
+  "aula": "Aula 11",
+  "data": "18/08/2026",
+  "titulo": "Revisao geral das aulas",
+  "foraDaRevisao": [
+    "{ get; set; } - a sintaxe de propriedade com get e set",
+    "construtor",
+    "heranca, polimorfismo, encapsulamento",
+    "banco de dados, SQL, GitHub"
+  ],
+  "topicos": [
+    {
+      "id": "classe",
+      "numero": 1,
+      "titulo": "Classe e campo",
+      "subtitulo": "o molde e o objeto",
+      "novo": false,
+      "explicacao": [
+        "A CLASSE e o molde. Ela nao e o objeto - ela descreve como o objeto vai ser. Voce escreve a classe uma vez e cria quantos objetos quiser a partir dela.",
+        "Dentro da classe voce declara os CAMPOS: os dados que cada objeto vai guardar. No Duelo da aula passada a classe Lutador tinha tres campos - Nome, Vida e Forca. Cada lutador que voce criou tinha os seus proprios valores nesses tres campos.",
+        "Para criar um objeto a partir do molde voce usa a palavra new. A partir daquele momento existe um objeto de verdade na memoria, com espaco para os campos dele.",
+        "O modificador public na frente do campo diz quem pode enxergar aquele dado. public = qualquer parte do programa. private = so a propria classe. Voce viu os dois na Aula 5, junto com internal."
+      ],
+      "diagrama": "molde-objeto",
+      "exemplo": {
+        "codigo": "public class Lutador\n{\n    public string Nome = \"\";\n    public int Vida = 20;\n    public int Forca = 5;\n}\n\n// dois objetos a partir do mesmo molde\nLutador a = new Lutador();\na.Nome = \"Ana\";\na.Vida = 12;              // so o objeto a mudou\n\nLutador b = new Lutador();\nb.Nome = \"Bruno\";        // b continua com Vida = 20\n\nConsole.WriteLine(a.Nome + \" tem \" + a.Vida);   // Ana tem 12\nConsole.WriteLine(b.Nome + \" tem \" + b.Vida);   // Bruno tem 20",
+        "legenda": "Um molde, dois objetos. Mexer em a nao mexe em b."
+      },
+      "armadilha": {
+        "titulo": "Propriedade: tres sentidos",
+        "texto": "PROPRIEDADE E O DADO QUE O OBJETO GUARDA. Na janela Properties do Visual Studio voce configura o dado de um controle (Name, Text, PasswordChar). Dentro de uma classe sua, voce escreve o dado em uma linha de codigo (public int Vida = 20;). Nos dois casos e a mesma ideia: o dado que aquilo guarda.",
+        "regraDoCurso": "{ get; set; } nao entra nesta revisao. Voce vai ver isso escrito por ai; neste curso ainda nao usamos."
+      },
+      "desafio": {
+        "metodo": "CriarLutador",
+        "assinatura": "public static Lutador CriarLutador(string nome)",
+        "enunciado": "Crie um objeto Lutador com new, coloque o nome recebido no campo Nome e devolva o objeto. Vida e Forca ja nascem com o valor certo do molde.",
+        "exigeTokens": ["new Lutador", ".Nome = nome", "return"],
+        "dica": "Sao tres linhas: uma com new, uma com a atribuicao do Nome, e o return. Cuidado para nao escrever um nome fixo entre aspas - use o que o metodo recebeu.",
+        "testes": [
+          {
+            "entrada": "Ana",
+            "esperado": "Ana|20|5",
+            "descricao": "CriarLutador(\"Ana\") tem que voltar com Nome=Ana, Vida=20 e Forca=5"
+          },
+          {
+            "entrada": "Bruno",
+            "esperado": "Bruno|20|5",
+            "descricao": "CriarLutador(\"Bruno\") tem que voltar com Nome=Bruno"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "public int Vida = 20; dentro da classe Lutador e:",
+          "alternativas": [
+            "Um metodo",
+            "Um dado que o objeto guarda",
+            "Um evento de clique",
+            "Uma tela do programa"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "Classe e o molde. Campo e o dado que o objeto guarda. new cria o objeto."
+    },
+    {
+      "id": "metodo",
+      "numero": 2,
+      "titulo": "Metodo",
+      "subtitulo": "o que o objeto sabe fazer",
+      "novo": false,
+      "explicacao": [
+        "Se o campo e o que o objeto TEM, o metodo e o que o objeto SABE FAZER. MostrarBarra e Atacar eram os metodos do Lutador.",
+        "A assinatura do metodo tem tres partes que importam: o tipo de retorno, o nome, e os parametros entre parenteses. Em public void MostrarBarra() o tipo de retorno e void, o nome e MostrarBarra e nao ha parametro nenhum.",
+        "void quer dizer que o metodo faz alguma coisa mas nao devolve valor. Quando o metodo devolve um valor, o tipo aparece no lugar do void e o metodo precisa de um return.",
+        "PARAMETRO e ARGUMENTO nao sao a mesma coisa, e voce viu essa diferenca na Aula 8. O parametro e a variavel que aparece na DECLARACAO do metodo. O argumento e o valor que voce passa na CHAMADA."
+      ],
+      "diagrama": "assinatura-metodo",
+      "exemplo": {
+        "codigo": "// void: faz e nao devolve nada\npublic void Apresentar()\n{\n    Console.WriteLine(\"Eu sou \" + Nome);\n}\n\n// com PARAMETRO: recebe um valor de fora\npublic void Perder(int dano)\n{\n    Vida = Vida - dano;\n}\n\n// com RETORNO: o tipo entra no lugar do void\npublic string Ficha()\n{\n    return Nome + \" (\" + Vida + \")\";\n}\n\na.Perder(3);                        // 3 e o ARGUMENTO\nConsole.WriteLine(a.Ficha());",
+        "legenda": "Os tres formatos: sem nada, com parametro, com retorno."
+      },
+      "armadilha": {
+        "titulo": "Com retorno, exige return",
+        "texto": "Se voce trocar void por string, int ou bool, o compilador passa a exigir que TODO caminho do metodo termine em um return. Um if sem else que esquece de retornar no ultimo caminho da erro de compilacao.",
+        "erroCompilador": "CS0161 - nem todos os caminhos de codigo retornam um valor"
+      },
+      "desafio": {
+        "metodo": "Descansar",
+        "assinatura": "public static int Descansar(int vida, int pontos)",
+        "enunciado": "Some os pontos a vida e devolva o resultado. A vida nunca pode passar de 20 - se passar, devolva 20.",
+        "exigeTokens": ["pontos", "if", "20", "return"],
+        "dica": "Some primeiro, depois trave o teto com um if, e so entao devolva. Some e devolva sem o if e um dos testes passa - o outro nao.",
+        "testes": [
+          {
+            "entrada": "10|5",
+            "esperado": "15",
+            "descricao": "Descansar(10, 5) tem que devolver 15"
+          },
+          {
+            "entrada": "18|5",
+            "esperado": "20",
+            "descricao": "Descansar(18, 5) tem que devolver 20, nao 23"
+          },
+          {
+            "entrada": "20|5",
+            "esperado": "20",
+            "descricao": "Descansar(20, 5) continua 20"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "Em public void Descansar(int pontos), o int pontos e:",
+          "alternativas": [
+            "O nome do metodo",
+            "O parametro que o metodo recebe",
+            "O valor devolvido pelo metodo",
+            "Um campo da classe"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "Metodo e o que o objeto sabe fazer. void nao devolve; com tipo, exige return. Parametro na declaracao, argumento na chamada."
+    },
+    {
+      "id": "operadores",
+      "numero": 3,
+      "titulo": "Operadores",
+      "subtitulo": "= guarda, == pergunta",
+      "novo": false,
+      "explicacao": [
+        "Esta e a confusao que mais derruba gente comecando a programar, e ela cabe em uma frase: = GUARDA um valor, == PERGUNTA se dois valores sao iguais.",
+        "Vida = 0 manda a vida virar zero. Vida == 0 quer saber se ela e zero. O primeiro e um comando, o segundo e uma pergunta - e o if so aceita pergunta.",
+        "Os operadores de comparacao sao ==, !=, >, <, >= e <=. Todos devolvem verdadeiro ou falso.",
+        "Os operadores logicos juntam duas perguntas numa so. && exige que AS DUAS sejam verdadeiras. || se contenta com PELO MENOS UMA.",
+        "Voce escreveu os dois no Duelo: if (a.Vida == 0 || b.Vida == 0) break; - o duelo para quando UM dos dois zera, nao quando os dois zeram."
+      ],
+      "diagrama": "tabela-verdade",
+      "exemplo": {
+        "codigo": "int Vida = 12;\nint Forca = 5;\n\n// as DUAS precisam ser verdadeiras\nif (Vida > 0 && Forca > 3)\n{\n    Console.WriteLine(\"pode lutar\");\n}\n\n// PELO MENOS UMA precisa ser verdadeira\nif (Vida == 0 || Forca == 0)\n{\n    Console.WriteLine(\"esta fora do combate\");\n}\n\nVida = 20;              // ORDEM: a vida virou 20\nif (Vida == 20)         // PERGUNTA: a vida e 20?\n{\n    Console.WriteLine(\"vida cheia\");\n}",
+        "legenda": "As duas ultimas linhas tem o mesmo sinal quase igual - e fazem coisas opostas."
+      },
+      "armadilha": {
+        "titulo": "if (Vida = 20) nao compila",
+        "texto": "Trocar == por = dentro do if e o erro mais comum da linguagem. O compilador reclama porque recebeu uma ordem onde esperava uma pergunta: ele nao consegue transformar o numero 20 em verdadeiro ou falso.",
+        "erroCompilador": "CS0029 - nao e possivel converter implicitamente o tipo int em bool"
+      },
+      "desafio": {
+        "metodo": "EstaPronto",
+        "assinatura": "public static bool EstaPronto(int vida, int treinos)",
+        "enunciado": "Devolva verdadeiro somente quando a vida for exatamente 20 E os treinos forem 3 ou mais. Nos outros casos, falso.",
+        "exigeTokens": ["==", "&&", "return"],
+        "dica": "Da para fazer em uma linha so: return, a pergunta, ponto e virgula. Exatamente 20 pede ==, nao >=. E os dois ao mesmo tempo pede && , nao ||.",
+        "testes": [
+          {
+            "entrada": "20|3",
+            "esperado": "True",
+            "descricao": "vida 20 e 3 treinos: as duas verdadeiras, entao True"
+          },
+          {
+            "entrada": "20|2",
+            "esperado": "False",
+            "descricao": "vida 20 mas so 2 treinos: && exige as duas, entao False"
+          },
+          {
+            "entrada": "15|5",
+            "esperado": "False",
+            "descricao": "5 treinos mas vida 15: False"
+          },
+          {
+            "entrada": "10|0",
+            "esperado": "False",
+            "descricao": "nenhuma das duas: False"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "Qual linha PERGUNTA se a vida e 20?",
+          "alternativas": [
+            "if (Vida = 20)",
+            "if (Vida == 20)",
+            "if (Vida => 20)",
+            "Vida == 20;"
+          ],
+          "certa": 1
+        },
+        {
+          "pergunta": "Por que if (Vida = 20) nao compila?",
+          "alternativas": [
+            "Falta ponto e virgula no fim",
+            "A variavel Vida nao existe",
+            "O = guarda um valor, e o if precisa de uma pergunta",
+            "20 e um numero grande demais"
+          ],
+          "certa": 2
+        }
+      ],
+      "folhaRevisao": "= guarda. == pergunta. && = os dois. || = pelo menos um."
+    },
+    {
+      "id": "if",
+      "numero": 4,
+      "titulo": "if e else if",
+      "subtitulo": "no maximo um ramo roda",
+      "novo": false,
+      "explicacao": [
+        "O if decide se um trecho de codigo vai rodar ou nao. Ele recebe uma pergunta e, se a resposta for verdadeira, executa o bloco entre chaves.",
+        "Quando voce encadeia if / else if / else, o programa testa de cima para baixo e PARA NO PRIMEIRO QUE DER VERDADEIRO. Os outros nem sao testados.",
+        "Isso significa que, numa cadeia, no maximo um bloco roda. Nunca dois. Se nenhum der verdadeiro e existir um else, o else roda; se nao existir else, nao roda nada e o programa segue.",
+        "A ORDEM DOS TESTES IMPORTA. Se voce testar a faixa mais baixa primeiro, ela captura todos os valores altos tambem - porque o primeiro teste ja deu verdadeiro e a cadeia parou ali."
+      ],
+      "diagrama": "cadeia-if",
+      "exemplo": {
+        "codigo": "// do MAIOR para o menor\nif (Vida >= 15)\n{\n    estado = \"OTIMO\";\n}\nelse if (Vida >= 8)\n{\n    estado = \"FERIDO\";\n}\nelse if (Vida >= 1)\n{\n    estado = \"QUASE CAINDO\";\n}\nelse\n{\n    estado = \"FORA DE COMBATE\";\n}",
+        "legenda": "Vida 20 para no primeiro e nem testa os outros tres."
+      },
+      "armadilha": {
+        "titulo": "if solto nao e else if",
+        "texto": "Quatro if separados testam as quatro condicoes, uma depois da outra, e mais de um pode rodar. Uma cadeia if / else if para no primeiro verdadeiro. Com quatro if soltos, quem tem Vida 20 passa por todos e termina com o valor do ultimo."
+      },
+      "desafio": {
+        "metodo": "Mencao",
+        "assinatura": "public static string Mencao(double nota)",
+        "enunciado": "Devolva a mencao pela nota: 9 ou mais devolve A, 7 ou mais devolve B, 5 ou mais devolve C, abaixo disso devolve D.",
+        "exigeTokens": ["if", "else", "9", "7", "5", "return"],
+        "dica": "Comece pela nota mais alta. Se comecar pela mais baixa, todo mundo tira C.",
+        "testes": [
+          {
+            "entrada": "10",
+            "esperado": "A",
+            "descricao": "nota 10 tem que dar A"
+          },
+          {
+            "entrada": "9",
+            "esperado": "A",
+            "descricao": "nota 9 tem que dar A - o >= inclui o proprio 9"
+          },
+          {
+            "entrada": "8",
+            "esperado": "B",
+            "descricao": "nota 8 tem que dar B"
+          },
+          {
+            "entrada": "5",
+            "esperado": "C",
+            "descricao": "nota 5 tem que dar C"
+          },
+          {
+            "entrada": "4",
+            "esperado": "D",
+            "descricao": "nota 4 tem que dar D"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "Numa cadeia if / else if / else, quantos blocos rodam?",
+          "alternativas": [
+            "Todos os que forem verdadeiros",
+            "Nenhum",
+            "No maximo um",
+            "Sempre dois"
+          ],
+          "certa": 2
+        }
+      ],
+      "folhaRevisao": "if decide. Na cadeia if/else if, para no primeiro verdadeiro - no maximo um roda. A ordem importa."
+    },
+    {
+      "id": "switch",
+      "numero": 5,
+      "titulo": "switch e case",
+      "subtitulo": "so compara igualdade",
+      "novo": false,
+      "explicacao": [
+        "O switch escolhe um caminho entre varios, comparando uma variavel com valores fixos. Cada valor possivel vira um case.",
+        "Todo case precisa terminar em break. O break diz ao programa para sair do switch ali. Esquecer o break nao e um detalhe de estilo - o programa NAO COMPILA.",
+        "O default e a rede de seguranca: ele roda quando nenhum case bateu. Use sempre, mesmo que so para avisar que a opcao e invalida.",
+        "A limitacao que mais confunde: O SWITCH SO COMPARA IGUALDADE. Ele nao sabe testar nota >= 7 nem juntar duas condicoes com &&. Para faixas e condicoes compostas, a ferramenta e o if / else if.",
+        "Voce viu tudo isso na Aula 9, reescrevendo a cadeia de if da calculadora com switch."
+      ],
+      "diagrama": "switch-caminhos",
+      "exemplo": {
+        "codigo": "switch (resposta)\n{\n    case \"s\":\n        Console.WriteLine(\"Continuando...\");\n        break;\n\n    case \"n\":\n        Console.WriteLine(\"Encerrando.\");\n        break;\n\n    default:\n        Console.WriteLine(\"Responda s ou n.\");\n        break;\n}",
+        "legenda": "Um case por valor. break em todos. default fecha a conta."
+      },
+      "armadilha": {
+        "titulo": "Esqueceu o break: nao compila",
+        "texto": "Em C#, ao contrario de outras linguagens, o compilador nao deixa a execucao escorregar de um case para o outro. Se voce esquecer o break, ele para a compilacao e aponta o case.",
+        "erroCompilador": "CS0163 - o controle nao pode passar de um rotulo case para outro"
+      },
+      "desafio": {
+        "metodo": "DescreverOpcao",
+        "assinatura": "public static string DescreverOpcao(string opcao)",
+        "enunciado": "Monte um switch que devolva Treinar para \"1\", Descansar para \"2\", Ficha para \"3\", Sair para \"0\", e Opcao invalida para qualquer outra coisa.",
+        "exigeTokens": ["switch", "case", "default"],
+        "dica": "Os valores comparados sao TEXTO, entao vao entre aspas: case \"1\", nao case 1. Quando o case ja tem return, o return sai do metodo inteiro e o break fica desnecessario - mas se voce usar uma variavel, o break volta a ser obrigatorio.",
+        "testes": [
+          {
+            "entrada": "1",
+            "esperado": "Treinar",
+            "descricao": "opcao 1 tem que devolver Treinar"
+          },
+          {
+            "entrada": "3",
+            "esperado": "Ficha",
+            "descricao": "opcao 3 tem que devolver Ficha"
+          },
+          {
+            "entrada": "0",
+            "esperado": "Sair",
+            "descricao": "opcao 0 tem que devolver Sair"
+          },
+          {
+            "entrada": "9",
+            "esperado": "Opcao invalida",
+            "descricao": "opcao 9 nao existe: cai no default"
+          },
+          {
+            "entrada": "",
+            "esperado": "Opcao invalida",
+            "descricao": "texto vazio tambem cai no default"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "O switch consegue testar a condicao nota >= 7?",
+          "alternativas": [
+            "Sim, funciona igual ao if",
+            "Nao - o switch compara so igualdade",
+            "Sim, se usar default",
+            "Sim, se juntar com &&"
+          ],
+          "certa": 1
+        },
+        {
+          "pergunta": "Voce esqueceu o break no fim de um case. O que acontece?",
+          "alternativas": [
+            "O programa roda e ignora aquele case",
+            "Erro de compilacao - CS0163",
+            "Roda todos os case seguidos, um atras do outro",
+            "Nada, o break e opcional em C#"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "switch compara SO igualdade. Todo case pede break (CS0163). default e a rede de seguranca."
+    },
+    {
+      "id": "for",
+      "numero": 6,
+      "titulo": "for",
+      "subtitulo": "as tres partes",
+      "novo": false,
+      "explicacao": [
+        "O for repete um trecho de codigo um numero de vezes. Voce escreveu dois deles no Duelo: um para desenhar a barra de vida e outro para conduzir as rodadas.",
+        "Ele tem TRES PARTES separadas por ponto e virgula. Inicializacao: acontece uma vez so, no comeco. Condicao de parada: testada ANTES de cada volta - enquanto for verdadeira, o laco continua. Incremento: acontece no FIM de cada volta.",
+        "A variavel de controle (normalmente i) existe so dentro do for. Ela serve para o laco saber em que volta esta.",
+        "Detalhe que confunde muita gente: a condicao e testada ANTES da primeira volta. Se ela ja comecar falsa, o corpo do for NAO RODA NENHUMA VEZ - e isso nao e um bug."
+      ],
+      "diagrama": "for-tres-partes",
+      "exemplo": {
+        "codigo": "//        1 - uma vez     2 - antes de cada volta   3 - no fim de cada volta\nint soma = 0;\nfor (int i = 1;          i <= 4;                    i++)\n{\n    soma = soma + i;\n}\n// soma vale 10:  1 + 2 + 3 + 4\n\n// se a condicao JA COMECA falsa, o corpo nao roda nenhuma vez\nfor (int i = 1; i <= 0; i++)\n{\n    Console.WriteLine(\"isto nunca aparece\");\n}",
+        "legenda": "Inicializacao, condicao, incremento. A condicao manda."
+      },
+      "armadilha": {
+        "titulo": "O for que roda zero voltas",
+        "texto": "for (int t = 1; t <= 0; t++) nunca entra no corpo, porque 1 <= 0 ja e falso na primeira checagem. Tela vazia nao significa programa quebrado. A pergunta classica e exatamente essa: quantas vezes esse for roda? A resposta e nenhuma."
+      },
+      "desafio": {
+        "metodo": "Barra",
+        "assinatura": "public static string Barra(int vida)",
+        "enunciado": "Monte e devolva um texto com um # para cada ponto de vida. Vida 5 devolve #####. Vida 0 devolve texto vazio.",
+        "exigeTokens": ["for", "#", "return"],
+        "dica": "Comece com um texto vazio e va grudando um # a cada volta. Nao precisa de if para o caso do zero - o proprio for resolve.",
+        "testes": [
+          {
+            "entrada": "5",
+            "esperado": "#####",
+            "descricao": "vida 5 tem que dar cinco tracinhos"
+          },
+          {
+            "entrada": "1",
+            "esperado": "#",
+            "descricao": "vida 1 tem que dar um tracinho"
+          },
+          {
+            "entrada": "0",
+            "esperado": "",
+            "descricao": "vida 0 tem que dar texto vazio - o for nao roda nenhuma volta"
+          },
+          {
+            "entrada": "20",
+            "esperado": "####################",
+            "descricao": "vida 20 tem que dar vinte tracinhos"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "Quantas vezes roda o corpo de for (int i = 0; i < 5; i++)?",
+          "alternativas": [
+            "4",
+            "5",
+            "6",
+            "Depende do que tem dentro"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "for tem tres partes: inicializa uma vez, testa antes de cada volta, incrementa no fim. Condicao falsa no comeco = zero voltas."
+    },
+    {
+      "id": "while",
+      "numero": 7,
+      "titulo": "while",
+      "subtitulo": "o mesmo for, desmontado",
+      "novo": true,
+      "explicacao": [
+        "O while faz a mesma coisa que o for - repete enquanto uma condicao for verdadeira. A diferenca e so onde ficam as pecas.",
+        "No for as tres partes estao na mesma linha, entre parenteses. No while, so a condicao fica entre parenteses: a inicializacao voce escreve ANTES do laco, e o incremento DENTRO do corpo.",
+        "Sao a mesma ideia escrita de dois jeitos. Todo for pode virar while e vice-versa.",
+        "Quando usar cada um: se voce sabe quantas voltas vai dar, o for e mais claro porque junta tudo numa linha. Se voce nao sabe - repetir ate o usuario digitar sair, por exemplo - o while costuma ler melhor."
+      ],
+      "diagrama": "for-vira-while",
+      "exemplo": {
+        "codigo": "// FOR - as tres partes juntas, contando de 5 a 1\nfor (int i = 5; i >= 1; i--)\n{\n    Console.WriteLine(i);\n}\n\n// WHILE - as mesmas tres partes, espalhadas\nint i = 5;              // inicializacao ANTES\nwhile (i >= 1)          // so a condicao fica aqui\n{\n    Console.WriteLine(i);\n    i--;                // o passo, DENTRO do corpo\n}",
+        "legenda": "Mesmas tres pecas, lugares diferentes. A saida e identica."
+      },
+      "armadilha": {
+        "titulo": "Esqueceu o passo? Trava",
+        "texto": "No for, o i++ esta na mesma linha e e dificil esquecer. No while ele fica no meio do corpo - e se voce esquecer, a condicao nunca fica falsa e o programa repete para sempre. Isso se chama laco infinito, e a saida e fechar a janela do console."
+      },
+      "desafio": {
+        "metodo": "ContarAte",
+        "assinatura": "public static string ContarAte(int n)",
+        "enunciado": "Usando WHILE (nao use for), devolva os numeros de 1 ate n separados por espaco, com espaco tambem no fim. ContarAte(3) devolve \"1 2 3 \". Se n for 0, devolve texto vazio.",
+        "exigeTokens": ["while", "return"],
+        "dica": "Tres pecas: declare o contador antes, teste no while, e nao esqueca de avancar o contador dentro do corpo. Sem isso o programa trava e voce tem que fechar a janela.",
+        "testes": [
+          {
+            "entrada": "3",
+            "esperado": "1 2 3 ",
+            "descricao": "ContarAte(3) tem que dar 1 2 3 com espaco no fim"
+          },
+          {
+            "entrada": "1",
+            "esperado": "1 ",
+            "descricao": "ContarAte(1) tem que dar so o 1"
+          },
+          {
+            "entrada": "0",
+            "esperado": "",
+            "descricao": "ContarAte(0) tem que dar texto vazio - o while nem entra"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "No while, onde fica o incremento (o i++)?",
+          "alternativas": [
+            "Entre parenteses, junto da condicao",
+            "Dentro do corpo do laco",
+            "Antes do while",
+            "O while nao precisa de incremento"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "while = o for desmontado: inicializa antes, testa entre parenteses, avanca dentro. Esqueceu o passo, laco infinito."
+    },
+    {
+      "id": "foreach",
+      "numero": 8,
+      "titulo": "foreach e List",
+      "subtitulo": "varios objetos, sem indice",
+      "novo": true,
+      "explicacao": [
+        "No Duelo, para ter dois lutadores, voce criou duas variaveis soltas: a e b. E se fossem quatro? E vinte? A resposta cria c, d, e... nao se sustenta.",
+        "A List guarda varios objetos do mesmo tipo em um lugar so. Voce cria a lista vazia e vai adicionando com .Add. A propriedade .Count diz quantos itens tem la dentro.",
+        "O foreach percorre a lista item por item, sem voce precisar controlar indice nenhum. Ele mesmo pega o primeiro, depois o segundo, ate acabar.",
+        "COMO ESCOLHER ENTRE for E foreach: pergunte se voce precisa saber EM QUE POSICAO o item esta. Precisa (para numerar a lista, por exemplo)? for. Nao precisa, so quer passar por todos? foreach."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "using System.Collections.Generic;\n\nList<Lutador> elenco = new List<Lutador>();\nelenco.Add(a);\nelenco.Add(b);\n\nConsole.WriteLine(\"na arena: \" + elenco.Count);   // na arena: 2\n\n// foreach: nao existe indice aqui\nforeach (Lutador l in elenco)\n{\n    l.Vida = l.Vida - 1;        // todos perdem 1 de vida\n}\n\n// com for, quando voce PRECISA da posicao\nfor (int i = 0; i < elenco.Count; i++)\n{\n    Console.WriteLine((i + 1) + \" - \" + elenco[i].Nome);\n}",
+        "legenda": "Acrescente um lutador na lista e nenhum dos dois lacos muda."
+      },
+      "armadilha": {
+        "titulo": "A lista comeca no zero",
+        "texto": "elenco[0] e o primeiro item, nao o segundo. Por isso a numeracao na tela costuma usar i + 1. Com foreach o problema desaparece, porque nao existe indice - e essa e uma das razoes de ele existir."
+      },
+      "desafio": {
+        "metodo": "Elenco",
+        "assinatura": "public static string Elenco(List<Lutador> lutadores)",
+        "enunciado": "Usando FOREACH (nao use for), devolva os nomes de todos os lutadores da lista separados por virgula e espaco, com virgula e espaco tambem no fim. Lista com Ana e Bruno devolve \"Ana, Bruno, \".",
+        "exigeTokens": ["foreach", "in", "Nome", "return"],
+        "dica": "foreach (Lutador l in lutadores) - le-se: para cada lutador l dentro de lutadores. Dentro do corpo, l e o objeto da vez, e l.Nome e o nome dele.",
+        "testes": [
+          {
+            "entrada": "Ana|Bruno",
+            "esperado": "Ana, Bruno, ",
+            "descricao": "dois lutadores na lista"
+          },
+          {
+            "entrada": "Ana|Bruno|Carla|Diego",
+            "esperado": "Ana, Bruno, Carla, Diego, ",
+            "descricao": "quatro lutadores - e o codigo nao mudou"
+          },
+          {
+            "entrada": "",
+            "esperado": "",
+            "descricao": "lista vazia devolve texto vazio - o foreach nao entra"
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "pergunta": "Quando usar for em vez de foreach?",
+          "alternativas": [
+            "Quando a lista for grande",
+            "Quando voce precisa saber a posicao do item",
+            "Quando a lista tiver objetos",
+            "for e foreach sao a mesma coisa"
+          ],
+          "certa": 1
+        }
+      ],
+      "folhaRevisao": "List guarda varios; .Add acrescenta, .Count conta. foreach percorre sem indice. Precisa da posicao? for. Nao precisa? foreach."
+    }
+  ]
+}
