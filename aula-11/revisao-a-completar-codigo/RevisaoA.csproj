@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Revisao</RootNamespace>
+    <AssemblyName>RevisaoA</AssemblyName>
+
+    <!--
+      Sem nenhum pacote NuGet: compila em maquina sem internet,
+      igual a todos os projetos deste curso.
+    -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O que as tres variantes compartilham mora em ../comum. Nao ha copia:
+         cada projeto compila os mesmos arquivos. -->
+    <Compile Include="..\comum\*.cs" />
+
+    <!-- A fonte unica do conteudo, tambem lida pelo gerador da apostila. -->
+    <Content Include="..\conteudo\conteudo-revisao.json"
+             Link="conteudo-revisao.json"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
