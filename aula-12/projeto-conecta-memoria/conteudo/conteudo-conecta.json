@@ -1,0 +1,1002 @@
+{
+  "aula": "Aula 12",
+  "data": "19/08/2026",
+  "titulo": "Conecta em memoria",
+  "subtitulo": "cada aba e um pedaco do seu projeto - complete o metodo em Desafios.cs, salve e rode com F5",
+  "avisoNovo": "Este assunto e novo. Hoje sao tres: a List, o foreach e o while. Os outros sete desafios sao revisao aplicada ao Conecta. Aprenda com calma, sem correr.",
+  "foraDaRevisao": [
+    "banco de dados, MySQL e SQL",
+    "{ get; set; } - as propriedades",
+    "construtor",
+    "heranca, polimorfismo e encapsulamento",
+    "try / catch",
+    "a classe Postagem e o mural"
+  ],
+  "topicos": [
+    {
+      "id": "conta",
+      "numero": 1,
+      "titulo": "A conta",
+      "subtitulo": "o molde e o objeto",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "A classe e o molde. Ela diz o que toda conta do Conecta guarda: um Id, um Nome, um Login e uma Senha. Enquanto e so o molde, nao existe conta nenhuma - existe a receita.",
+        "O objeto e a conta de verdade, e ele nasce com new. Cada new produz um objeto separado, com os proprios valores: duas contas feitas a partir do mesmo molde nao dividem nada.",
+        "Escrever u.Nome = nome quer dizer: no objeto u, guarde no campo Nome o valor que chegou no parametro nome. Sao duas coisas diferentes com nomes parecidos - o de fora e o valor que chegou, o de dentro e onde ele fica guardado.",
+        "No fim, o metodo entrega o objeto com return. Quem chamou fica com a conta na mao."
+      ],
+      "diagrama": "molde-objeto",
+      "exemplo": {
+        "codigo": "Usuario u = new Usuario();\n\nu.Nome  = \"Ana Souza\";\nu.Login = \"ana\";\n\nreturn u;",
+        "legenda": "O new cria. As atribuicoes preenchem. O return entrega."
+      },
+      "noSeuProjeto": "Esta e a classe Usuario da Parte 6 da sua apostila. Hoje a noite ela ganha o Id e vira o coracao do UsuarioDAO.",
+      "armadilha": {
+        "titulo": "o nome fixo entre aspas",
+        "texto": "Escrever u.Nome = \"Ana\"; passa no primeiro teste e falha em todos os outros: toda conta criada sai chamada Ana. O valor tem que vir do parametro, sem aspas.",
+        "regraDoCurso": "Se o valor esta entre aspas dentro do metodo, ele nao veio de fora."
+      },
+      "desafio": {
+        "metodo": "CriarUsuario",
+        "assinatura": "public static Usuario CriarUsuario(string nome, string login,\n                                   string senha)",
+        "enunciado": "Crie um objeto Usuario com new, guarde nele o nome, o login e a senha que chegaram, e devolva o objeto. O Id nao e problema seu: quem da o numero e o desafio 2.",
+        "dica": "Sao cinco linhas: uma com new, tres atribuicoes e o return. Os tres valores ja chegaram prontos entre parenteses - nao invente texto entre aspas.",
+        "testes": [
+          {
+            "entrada": "Ana Souza|ana|1234",
+            "esperado": "0|Ana Souza|ana|1234",
+            "descricao": "Ana Souza / ana / 1234 -> devolve a conta com os tres campos preenchidos"
+          },
+          {
+            "entrada": "Bruno Lima|bruno|abcd",
+            "esperado": "0|Bruno Lima|bruno|abcd",
+            "descricao": "Bruno Lima / bruno / abcd -> o nome muda junto (nada fixo entre aspas)"
+          },
+          {
+            "entrada": "Carla|carla|",
+            "esperado": "0|Carla|carla|",
+            "descricao": "senha em branco -> o metodo guarda o que chegou e nao julga o dado"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "frmCadastro",
+        "instrucao": "Preencha e clique em Salvar. Quem cria a conta e o SEU metodo CriarUsuario.",
+        "campos": [
+          {
+            "id": "nome",
+            "rotulo": "Nome",
+            "tipo": "texto",
+            "valor": "Ana Souza",
+            "largura": 250
+          },
+          {
+            "id": "login",
+            "rotulo": "Login",
+            "tipo": "texto",
+            "valor": "ana",
+            "largura": 160
+          },
+          {
+            "id": "senha",
+            "rotulo": "Senha",
+            "tipo": "senha",
+            "valor": "1234",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "salvar",
+            "texto": "Salvar conta",
+            "destaque": true
+          },
+          {
+            "id": "limpar",
+            "texto": "Limpar campos",
+            "destaque": false
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta ainda. Preencha os campos e clique em Salvar."
+        }
+      },
+      "folhaRevisao": "A classe e o molde. O objeto nasce com new. O return entrega o objeto para quem pediu."
+    },
+    {
+      "id": "lista",
+      "numero": 2,
+      "titulo": "A lista",
+      "subtitulo": "guardar varias contas",
+      "novo": true,
+      "livre": false,
+      "explicacao": [
+        "Uma variavel guarda um valor so. Guarde a conta da Maria numa variavel e depois a do Bruno na mesma variavel: a Maria nao fica ao lado dele, ela e substituida por ele.",
+        "A List resolve isso. Ela guarda uma fila de objetos e cresce sozinha, sem voce dizer de antemao quantos serao. List<Usuario> se le lista DE Usuario: o que esta entre os sinais de maior e menor e o tipo do que ela guarda dentro.",
+        "Sao duas operacoes hoje. contas.Add(u) poe u no fim da fila. contas.Count diz quantas ja estao la dentro - e repare que Count nao tem parenteses.",
+        "O Id serve para diferenciar uma conta da outra. Se ja existem duas, a proxima e a numero 3: e o Count mais um. Sem o mais um, a primeira conta nasceria com Id 0."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "List<Usuario> contas = new List<Usuario>();\n\ncontas.Add(ana);      // agora tem 1\ncontas.Add(bruno);    // agora tem 2\n\nint quantas = contas.Count;   // 2",
+        "legenda": "A lista comeca vazia e cresce a cada Add. O Count sempre diz o tamanho de agora."
+      },
+      "noSeuProjeto": "E o UsuarioDAO.CriarConta da Parte 7. La a lista se chama _usuarios e mora dentro da classe; aqui ela chega pela porta, como parametro. O miolo e o mesmo.",
+      "armadilha": {
+        "titulo": "calculou o Id e nao guardou",
+        "texto": "Dar o numero ao objeto e acrescentar ele na lista sao dois passos separados. Quem faz so o primeiro devolve o Id certo, ve o numero aparecer na tela, e a lista continua exatamente do mesmo tamanho.",
+        "regraDoCurso": "Se o Count nao mudou, nada foi guardado."
+      },
+      "desafio": {
+        "metodo": "CriarConta",
+        "assinatura": "public static int CriarConta(List<Usuario> contas, Usuario u)",
+        "enunciado": "De ao usuario um Id igual a quantidade de contas mais um, acrescente ele na lista, e devolva o Id. A primeira conta tem que sair com Id 1, nao 0.",
+        "dica": "O Count diz quantas ja estao la dentro. Some 1 antes de guardar no Id. E acrescentar de fato na lista e um passo separado do return - os testes conferem o tamanho da lista depois.",
+        "testes": [
+          {
+            "entrada": "|Ana,ana,1234",
+            "esperado": "1|1|Ana",
+            "descricao": "lista vazia -> a primeira conta nasce com Id 1, e a lista fica com 1"
+          },
+          {
+            "entrada": "Zeca,zeca,0000|Ana,ana,1234",
+            "esperado": "2|2|Ana",
+            "descricao": "ja havia 1 conta -> a nova recebe Id 2"
+          },
+          {
+            "entrada": "A,a,1;B,b,2;C,c,3|Duda,duda,4444",
+            "esperado": "4|4|Duda",
+            "descricao": "ja havia 3 contas -> a nova recebe Id 4"
+          },
+          {
+            "entrada": "A,a,1;B,b,2|Bia,bia,9999",
+            "esperado": "3|3|Bia",
+            "descricao": "e a lista precisa CRESCER: calcular o Id sem o Add nao vale"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "frmCadastro",
+        "instrucao": "Agora o Id vem do SEU codigo. Cadastre tres contas seguidas e veja a numeracao andar.",
+        "campos": [
+          {
+            "id": "nome",
+            "rotulo": "Nome",
+            "tipo": "texto",
+            "valor": "Bruno Lima",
+            "largura": 250
+          },
+          {
+            "id": "login",
+            "rotulo": "Login",
+            "tipo": "texto",
+            "valor": "bruno",
+            "largura": 160
+          },
+          {
+            "id": "senha",
+            "rotulo": "Senha",
+            "tipo": "senha",
+            "valor": "abcd",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "salvar",
+            "texto": "Salvar conta",
+            "destaque": true
+          },
+          {
+            "id": "limpar",
+            "texto": "Limpar campos",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta ainda. Preencha os campos e clique em Salvar."
+        }
+      },
+      "folhaRevisao": "A List guarda varios e cresce sozinha. Add acrescenta, Count conta. O primeiro Id e Count + 1."
+    },
+    {
+      "id": "entrar",
+      "numero": 3,
+      "titulo": "Entrar",
+      "subtitulo": "achou, ou nao achou",
+      "novo": true,
+      "livre": false,
+      "explicacao": [
+        "Para saber se alguem pode entrar, o sistema olha as contas uma por uma. O foreach faz exatamente isso: foreach (Usuario u in contas) se le para cada Usuario, que eu chamo de u, dentro de contas.",
+        "O foreach nao pede indice, nao pede tamanho e nao erra a conta: ele passa por todos, do primeiro ao ultimo, e para sozinho.",
+        "Entrar exige as duas coisas ao mesmo tempo: o login tem que bater E a senha tem que bater. Isso e o &&. Com || bastaria uma das duas, e qualquer pessoa entraria na conta de qualquer outra sabendo so o login.",
+        "E quando ninguem bate? O metodo devolve null, que quer dizer procurei e nao achei. O lugar de cada return muda tudo: um vai DENTRO do laco, o outro DEPOIS dele - e so ali voce tem certeza de que olhou todas."
+      ],
+      "diagrama": "tabela-verdade",
+      "exemplo": {
+        "codigo": "foreach (Usuario u in contas)\n{\n    if (u.Id == procurado)\n    {\n        return u;      // achou: sai na hora\n    }\n}\n\nreturn null;           // olhou todas e nao achou",
+        "legenda": "Dois return em lugares diferentes. Este exemplo procura pelo Id; o seu desafio procura por login e senha ao mesmo tempo."
+      },
+      "noSeuProjeto": "E o UsuarioDAO.Autenticar do Passo 42: ele devolve a conta, e nao um sim ou nao, porque o sistema precisa do Id de quem entrou.",
+      "armadilha": {
+        "titulo": "o null dentro do laco",
+        "texto": "Se o return null ficar dentro do foreach, o metodo desiste na primeira conta que nao bate. Funciona para quem se cadastrou primeiro e falha para todo mundo depois - e quem escreveu jura que testou.",
+        "regraDoCurso": "Achou sai de dentro. Nao achei so sai depois."
+      },
+      "desafio": {
+        "metodo": "Autenticar",
+        "assinatura": "public static Usuario Autenticar(List<Usuario> contas,\n                                 string login, string senha)",
+        "enunciado": "Percorra a lista com foreach e devolva a conta em que o login E a senha batem com os que chegaram. Se o foreach terminar sem achar nenhuma, devolva null. Sao dois return, em lugares diferentes.",
+        "dica": "O null so pode aparecer DEPOIS que o foreach terminar. Dentro do laco cabe so o caso de achar: compare os dois campos com == ligados por &&, e se bater, devolva aquela conta na hora.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|ana|1234",
+            "esperado": "1|Ana|ana|1234",
+            "descricao": "ana / 1234 -> devolve a conta da Ana"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|bruno|abcd",
+            "esperado": "2|Bruno|bruno|abcd",
+            "descricao": "bruno / abcd -> devolve a SEGUNDA conta (aqui o null dentro do laco quebra)"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|bruno|1234",
+            "esperado": "(null)",
+            "descricao": "login certo com a senha do outro -> nao entra (aqui o || no lugar do && quebra)"
+          },
+          {
+            "entrada": "Ana,ana,1234|carla|1234",
+            "esperado": "(null)",
+            "descricao": "quem nao existe nao entra"
+          },
+          {
+            "entrada": "|ana|1234",
+            "esperado": "(null)",
+            "descricao": "lista vazia -> o foreach nao entra nenhuma vez"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "frmLogin",
+        "instrucao": "Entre com a conta que voce cadastrou nas abas 1 e 2. A lista e a MESMA: trocar de aba nao apaga nada.",
+        "campos": [
+          {
+            "id": "login",
+            "rotulo": "Usuario",
+            "tipo": "texto",
+            "valor": "ana",
+            "largura": 160
+          },
+          {
+            "id": "senha",
+            "rotulo": "Senha",
+            "tipo": "senha",
+            "valor": "1234",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "entrar",
+            "texto": "Entrar",
+            "destaque": true
+          },
+          {
+            "id": "sair",
+            "texto": "Sair da conta",
+            "destaque": false
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Quem esta na memoria",
+          "vazio": "Nenhuma conta. Clique em Semear, ou volte a aba 1 e cadastre uma."
+        }
+      },
+      "folhaRevisao": "O foreach passa por todos. O return de achou sai de dentro; o null so sai depois do laco."
+    },
+    {
+      "id": "repetido",
+      "numero": 4,
+      "titulo": "Ja existe",
+      "subtitulo": "o login e unico",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "Se duas contas tiverem o mesmo login, o Autenticar da aba anterior vai achar sempre a primeira - e a segunda pessoa nunca entra na propria conta. Nao e detalhe: e o sistema mentindo para o usuario.",
+        "A defesa e conferir antes de gravar. O metodo percorre as contas e responde uma pergunta de sim ou nao: este login ja esta em uso?",
+        "O desenho e o mesmo do Autenticar, com uma diferenca: em vez de devolver a conta, devolve true. E em vez de null no fim, devolve false.",
+        "O true sai de dentro do laco assim que achar. O false so pode sair depois que o laco acabar, porque so ai voce sabe que olhou todas."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "foreach (Usuario u in contas)\n{\n    if (u.Senha == senha)\n    {\n        return true;   // achou alguem com essa senha\n    }\n}\n\nreturn false;          // olhou todas, ninguem usa",
+        "legenda": "Mesmo desenho do desafio anterior. Muda o que sai: true e false no lugar da conta e do null."
+      },
+      "noSeuProjeto": "E a quinta validacao do btnCadastrar, no Passo 41: se o LoginExiste devolver true, o cadastro mostra a mensagem e para com return, sem criar a conta.",
+      "armadilha": {
+        "titulo": "o false dentro do laco",
+        "texto": "Com o return false dentro do foreach, o metodo responde nao existe depois de olhar so a primeira conta. Cadastre duas pessoas e tente repetir o login da segunda: passa direto.",
+        "regraDoCurso": "So depois de olhar todas voce pode dizer que nao achou."
+      },
+      "desafio": {
+        "metodo": "LoginExiste",
+        "assinatura": "public static bool LoginExiste(List<Usuario> contas, string login)",
+        "enunciado": "Percorra as contas e devolva verdadeiro se o login ja estiver em uso. Se o foreach terminar sem achar nenhum igual, devolva falso.",
+        "dica": "O true sai de dentro do laco assim que achar. O false so pode sair depois que o laco acabar, porque so ai voce sabe que olhou todas.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|ana",
+            "esperado": "True",
+            "descricao": "ana ja existe -> verdadeiro"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|bruno",
+            "esperado": "True",
+            "descricao": "bruno tambem, e ele e o SEGUNDO (aqui o false dentro do laco quebra)"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|carla",
+            "esperado": "False",
+            "descricao": "carla nao existe -> falso, e so depois de olhar as duas"
+          },
+          {
+            "entrada": "|ana",
+            "esperado": "False",
+            "descricao": "lista vazia -> nao existe"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "frmCadastro  (agora com porteiro)",
+        "instrucao": "Cadastre ana. Depois tente cadastrar ana de novo. E entao clique no outro botao e veja o que acontece sem o porteiro.",
+        "campos": [
+          {
+            "id": "nome",
+            "rotulo": "Nome",
+            "tipo": "texto",
+            "valor": "Ana Paula",
+            "largura": 250
+          },
+          {
+            "id": "login",
+            "rotulo": "Login",
+            "tipo": "texto",
+            "valor": "ana",
+            "largura": 160
+          },
+          {
+            "id": "senha",
+            "rotulo": "Senha",
+            "tipo": "senha",
+            "valor": "9999",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "salvar",
+            "texto": "Salvar conta",
+            "destaque": true
+          },
+          {
+            "id": "sem-porteiro",
+            "texto": "Salvar SEM o porteiro",
+            "destaque": false
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta ainda. Clique em Semear para comecar com duas."
+        }
+      },
+      "folhaRevisao": "Login repetido faz o Autenticar achar sempre a primeira conta. Confira ANTES de gravar."
+    },
+    {
+      "id": "porteiro",
+      "numero": 5,
+      "titulo": "O porteiro",
+      "subtitulo": "quatro if em ordem",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "Antes de criar a conta, o cadastro confere o que foi digitado. Cada regra e um if; se a regra for violada, o metodo devolve a mensagem e acaba ali mesmo.",
+        "E por isso que se chama porteiro: ele barra na porta. O return nao serve so para entregar um valor - ele tambem interrompe o metodo na hora, e nada depois dele roda.",
+        "A ORDEM importa. Quem escreve a regra da senha antes da regra do nome faz o sistema reclamar da senha para quem esqueceu de digitar o nome.",
+        "O || aparece quando duas situacoes diferentes dao o mesmo erro: senha curta demais OU comprida demais e o mesmo problema, com a mesma mensagem."
+      ],
+      "diagrama": "cadeia-if",
+      "exemplo": {
+        "codigo": "if (email == \"\")\n{\n    return \"Informe o email.\";\n}\n\nif (idade < 16 || idade > 120)\n{\n    return \"Idade invalida.\";\n}\n\nreturn \"\";   // passou por tudo: nao ha erro",
+        "legenda": "Texto vazio quer dizer nao achei problema nenhum. O ultimo return fica FORA de todos os if."
+      },
+      "noSeuProjeto": "Sao as quatro validacoes da Parte 5. La cada uma mostra um MessageBox e para com return; aqui elas devolvem a mensagem, para o corretor poder conferir.",
+      "armadilha": {
+        "titulo": "if sem return",
+        "texto": "Sem o return dentro do if, o metodo confere a regra, nao faz nada com o resultado e segue em frente. O cadastro aceita tudo, e quem escreveu jura que a validacao esta la - e esta mesmo, so nao serve para nada.",
+        "regraDoCurso": "Validacao sem return e comentario."
+      },
+      "desafio": {
+        "metodo": "ValidarCadastro",
+        "assinatura": "public static string ValidarCadastro(\n        string nome, string login, string senha, string confirmar)",
+        "enunciado": "Devolva a mensagem do PRIMEIRO problema, nesta ordem: nome vazio, login vazio, senha fora de 4 a 12 caracteres, senha diferente da confirmacao. As mensagens exatas estao nos comentarios do metodo. Se estiver tudo certo, devolva texto vazio.",
+        "dica": "Sao quatro if, cada um com o seu return, na ordem do enunciado. Use senha.Length para medir, e o || para juntar curta demais e comprida demais na mesma regra. O return do texto vazio fica fora de todos os if.",
+        "testes": [
+          {
+            "entrada": "|ana|1234|1234",
+            "esperado": "Informe o seu nome.",
+            "descricao": "nome vazio -> reclama do nome, e e a primeira regra"
+          },
+          {
+            "entrada": "Ana||1234|1234",
+            "esperado": "Informe o usuario.",
+            "descricao": "login vazio -> reclama do usuario"
+          },
+          {
+            "entrada": "Ana|ana|12|12",
+            "esperado": "A senha precisa ter de 4 a 12 caracteres.",
+            "descricao": "senha com 2 caracteres -> curta demais"
+          },
+          {
+            "entrada": "Ana|ana|1234567890123|1234567890123",
+            "esperado": "A senha precisa ter de 4 a 12 caracteres.",
+            "descricao": "senha com 13 -> comprida demais, mesma mensagem (aqui entra o ||)"
+          },
+          {
+            "entrada": "Ana|ana|1234|4321",
+            "esperado": "As senhas nao conferem.",
+            "descricao": "confirmacao diferente -> ultima regra"
+          },
+          {
+            "entrada": "Ana|ana|1234|1234",
+            "esperado": "",
+            "descricao": "tudo certo -> texto vazio"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "frmCadastro  (com as quatro validacoes)",
+        "instrucao": "Apague um campo, ponha uma senha de dois caracteres, erre a confirmacao. Cada erro que aparecer saiu do SEU metodo.",
+        "campos": [
+          {
+            "id": "nome",
+            "rotulo": "Nome",
+            "tipo": "texto",
+            "valor": "Carla Dias",
+            "largura": 250
+          },
+          {
+            "id": "login",
+            "rotulo": "Login",
+            "tipo": "texto",
+            "valor": "carla",
+            "largura": 160
+          },
+          {
+            "id": "senha",
+            "rotulo": "Senha",
+            "tipo": "senha",
+            "valor": "1234",
+            "largura": 160
+          },
+          {
+            "id": "confirmar",
+            "rotulo": "Repita",
+            "tipo": "senha",
+            "valor": "1234",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "validar",
+            "texto": "Validar e salvar",
+            "destaque": true
+          },
+          {
+            "id": "limpar",
+            "texto": "Limpar campos",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta ainda. So passa quem o seu porteiro deixar."
+        }
+      },
+      "folhaRevisao": "Cada regra e um if com o seu return. A ordem das regras e a ordem das mensagens."
+    },
+    {
+      "id": "buscar",
+      "numero": 6,
+      "titulo": "Buscar conta",
+      "subtitulo": "o quarto metodo do DAO",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "Depois que alguem entra, o sistema guarda o Id de quem esta logado - nao a pessoa inteira. Quando precisa do nome de novo, busca pelo Id.",
+        "Na Atividade 2 e assim que o mural mostra quem escreveu cada recado: a postagem guarda o UsuarioId, e o feed busca a conta por esse numero.",
+        "O metodo e irmao do Autenticar: mesmo foreach, mesmo par de return em lugares diferentes. Muda so a pergunta do if, que agora compara numero em vez de texto.",
+        "Com este metodo pronto o seu UsuarioDAO fica completo: CriarConta, Autenticar, LoginExiste e BuscarPorId. Sao os quatro que voce escreve hoje a noite, no projeto de verdade."
+      ],
+      "diagrama": "assinatura-metodo",
+      "exemplo": {
+        "codigo": "// procurando pelo login, e nao pelo Id:\n\nforeach (Usuario u in contas)\n{\n    if (u.Login == procurado)\n    {\n        return u;\n    }\n}\n\nreturn null;",
+        "legenda": "O mesmo desenho de sempre. No seu desafio a comparacao e com numero, e numero se compara com == igual a texto."
+      },
+      "noSeuProjeto": "E o UsuarioDAO.BuscarPorId do Passo 44. Na Parte 11 ele vira um SELECT ... WHERE Id = @id, e nenhuma tela precisa mudar.",
+      "armadilha": {
+        "titulo": "usar o resultado sem conferir",
+        "texto": "Quem chama BuscarPorId e usa .Nome direto leva NullReferenceException no dia em que o Id nao existir. Devolver null nao e erro - e resposta. Quem chamou e que precisa perguntar antes de usar.",
+        "regraDoCurso": "null quer dizer procurei e nao achei. Confira antes de usar."
+      },
+      "desafio": {
+        "metodo": "BuscarPorId",
+        "assinatura": "public static Usuario BuscarPorId(List<Usuario> contas, int id)",
+        "enunciado": "Percorra as contas e devolva aquela cujo Id for igual ao pedido. Se nenhuma tiver esse Id, devolva null.",
+        "dica": "E o mesmo desenho do desafio 3: foreach, if, return dentro, null depois. Muda so a comparacao - agora e u.Id == id, com numero.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|1",
+            "esperado": "1|Ana|ana|1234",
+            "descricao": "Id 1 -> a primeira conta"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|2",
+            "esperado": "2|Bruno|bruno|abcd",
+            "descricao": "Id 2 -> a segunda (aqui o null dentro do laco quebra)"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|9",
+            "esperado": "(null)",
+            "descricao": "Id que nao existe -> null"
+          },
+          {
+            "entrada": "|1",
+            "esperado": "(null)",
+            "descricao": "lista vazia -> null"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "buscar quem escreveu o recado",
+        "instrucao": "Clique em Semear e busque o Id 1, o 2 e o 9. Repare que nao achar tambem e uma resposta.",
+        "campos": [
+          {
+            "id": "id",
+            "rotulo": "Id da conta",
+            "tipo": "texto",
+            "valor": "1",
+            "largura": 80
+          }
+        ],
+        "botoes": [
+          {
+            "id": "buscar",
+            "texto": "Buscar",
+            "destaque": true
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta. Clique em Semear para ter o que buscar."
+        }
+      },
+      "folhaRevisao": "Buscar por Id fecha o UsuarioDAO: sao quatro metodos, e voce ja escreveu todos."
+    },
+    {
+      "id": "numerar",
+      "numero": 7,
+      "titulo": "Numerar",
+      "subtitulo": "quando a posicao importa",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "O foreach e otimo para passar por todos, mas ele nao sabe dizer em que posicao voce esta. Quando o numero da linha faz parte do resultado, ele nao serve.",
+        "O for sabe, porque ele carrega o contador. As tres partes entre parenteses sao: onde comeca, ate quando continua, e quanto anda a cada volta.",
+        "Para pegar a conta de uma posicao use contas[i], com colchetes, e nao com ponto. A posicao 0 e a primeira da lista, e a ultima e Count menos um.",
+        "Guarde o criterio, porque ele vale para o resto do curso: preciso saber em que posicao esse item esta? Se sim, for. Se nao, foreach."
+      ],
+      "diagrama": "for-tres-partes",
+      "exemplo": {
+        "codigo": "string texto = \"\";\n\nfor (int i = 0; i < notas.Count; i++)\n{\n    texto = texto + (i + 1) + \") \" + notas[i] + \"; \";\n}\n\nreturn texto;   //  \"1) 7,5; 2) 9; \"",
+        "legenda": "O i comeca em 0, mas na tela a primeira linha e a numero 1. Por isso o i + 1."
+      },
+      "armadilha": {
+        "titulo": "esquecer o mais um",
+        "texto": "A lista comeca na posicao 0, mas ninguem le uma tela que comeca em 0. Sem o i + 1 a primeira conta aparece numerada como 0, e a ultima fica com o numero da penultima.",
+        "regraDoCurso": "Posicao na lista comeca em 0. Numero na tela comeca em 1."
+      },
+      "desafio": {
+        "metodo": "Numerar",
+        "assinatura": "public static string Numerar(List<Usuario> contas)",
+        "enunciado": "Monte um texto com as contas numeradas, na ordem da lista: [Ana Souza, Bruno Lima] vira \"1. Ana Souza | 2. Bruno Lima | \". Repare no ponto, na barra e nos espacos - inclusive depois do ultimo nome. Lista vazia devolve texto vazio.",
+        "dica": "Comece com um texto vazio e va grudando um pedaco por volta. O numero que aparece na tela e i + 1; a conta daquela volta e contas[i]. Nao esqueca o espaco depois da barra, inclusive no ultimo.",
+        "testes": [
+          {
+            "entrada": "Ana Souza,ana,1;Bruno Lima,bruno,2",
+            "esperado": "1. Ana Souza | 2. Bruno Lima | ",
+            "descricao": "duas contas -> numeradas 1 e 2, com barra e espaco no fim"
+          },
+          {
+            "entrada": "Ana,a,1",
+            "esperado": "1. Ana | ",
+            "descricao": "uma conta -> comeca em 1, e nao em 0"
+          },
+          {
+            "entrada": "A,a,1;B,b,2;C,c,3",
+            "esperado": "1. A | 2. B | 3. C | ",
+            "descricao": "tres contas -> a numeracao acompanha ate o fim"
+          },
+          {
+            "entrada": "",
+            "esperado": "",
+            "descricao": "lista vazia -> texto vazio, e o proprio for resolve isso sozinho"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "a lista numerada",
+        "instrucao": "Clique em Semear para ter contas e depois em Numerar. O texto que aparecer saiu do SEU metodo.",
+        "campos": [],
+        "botoes": [
+          {
+            "id": "numerar",
+            "texto": "Numerar as contas",
+            "destaque": true
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta. Clique em Semear para ter o que numerar."
+        }
+      },
+      "folhaRevisao": "Preciso da posicao? for. Nao preciso? foreach. A posicao 0 e o numero 1 na tela."
+    },
+    {
+      "id": "sugerir",
+      "numero": 8,
+      "titulo": "Sugerir login",
+      "subtitulo": "sem saber quantas vezes",
+      "novo": true,
+      "livre": false,
+      "explicacao": [
+        "O login desejado esta ocupado. O sistema podia so recusar, mas todo site bom faz melhor: oferece um parecido que esteja livre. E o que acontece quando voce cria um email e ele sugere o seu nome com um numero no fim.",
+        "Aqui o for nao serve, e o motivo e simples: ninguem sabe quantas tentativas serao necessarias. Pode ser uma, pode ser trinta. O while existe exatamente para isso - ele repete enquanto a condicao for verdadeira, sem numero combinado.",
+        "O while tem as mesmas tres pecas do for, so que espalhadas: o valor inicial fica ANTES do laco, o teste fica entre parenteses, e o avanco fica DENTRO do corpo.",
+        "O avanco dentro do corpo e a peca que todo mundo esquece. Sem ele a condicao nunca muda, o laco nunca termina, e o programa trava de verdade - sem mensagem de erro nenhuma."
+      ],
+      "diagrama": "for-vira-while",
+      "exemplo": {
+        "codigo": "int valor = 1;\n\nwhile (valor < 1000)\n{\n    valor = valor * 2;   // 1, 2, 4, 8, 16 ...\n}\n\nreturn valor;   // 1024",
+        "legenda": "Ninguem calculou quantas voltas serao. O laco para quando a condicao deixa de ser verdadeira. Tire o valor * 2 e o programa congela."
+      },
+      "armadilha": {
+        "titulo": "o while sem o passo",
+        "texto": "Se a tentativa nao mudar dentro do laco, a condicao continua verdadeira para sempre e a janela congela. Nao aparece erro nenhum: o programa simplesmente para de responder, e voce precisa fecha-lo pelo Gerenciador de Tarefas.",
+        "regraDoCurso": "Salve o arquivo ANTES de rodar um while pela primeira vez."
+      },
+      "desafio": {
+        "metodo": "SugerirLogin",
+        "assinatura": "public static string SugerirLogin(List<Usuario> contas,\n                                  string desejado)",
+        "enunciado": "Se o login desejado estiver livre, devolva ele mesmo. Se estiver ocupado, junte um numero no fim, comecando em 2, ate achar um livre: ana ocupado vira ana2; se ana2 tambem estiver ocupado, vira ana3. Use while, e pergunte se esta ocupado com Ajuda.LoginEmUso(contas, tentativa).",
+        "dica": "Antes do laco: uma variavel com a tentativa, comecando igual ao desejado, e um numero comecando em 1. Enquanto a tentativa estiver em uso, aumente o numero e monte a tentativa de novo juntando o desejado com o numero. Devolva a tentativa depois do laco.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|carla",
+            "esperado": "carla",
+            "descricao": "login livre -> devolve ele mesmo, sem entrar no laco"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|ana",
+            "esperado": "ana2",
+            "descricao": "ana ocupado -> ana2"
+          },
+          {
+            "entrada": "Ana,ana,1;Ana2,ana2,2|ana",
+            "esperado": "ana3",
+            "descricao": "ana e ana2 ocupados -> ana3 (duas voltas)"
+          },
+          {
+            "entrada": "A,ana,1;B,ana2,2;C,ana3,3|ana",
+            "esperado": "ana4",
+            "descricao": "tres ocupados seguidos -> ana4"
+          },
+          {
+            "entrada": "|ana",
+            "esperado": "ana",
+            "descricao": "lista vazia -> nada esta ocupado"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "o login que o sistema sugere",
+        "instrucao": "Semeie as contas e peca ana. Depois peca carla, que esta livre, e compare. O seu while roda com prazo de 2 segundos: se nao terminar, o aplicativo avisa em vez de congelar.",
+        "campos": [
+          {
+            "id": "desejado",
+            "rotulo": "Login desejado",
+            "tipo": "texto",
+            "valor": "ana",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "sugerir",
+            "texto": "Sugerir um livre",
+            "destaque": true
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Logins ja em uso",
+          "vazio": "Nenhuma conta. Sem ninguem na lista, todo login esta livre."
+        }
+      },
+      "folhaRevisao": "Sei quantas voltas? for. Nao sei? while - e o passo fica DENTRO do corpo, ou trava."
+    },
+    {
+      "id": "trocar",
+      "numero": 9,
+      "titulo": "Trocar senha",
+      "subtitulo": "o objeto na lista e o mesmo objeto",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "Trocar a senha e pedido comum de qualquer sistema. Antes de trocar, e preciso provar que a pessoa e dona da conta - por isso o metodo recebe a senha atual, e nao so o login.",
+        "A busca e a de sempre: um foreach, um if com os dois campos ligados por &&, e dois return em lugares diferentes.",
+        "O que muda e o que voce faz depois de achar. Aqui voce nao devolve a conta: voce MUDA ela e devolve verdadeiro.",
+        "E aqui esta o ponto da aba: o u que o foreach entrega NAO e uma copia. E o mesmo objeto que esta guardado na lista. Escrever u.Senha = nova muda a conta la dentro, e nao existe passo de guardar de volta."
+      ],
+      "diagrama": "molde-objeto",
+      "exemplo": {
+        "codigo": "// o objeto da lista e o objeto da variavel:\n\nUsuario primeiro = contas[0];\nprimeiro.Nome = \"Outro nome\";\n\n// contas[0].Nome tambem virou \"Outro nome\".\n// Nao existe devolver para a lista.",
+        "legenda": "Uma caixa so, com dois nomes apontando para ela. Mexeu por um nome, mudou para os dois."
+      },
+      "noSeuProjeto": "Trocar a senha nao esta na Atividade 1, mas o raciocinio esta: e assim que qualquer edicao funciona. Na Atividade 2 e o que acontece quando alguem edita o proprio recado.",
+      "armadilha": {
+        "titulo": "trocar sem conferir a senha",
+        "texto": "Quem procura so pelo login troca a senha de qualquer pessoa sabendo o nome de usuario dela. A senha atual nao e formalidade: e a prova de que quem pediu e o dono.",
+        "regraDoCurso": "Para mudar um dado de alguem, prove primeiro que e a pessoa certa."
+      },
+      "desafio": {
+        "metodo": "TrocarSenha",
+        "assinatura": "public static bool TrocarSenha(List<Usuario> contas, string login,\n                               string atual, string nova)",
+        "enunciado": "Ache a conta em que o login E a senha atual batem, troque a senha dela pela nova, e devolva verdadeiro. Se nao achar, devolva falso e nao mude nada. Nao precisa tirar da lista e por de volta.",
+        "dica": "E o mesmo desenho do desafio 3: foreach, if com == e && nos dois campos. Achou? atribua a senha nova naquele objeto e devolva true na hora. O false so sai depois do laco.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|ana|1234|9999",
+            "esperado": "True|9999",
+            "descricao": "ana com a senha certa -> troca, e a conta fica com a senha nova"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|bruno|abcd|xyz9",
+            "esperado": "True|xyz9",
+            "descricao": "bruno e a SEGUNDA conta (aqui o false dentro do laco quebra)"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|ana|0000|9999",
+            "esperado": "False|1234",
+            "descricao": "senha atual errada -> nao troca, e a senha continua a antiga"
+          },
+          {
+            "entrada": "Ana,ana,1234|carla|1234|9999",
+            "esperado": "False|(nao achei)",
+            "descricao": "login que nao existe -> falso"
+          },
+          {
+            "entrada": "|ana|1234|9999",
+            "esperado": "False|(nao achei)",
+            "descricao": "lista vazia -> o foreach nao entra nenhuma vez"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "trocar a minha senha",
+        "instrucao": "Semeie, troque a senha da ana, e depois volte ao desafio 3 e entre com a senha NOVA. A lista e a mesma.",
+        "campos": [
+          {
+            "id": "login",
+            "rotulo": "Login",
+            "tipo": "texto",
+            "valor": "ana",
+            "largura": 160
+          },
+          {
+            "id": "atual",
+            "rotulo": "Senha atual",
+            "tipo": "senha",
+            "valor": "1234",
+            "largura": 160
+          },
+          {
+            "id": "nova",
+            "rotulo": "Senha nova",
+            "tipo": "senha",
+            "valor": "9999",
+            "largura": 160
+          }
+        ],
+        "botoes": [
+          {
+            "id": "trocar",
+            "texto": "Trocar a senha",
+            "destaque": true
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta. Clique em Semear para ter uma senha para trocar."
+        }
+      },
+      "folhaRevisao": "O objeto que o foreach entrega e o mesmo que esta na lista. Mudou nele, mudou la."
+    },
+    {
+      "id": "remover",
+      "numero": 10,
+      "titulo": "Remover",
+      "subtitulo": "mexer na lista enquanto percorre",
+      "novo": false,
+      "livre": false,
+      "explicacao": [
+        "Excluir a conta e o ultimo pedido que todo sistema precisa atender. A busca e a mesma de sempre; o que muda e que agora voce nao le a lista - voce MEXE nela.",
+        "Para tirar um item existe contas.Remove(u), que procura aquele objeto e o retira. A lista encolhe na hora, e quem estava depois anda uma posicao para tras.",
+        "E ai mora a armadilha do dia: o foreach nao aceita que a lista mude enquanto ele a percorre. Se voce remover e continuar o laco, o programa estoura com InvalidOperationException - Collection was modified.",
+        "A saida e simples, e voce ja usou nove vezes hoje: saia do laco na MESMA hora em que remover. O return faz as duas coisas de uma vez - devolve a resposta e encerra o metodo."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "// ERRADO - o laco continua depois de mexer na lista:\n\nforeach (Usuario u in contas)\n{\n    if (u.Id == id)\n    {\n        contas.Remove(u);   // a lista mudou...\n    }\n}                       // ...e aqui o foreach estoura",
+        "legenda": "Este exemplo mostra o que NAO fazer. Falta uma linha para consertar - e ela e a mesma que voce usou nos desafios 3, 4 e 6."
+      },
+      "noSeuProjeto": "Na Atividade 2 e o botao Apagar do mural: so o dono pode apagar o proprio recado. O DAO faz um DELETE ... WHERE Id = @id, e o feed recarrega a lista.",
+      "armadilha": {
+        "titulo": "remover e continuar o laco",
+        "texto": "O foreach guarda por onde estava. Tirar um item da lista no meio do caminho quebra essa contagem, e o C# prefere estourar a te devolver dado errado. Nao ha erro de compilacao: o programa compila, roda, e para na hora.",
+        "erroCompilador": "InvalidOperationException: Collection was modified; enumeration operation may not execute.",
+        "regraDoCurso": "Mexeu na lista dentro do foreach? Saia do laco na mesma hora."
+      },
+      "desafio": {
+        "metodo": "Remover",
+        "assinatura": "public static bool Remover(List<Usuario> contas, int id)",
+        "enunciado": "Ache a conta com aquele Id, tire ela da lista com contas.Remove e devolva verdadeiro. Se nenhuma tiver esse Id, devolva falso e nao mexa na lista.",
+        "dica": "Ache como sempre: foreach e if. Depois do Remove, saia do laco na mesma hora - o return true faz isso. O false so sai depois que o laco terminar.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|2",
+            "esperado": "True|2|Ana, Carla",
+            "descricao": "remove a do meio -> sobram Ana e Carla, nesta ordem"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|1",
+            "esperado": "True|1|Bruno",
+            "descricao": "remove a primeira -> sobra Bruno"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|3",
+            "esperado": "True|2|Ana, Bruno",
+            "descricao": "remove a ultima -> o laco chega ate o fim antes de achar"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|9",
+            "esperado": "False|2|Ana, Bruno",
+            "descricao": "Id que nao existe -> falso, e a lista fica intacta"
+          },
+          {
+            "entrada": "|1",
+            "esperado": "False|0|",
+            "descricao": "lista vazia -> falso"
+          }
+        ]
+      },
+      "bancada": {
+        "titulo": "excluir a conta",
+        "instrucao": "Semeie, remova o Id 1 e veja a lista encolher. Depois tente um Id que nao existe.",
+        "campos": [
+          {
+            "id": "id",
+            "rotulo": "Id da conta",
+            "tipo": "texto",
+            "valor": "1",
+            "largura": 80
+          }
+        ],
+        "botoes": [
+          {
+            "id": "remover",
+            "texto": "Remover a conta",
+            "destaque": true
+          },
+          {
+            "id": "semear",
+            "texto": "Semear (ana + bruno)",
+            "destaque": false
+          },
+          {
+            "id": "esvaziar",
+            "texto": "Esvaziar a memoria",
+            "destaque": false
+          }
+        ],
+        "saida": {
+          "titulo": "Contas na memoria",
+          "vazio": "Nenhuma conta. Clique em Semear para ter o que remover."
+        }
+      },
+      "folhaRevisao": "Removeu dentro do foreach? Saia do laco na mesma hora, ou o programa estoura."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Conecta</RootNamespace>
+    <AssemblyName>ConectaA</AssemblyName>
+
+    <!--
+      Sem nenhum pacote NuGet: compila em maquina sem internet,
+      igual a todos os projetos deste curso.
+    -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O motor mora em ../comum. E uma COPIA do motor da Aula 11:
+         mexer aqui nao toca no projeto de ontem. -->
+    <Compile Include="..\comum\*.cs" />
+
+    <!-- A fonte unica do conteudo. O Link achata o arquivo na raiz da
+         saida, que e onde Conteudo.Carregar() procura por ele. -->
+    <Content Include="..\conteudo\conteudo-conecta.json"
+             Link="conteudo-conecta.json"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
