@@ -1,0 +1,671 @@
+{
+  "aula": "Aula 13",
+  "data": "20/08/2026",
+  "titulo": "Simulado da prova",
+  "subtitulo": "dez metodos, no formato de amanha - complete em Desafios.cs, salve e rode com F5",
+  "avisoNovo": "",
+  "foraDaRevisao": [
+    "banco de dados, MySQL e SQL",
+    "{ get; set; } - as propriedades",
+    "construtor",
+    "heranca, polimorfismo e encapsulamento",
+    "vetor, ordenacao e recursividade",
+    "a classe Postagem e o mural"
+  ],
+  "topicos": [
+    {
+      "id": "nome",
+      "numero": 0,
+      "titulo": "Quem e voce",
+      "subtitulo": "o unico sem pegadinha",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Antes de qualquer coisa: o professor precisa saber de quem sao estas respostas. E voce escreve isso no proprio codigo, como todo o resto.",
+        "Um metodo que devolve texto e a coisa mais simples que existe em C#: ele nao recebe nada, nao percorre nada, nao decide nada. So entrega um valor com return.",
+        "Escreva o seu nome completo entre as aspas. Nome e sobrenome - o professor tem trinta alunos e alguns primeiros nomes se repetem.",
+        "Voce escreve isto UMA vez. Diferente de uma caixa de texto na tela, o que esta no codigo continua la depois de fechar o programa e rodar de novo com F5."
+      ],
+      "diagrama": "",
+      "exemplo": {
+        "codigo": "public static string Cidade()\n{\n    return \"Serra\";\n}",
+        "legenda": "Sem parametro, sem laco, sem if. So o return com o valor entre aspas."
+      },
+      "armadilha": {
+        "titulo": "so o primeiro nome",
+        "texto": "Nome e sobrenome. Com trinta alunos, so o primeiro nome nao identifica ninguem - e o teste desta aba recusa nome sem sobrenome de proposito."
+      },
+      "desafio": {
+        "metodo": "MeuNome",
+        "assinatura": "public static string MeuNome()",
+        "enunciado": "Devolva o seu nome completo, com nome e sobrenome. E so escrever entre as aspas. Sem este desafio resolvido o botao Enviar nao funciona - o professor nao teria como saber de quem sao as respostas.",
+        "dica": "E uma linha so: o return com o seu nome entre aspas. Nao apague as aspas.",
+        "testes": [
+          {
+            "entrada": "",
+            "esperado": "ok",
+            "descricao": "o seu nome completo, com nome e sobrenome"
+          }
+        ]
+      },
+      "folhaRevisao": "Um metodo que devolve texto: sem parametro, sem laco, so o return."
+    },
+    {
+      "id": "contar",
+      "numero": 1,
+      "titulo": "Senhas fracas",
+      "subtitulo": "contar sem parar no primeiro",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Todo laco que voce escreveu ate ontem procurava UMA coisa: achou, saiu na hora. Contar e o contrario disso. Nao existe sair mais cedo, porque a resposta so fica pronta quando a ultima conta ja foi olhada.",
+        "Para isso existe o acumulador: uma variavel int que nasce ANTES do laco, valendo zero, e cresce dentro dele. Ela precisa nascer antes por um motivo simples. Se nascesse dentro, cada volta criaria uma variavel nova e zerada, e o total nunca passaria de um.",
+        "Somar sobre si mesma e o coracao da coisa. Escrever fracas = fracas + 1 quer dizer: pegue o valor que fracas tem agora, some um, e guarde de volta em fracas. Nao e equacao de matematica. O sinal de igual aqui e atribuicao, e o lado direito e calculado primeiro.",
+        "O return muda de lugar. Nos desafios de busca ele saia de dentro do laco, porque achar uma ja bastava. Aqui ele fica DEPOIS do laco, sozinho, porque o total so esta pronto quando a ultima conta ja foi olhada."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "int atrasados = 0;\n\nforeach (int dias in emprestimos)\n{\n    if (dias > 30)\n    {\n        atrasados = atrasados + 1;\n    }\n}\n\nreturn atrasados;",
+        "legenda": "O total nasce fora, cresce dentro, e sai depois. Aqui o criterio e o prazo de um emprestimo; no seu desafio o criterio e outro."
+      },
+      "armadilha": {
+        "titulo": "contador que nao acumula",
+        "texto": "Escrever fracas = 1 em vez de fracas = fracas + 1 parece igual e nao e. O total para em um e fica ali, por mais contas fracas que aparecerem depois. O teste com uma conta fraca so passa, e todos os outros denunciam."
+      },
+      "desafio": {
+        "metodo": "ContarSenhasFracas",
+        "assinatura": "public static int ContarSenhasFracas(List<Usuario> contas,\n                                     int minimo)",
+        "enunciado": "Percorra as contas e devolva QUANTAS tem senha com menos caracteres do que o minimo que chegou. Nao existe achar aqui: o metodo tem que olhar ate a ultima conta antes de responder. Lista vazia devolve zero.",
+        "dica": "Crie a variavel do total ANTES do foreach, valendo zero, e faca ela crescer dentro do laco quando o if for verdadeiro. Para medir a senha use u.Senha.Length, o mesmo Length do porteiro de ontem. O return fica depois do laco, sozinho.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abc;Carla,carla,12|4",
+            "esperado": "2",
+            "descricao": "duas senhas com menos de 4 -> devolve 2"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd|4",
+            "esperado": "0",
+            "descricao": "nenhuma fraca -> zero e nao a quantidade de contas"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,22;Carla,carla,333|4",
+            "esperado": "3",
+            "descricao": "todas fracas -> o total tem que chegar a 3"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abc|6",
+            "esperado": "2",
+            "descricao": "agora o minimo e 6 -> quem fixou o 4 no codigo erra aqui"
+          },
+          {
+            "entrada": "Ana,ana,|4",
+            "esperado": "1",
+            "descricao": "senha em branco tem zero caracteres e zero e menos que 4"
+          },
+          {
+            "entrada": "|4",
+            "esperado": "0",
+            "descricao": "BORDA lista vazia -> zero e o foreach nao entra nenhuma vez"
+          }
+        ]
+      },
+      "folhaRevisao": "O contador nasce ANTES do laco, soma sobre ele mesmo dentro, e so e devolvido depois."
+    },
+    {
+      "id": "atalho",
+      "numero": 2,
+      "titulo": "O atalho",
+      "subtitulo": "switch, case e default",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "O Conecta tem teclas de atalho, e a pergunta e sempre a mesma: qual tecla o usuario apertou? Quando as opcoes sao valores exatos de uma variavel so, o switch diz isso mais limpo do que uma fila de if.",
+        "O switch compara SO igualdade. Ele nao sabe testar maior que, nem menor que, nem juntar duas condicoes com &&. Para faixas e condicoes compostas a ferramenta continua sendo o if / else if - foi por isso que na calculadora a divisao por zero ficou no if e a escolha da operacao coube no switch.",
+        "Os valores comparados aqui sao TEXTO, entao vao entre aspas: case \"F2\", e nao case F2. Cada case termina com break, que diz: acabou o meu pedaco, pule para depois do switch. Sem o break o projeto nem compila - o compilador para com CS0163.",
+        "O default e o case de todo o resto. Ele responde por qualquer tecla que voce nao escreveu. Atalho sem default e atalho que fica mudo quando o usuario aperta a tecla errada, e o usuario sempre aperta a tecla errada."
+      ],
+      "diagrama": "switch-caminhos",
+      "exemplo": {
+        "codigo": "string nome = \"\";\n\nswitch (turno)\n{\n    case \"M\":\n        nome = \"Manha\";\n        break;\n\n    case \"N\":\n        nome = \"Noite\";\n        break;\n\n    default:\n        nome = \"Turno desconhecido\";\n        break;\n}\n\nreturn nome;",
+        "legenda": "A variavel nasce antes do switch, cada case guarda o seu valor, e o return fica depois de tudo, um so."
+      },
+      "armadilha": {
+        "titulo": "o default que faltou",
+        "texto": "Sem o default, a tecla que nao esta em nenhum case nao entra em lugar nenhum: a variavel continua com o valor com que nasceu e o metodo devolve texto vazio. Na tela isso vira um atalho que nao faz nada e nao explica nada. E se faltar um break, nem chega a rodar: o compilador para com CS0163 e a aba inteira fica vermelha."
+      },
+      "desafio": {
+        "metodo": "TelaDoAtalho",
+        "assinatura": "public static string TelaDoAtalho(string tecla)",
+        "enunciado": "O Conecta recebe o nome da tecla que o usuario apertou e devolve a tela que deve abrir. Use switch: F2 devolve Nova conta, F3 devolve Procurar, F4 devolve Mural e F8 devolve Sair do Conecta. Qualquer outra tecla devolve a frase Atalho sem uso. com o ponto final incluido.",
+        "dica": "Sao quatro case e um default. Os valores sao texto, entao vao entre aspas. Cada case termina com break, senao o projeto nem roda. O default nao e enfeite: ele e a resposta para toda tecla que voce nao listou.",
+        "testes": [
+          {
+            "entrada": "F2",
+            "esperado": "Nova conta",
+            "descricao": "F2 -> a tela de cadastro"
+          },
+          {
+            "entrada": "F3",
+            "esperado": "Procurar",
+            "descricao": "F3 -> a busca de contas"
+          },
+          {
+            "entrada": "F4",
+            "esperado": "Mural",
+            "descricao": "F4 -> o mural de recados"
+          },
+          {
+            "entrada": "F8",
+            "esperado": "Sair do Conecta",
+            "descricao": "F8 -> o ultimo case e nao esqueca dele"
+          },
+          {
+            "entrada": "F1",
+            "esperado": "Atalho sem uso.",
+            "descricao": "tecla que nao esta no switch -> cai no default"
+          },
+          {
+            "entrada": "",
+            "esperado": "Atalho sem uso.",
+            "descricao": "BORDA texto vazio tambem cai no default"
+          }
+        ]
+      },
+      "folhaRevisao": "switch compara so igualdade. Todo case termina com break, e o default responde por todo o resto."
+    },
+    {
+      "id": "media",
+      "numero": 3,
+      "titulo": "A media",
+      "subtitulo": "somar, dividir, e o zero",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Media e soma dividida pela quantidade. A soma voce acabou de fazer no desafio 1: um acumulador que nasce antes do laco e cresce dentro dele. A quantidade a lista entrega pronta, no Count. O que este metodo cobra e juntar as duas coisas na ordem certa.",
+        "E ai aparece a conta que nao pode ser feita. Quando a lista esta vazia o Count vale 0, e dividir por zero nao e conta - e parada. O programa nao avisa antes: ele compila, abre, roda, e morre com DivideByZeroException na hora exata em que chega na barra.",
+        "Na calculadora da Aula 9 voce ja barrou uma divisao por zero com um if antes da conta. E a mesma ideia, agora com um motivo a mais: la os numeros eram double e o resultado saia estranho; aqui os numeros sao int e o programa para de vez. O divisor de uma media e sempre a quantidade de itens, e a quantidade de itens as vezes e zero.",
+        "Falta um fato novo, e ele e desta noite: dividindo int por int, o C# joga fora o que sobra. 9 dividido por 2 da 4, e nao 4,5. Nao e arredondamento, e corte. Para uma media de caracteres isso serve, e o esperado dos testes ja conta com esse corte."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "if (quantidade == 0)\n{\n    return 0;\n}\n\nreturn total / quantidade;",
+        "legenda": "A divisao por zero se resolve antes de acontecer, nunca depois. Numa media, o divisor e a quantidade de itens."
+      },
+      "armadilha": {
+        "titulo": "dividir a lista vazia",
+        "texto": "Somar zero e dividir por zero parece inofensivo e nao e. Sem o if na frente, a lista vazia derruba o metodo com DivideByZeroException. Todos os outros testes passam, esse trava, e o erro so aparece na hora de rodar."
+      },
+      "desafio": {
+        "metodo": "MediaTamanhoSenha",
+        "assinatura": "public static int MediaTamanhoSenha(List<Usuario> contas)",
+        "enunciado": "Some o tamanho de todas as senhas e devolva a media, dividindo pela quantidade de contas. Como o retorno e int, o resto da divisao e descartado. Lista vazia devolve zero - e essa conferencia precisa vir ANTES da divisao.",
+        "dica": "Sao duas coisas em ordem: primeiro barre a lista vazia, depois some e divida. Dividir por contas.Count com a lista vazia nao devolve zero nem devolve resposta errada: para o programa. Para medir cada senha use u.Senha.Length.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcd",
+            "esperado": "4",
+            "descricao": "4 e 4 caracteres -> 8 dividido por 2 da 4"
+          },
+          {
+            "entrada": "Ana,ana,12345;Bruno,bruno,abc",
+            "esperado": "4",
+            "descricao": "5 e 3 -> 8 dividido por 2 da 4"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abc;Carla,carla,12",
+            "esperado": "3",
+            "descricao": "4 e 3 e 2 -> 9 dividido por 3 da 3"
+          },
+          {
+            "entrada": "Ana,ana,12345;Bruno,bruno,abcd",
+            "esperado": "4",
+            "descricao": "9 dividido por 2 da 4 e nao 5: o resto e descartado"
+          },
+          {
+            "entrada": "Ana,ana,123456",
+            "esperado": "6",
+            "descricao": "uma conta so -> a media e o proprio tamanho"
+          },
+          {
+            "entrada": "",
+            "esperado": "0",
+            "descricao": "BORDA lista vazia -> zero sem chegar perto da divisao"
+          }
+        ]
+      },
+      "folhaRevisao": "Media e soma dividida pela quantidade - e quantidade zero para o programa. Confira antes de dividir."
+    },
+    {
+      "id": "linha",
+      "numero": 4,
+      "titulo": "Em uma linha",
+      "subtitulo": "o separador vai entre",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Juntar varios pedacos num texto so e o que toda tela de lista faz. O texto comeca vazio e cresce a cada volta: texto = texto + pedaco poe o pedaco no fim do que ja estava la, e nada se perde.",
+        "O problema nao e grudar o login. E o separador. Se voce grudar o separador depois de cada login, sobra um pendurado no fim, sem ninguem depois dele. Ontem, no Numerar, o separador ia mesmo em todos e por isso o codigo era simples. Hoje nao vai.",
+        "Sao Count logins e Count menos 1 separadores. Tres logins levam dois separadores. Dez levam nove. Sempre um a menos, porque o separador nao acompanha um item: ele fica no espaco ENTRE dois itens, e o ultimo nao tem ninguem depois dele.",
+        "A saida e mudar a pergunta. Em vez de perguntar se este e o ultimo - o que o laco nao sabe responder - pergunte se ele e o primeiro. E o proprio texto responde: se ele ainda esta vazio, ninguem entrou antes; se ja tem alguma coisa, o separador cabe."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "string conta = \"\";\n\nforeach (int n in numeros)\n{\n    if (conta != \"\")\n    {\n        conta = conta + \" + \";\n    }\n\n    conta = conta + n;\n}\n\nreturn conta;   //  \"7 + 9 + 8\"",
+        "legenda": "O separador entra ANTES do item, e so quando ja existe alguma coisa no texto. Repare que ele nunca aparece grudado no fim."
+      },
+      "armadilha": {
+        "titulo": "o separador que sobra no fim",
+        "texto": "Grudar a barra depois de cada login e o jeito automatico, e e o jeito errado hoje: sobra uma barra solta no fim da linha. Com tres contas quase ninguem percebe. Com uma conta so o erro fica gritante, e o teste de uma conta so existe exatamente para isso."
+      },
+      "desafio": {
+        "metodo": "ListarLogins",
+        "assinatura": "public static string ListarLogins(List<Usuario> contas)",
+        "enunciado": "Monte uma linha unica com os logins das contas, na ordem da lista, separados por espaco barra espaco: os logins ana e bruno viram o texto ana / bruno. Nao pode sobrar separador depois do ultimo nem antes do primeiro. Lista vazia devolve texto vazio.",
+        "dica": "Comece com um texto vazio e va grudando um login por volta. Antes de grudar, pergunte se o texto ja tem alguma coisa dentro: se tiver, e porque este nao e o primeiro, e ai o separador entra. Compare o texto com aspas vazias. Da para resolver com foreach ou com for - as duas valem.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2",
+            "esperado": "ana / bruno",
+            "descricao": "dois logins -> um separador so e nenhum no fim"
+          },
+          {
+            "entrada": "Ana,ana,1",
+            "esperado": "ana",
+            "descricao": "um login sozinho -> separador nenhum"
+          },
+          {
+            "entrada": "A,ana,1;B,bruno,2;C,carla,3",
+            "esperado": "ana / bruno / carla",
+            "descricao": "tres logins -> dois separadores"
+          },
+          {
+            "entrada": "A,ze,1;B,duda,2;C,bia,3;D,ana,4",
+            "esperado": "ze / duda / bia / ana",
+            "descricao": "quatro logins -> tres separadores e a ordem e a da lista"
+          },
+          {
+            "entrada": "",
+            "esperado": "",
+            "descricao": "BORDA lista vazia -> texto vazio"
+          }
+        ]
+      },
+      "folhaRevisao": "Sao Count itens e Count - 1 separadores: o separador vai ENTRE, nunca depois do ultimo."
+    },
+    {
+      "id": "campeao",
+      "numero": 5,
+      "titulo": "O maior nome",
+      "subtitulo": "guardar o melhor ate agora",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Buscar e achar uma conta que voce ja sabe qual e. Escolher o maior e diferente: nenhuma conta sozinha responde a pergunta, porque so da para saber quem e o maior depois de ver todas. Ainda assim o metodo tem que decidir volta a volta, sem guardar a lista inteira.",
+        "A solucao e uma variavel que segura o melhor ATE AGORA. Ela comeca valendo null, que aqui quer dizer ainda nao vi ninguem. A cada volta voce compara a conta da vez com esse campeao parcial e, se a nova for melhor, ela toma o lugar. No fim do laco, o melhor ate agora virou simplesmente o melhor.",
+        "A primeira volta e o ponto delicado. O campeao ainda e null, e null nao tem Nome nenhum para medir. Por isso a condicao tem duas partes ligadas por ||: ou o campeao esta vazio, e ai qualquer conta serve, ou o nome da conta da vez e maior. O C# olha o lado esquerdo primeiro e, quando ele ja e verdadeiro, nem chega a olhar o lado direito - e e isso que protege a primeira volta.",
+        "Se essa guarda faltar, o programa para com NullReferenceException e a tela vai falar em return null e em new que faltou. Nao e nada disso: o defeito e a guarda ausente. E o empate e decidido pelo sinal que voce escolher - com > o primeiro empatado fica, com >= o ultimo assume. Sao duas regras diferentes, e o enunciado e que manda."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "int maior = 0;\n\nforeach (int n in numeros)\n{\n    if (n > maior)\n    {\n        maior = n;\n    }\n}\n\nreturn maior;",
+        "legenda": "O campeao nasce antes do laco e so troca quando aparece alguem maior. Aqui ele pode nascer valendo zero. Quando o campeao e um objeto, ele nasce valendo null - e ai o primeiro if precisa tomar cuidado."
+      },
+      "armadilha": {
+        "titulo": "o campeao comeca vazio",
+        "texto": "Comparar direto com campeao.Nome.Length na primeira volta estoura o programa com NullReferenceException, porque nesse instante o campeao ainda e null. Nao ha erro de compilacao: o aplicativo abre, roda, e para na primeira conta."
+      },
+      "desafio": {
+        "metodo": "NomeMaisLongo",
+        "assinatura": "public static Usuario NomeMaisLongo(List<Usuario> contas)",
+        "enunciado": "Percorra as contas e devolva aquela cujo NOME tem mais caracteres. Se duas empatarem no tamanho, devolva a primeira das duas. Lista vazia devolve null.",
+        "dica": "Antes do laco, crie uma variavel Usuario valendo null para segurar o campeao. A cada volta, troque o campeao so se a conta da vez for melhor. E cuidado na primeira volta: nao da para medir o nome de um campeao que ainda nao existe.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1234;Bruno Lima,bruno,abcd",
+            "esperado": "2 / Bruno Lima / bruno",
+            "descricao": "o maior e o SEGUNDO -> quem devolve na primeira volta erra aqui"
+          },
+          {
+            "entrada": "Carla Dias,carla,1;Ana,ana,2",
+            "esperado": "1 / Carla Dias / carla",
+            "descricao": "o maior e o PRIMEIRO -> quem devolve sempre o ultimo erra aqui"
+          },
+          {
+            "entrada": "Ze,ze,1;Ana Maria Souza,ana,2;Bia,bia,3",
+            "esperado": "2 / Ana Maria Souza / ana",
+            "descricao": "o maior esta no meio -> o campeao troca uma vez so"
+          },
+          {
+            "entrada": "Ana,ana,1;Bia,bia,2",
+            "esperado": "1 / Ana / ana",
+            "descricao": "empate de 3 com 3 -> fica a primeira"
+          },
+          {
+            "entrada": "Zeca,zeca,1;Bia,bia,2;Duda,duda,3",
+            "esperado": "1 / Zeca / zeca",
+            "descricao": "empate de 4 com 4 no fim -> continua valendo a primeira"
+          },
+          {
+            "entrada": "",
+            "esperado": "(null)",
+            "descricao": "BORDA lista vazia -> null e o foreach nao entra nenhuma vez"
+          }
+        ]
+      },
+      "folhaRevisao": "Campeao parcial: comeca em null, so troca quando aparece alguem melhor, e empate nao troca."
+    },
+    {
+      "id": "resumo",
+      "numero": 6,
+      "titulo": "Quantas contas",
+      "subtitulo": "uma cadeia de if sobre o Count",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "A barra de status do mural precisa dizer, em uma frase, o tamanho da turma. Nao ha laco nenhum neste desafio: a lista ja sabe quantas contas tem, e quem responde isso e o Count, sem parenteses.",
+        "O que existe aqui e decisao. Sao tres frases diferentes para tres situacoes diferentes, e a ferramenta e a cadeia de if que voce escreveu no porteiro: o primeiro if que der certo responde, e o metodo acaba ali mesmo, porque o return sai do metodo inteiro.",
+        "A ordem importa. Comece pelos casos exatos - nenhuma conta, uma conta - e deixe o caso geral por ultimo, sem if nenhum. Se o caso geral vier na frente, ele responde por todos e os outros dois nunca rodam.",
+        "E repare na diferenca entre zero e um. Zero contas nao e um numero pequeno de contas: e turma nenhuma, e merece outra frase. Uma conta pede singular. Duas ou mais pedem plural. Quem escreve so a frase do plural mostra 1 contas cadastradas para o primeiro aluno que entrar."
+      ],
+      "diagrama": "cadeia-if",
+      "exemplo": {
+        "codigo": "if (faltas == 0)\n{\n    return \"Nenhuma falta.\";\n}\n\nif (faltas == 1)\n{\n    return \"1 falta.\";\n}\n\nreturn faltas + \" faltas.\";",
+        "legenda": "Os casos exatos vem primeiro. O caso geral fica por ultimo e nao precisa de if - se chegou ali e porque nenhum dos outros serviu."
+      },
+      "armadilha": {
+        "titulo": "o plural que serve para tudo",
+        "texto": "Devolver so o numero seguido de contas cadastradas parece cobrir os tres casos e nao cobre os dois primeiros: a lista vazia vira 0 contas cadastradas e a primeira conta vira 1 contas cadastradas. Sao os dois testes mais curtos que denunciam."
+      },
+      "desafio": {
+        "metodo": "ResumoDaTurma",
+        "assinatura": "public static string ResumoDaTurma(List<Usuario> contas)",
+        "enunciado": "Devolva a frase que a barra de status do Conecta mostra. Lista vazia devolve Nenhuma conta cadastrada. Uma conta devolve 1 conta cadastrada. Duas ou mais devolvem o numero seguido de um espaco e da palavra contas cadastradas. As tres frases terminam com ponto final.",
+        "dica": "Use contas.Count e uma cadeia de if. Nao precisa de laco nenhum. Cuide dos tres casos nesta ordem: zero, um, e todo o resto - e o resto nao precisa de if.",
+        "testes": [
+          {
+            "entrada": "",
+            "esperado": "Nenhuma conta cadastrada.",
+            "descricao": "BORDA lista vazia -> a frase do zero e nao o numero"
+          },
+          {
+            "entrada": "Ana,ana,1",
+            "esperado": "1 conta cadastrada.",
+            "descricao": "uma conta so -> singular e sem o s"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2",
+            "esperado": "2 contas cadastradas.",
+            "descricao": "duas contas -> o numero entra na frase"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3",
+            "esperado": "3 contas cadastradas.",
+            "descricao": "tres contas -> o Count responde sozinho"
+          },
+          {
+            "entrada": "A,a,1;B,b,2;C,c,3;D,d,4",
+            "esperado": "4 contas cadastradas.",
+            "descricao": "quatro contas -> nada de numero fixo no codigo"
+          }
+        ]
+      },
+      "folhaRevisao": "Count responde quantas. A cadeia de if decide a frase - zero, um e muitos sao tres casos, nao um."
+    },
+    {
+      "id": "inverso",
+      "numero": 7,
+      "titulo": "Ao contrario",
+      "subtitulo": "o for que anda para tras",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "A lista guarda as contas na ordem em que elas chegaram. A tela quase nunca quer essa ordem: em mural, feed e historico o mais novo vai em cima. Ninguem precisa mexer na lista para isso - basta ler ela de tras para frente.",
+        "O for tem tres partes e nenhuma delas obriga a andar para frente. Onde comeca vira a ultima posicao. Quanto anda vira i--, que tira um a cada volta e e novidade desta noite. E ate quando continua vira uma comparacao invertida: enquanto i for maior ou igual a zero.",
+        "Os dois numeros das pontas sao os que derrubam a turma. A ultima posicao e Count - 1, e nao Count, porque Count e a quantidade e as posicoes comecam em 0. E a parada e i >= 0, nao i > 0, porque a posicao 0 e a primeira conta da lista e ela tambem tem que aparecer.",
+        "O resto e o de sempre: contas[i] com colchetes para pegar a conta daquela posicao, e o texto crescendo com o +. Repare que a lista nao muda de ordem em lugar nenhum. Voce mudou so a ordem da leitura."
+      ],
+      "diagrama": "for-tres-partes",
+      "exemplo": {
+        "codigo": "string contagem = \"\";\n\nfor (int i = 5; i >= 1; i--)\n{\n    contagem = contagem + i + \"... \";\n}\n\nreturn contagem;   //  \"5... 4... 3... 2... 1... \"",
+        "legenda": "Tres partes trocadas de lado: comeca no maior, anda com i-- e para quando passa do menor. Numa lista, o maior e Count - 1 e o menor e 0."
+      },
+      "armadilha": {
+        "titulo": "parar antes da posicao 0",
+        "texto": "Escrever i > 0 em vez de i >= 0 faz o laco parar uma volta cedo demais, e a primeira conta da lista nunca e escrita. Com muitas contas o erro se esconde no meio do texto. Com uma conta so, o metodo devolve nada."
+      },
+      "desafio": {
+        "metodo": "Inverter",
+        "assinatura": "public static string Inverter(List<Usuario> contas)",
+        "enunciado": "No mural, a conta que chegou por ultimo aparece em cima. Monte o texto com os nomes na ordem inversa da lista, comecando pela ultima conta. Cada nome vem seguido de espaco, sinal de maior e espaco - inclusive o ultimo, igual ao Numerar de ontem. Lista vazia devolve texto vazio.",
+        "dica": "E um for com as tres partes trocadas de lado: comece na ultima posicao, ande para tras com i-- e continue enquanto ainda houver posicao valida. A ultima posicao e Count - 1, e a posicao 0 ainda faz parte do passeio. Confira o espaco depois do sinal de maior.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2",
+            "esperado": "Bruno > Ana > ",
+            "descricao": "duas contas -> a segunda vem primeiro"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3",
+            "esperado": "Carla > Bruno > Ana > ",
+            "descricao": "tres contas -> a ordem inteira de tras para frente"
+          },
+          {
+            "entrada": "Ana,ana,1",
+            "esperado": "Ana > ",
+            "descricao": "uma conta so -> ela aparece e aqui o i > 0 quebra"
+          },
+          {
+            "entrada": "A,a,1;B,b,2;C,c,3;D,d,4",
+            "esperado": "D > C > B > A > ",
+            "descricao": "quatro contas -> nenhuma pode faltar nas pontas"
+          },
+          {
+            "entrada": "",
+            "esperado": "",
+            "descricao": "BORDA lista vazia -> texto vazio e o for nao roda nenhuma vez"
+          }
+        ]
+      },
+      "folhaRevisao": "De tras para frente: comeca em Count - 1, continua enquanto i >= 0, e anda com i--."
+    },
+    {
+      "id": "vizinho",
+      "numero": 8,
+      "titulo": "O vizinho",
+      "subtitulo": "comparar com o item anterior",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Ate agora todo laco olhava uma conta por vez e comparava com alguma coisa que veio de fora: um login digitado, um Id procurado. Aqui a comparacao e entre dois itens da propria lista, e isso muda a ferramenta.",
+        "O foreach entrega uma conta de cada vez e nao guarda a anterior. Com o for voce tem o i, e com o i voce tem duas contas na mao na mesma volta: contas[i] e contas[i - 1]. Sempre com colchetes, e sempre lembrando que contas[0] e a primeira.",
+        "Ai aparece a pergunta que decide o desafio: onde o i comeca? A primeira conta da lista nao tem vizinha de tras. Se o i comecar em 0, a primeira volta ja pede a posicao menos um, que nao existe, e o programa para. Comecando em 1, o primeiro par comparado e o segundo com o primeiro, que e exatamente o que voce quer.",
+        "O resto e o desenho de sempre: achou, sai de dentro com o return; nao achou, o texto vazio so sai depois que o laco terminar. E repare que a lista vazia e a lista com uma conta so resolvem sozinhas, porque com o i comecando em 1 a condicao ja nasce falsa e o corpo nao roda nenhuma vez."
+      ],
+      "diagrama": "for-tres-partes",
+      "exemplo": {
+        "codigo": "for (int i = 1; i < numeros.Count; i++)\n{\n    if (numeros[i] < numeros[i - 1])\n    {\n        return \"fora de ordem\";\n    }\n}\n\nreturn \"em ordem\";",
+        "legenda": "O i comeca em 1, e nao em 0, porque a primeira posicao nao tem ninguem atras dela. Este exemplo compara tamanho de numero; o seu desafio compara texto com o sinal de igualdade."
+      },
+      "armadilha": {
+        "titulo": "comecar o for em zero",
+        "texto": "Com o i comecando em 0, a primeira volta pede a posicao menos um, que nao existe, e o programa para na hora com erro de indice. Nao e erro de compilacao: compila, roda, e estoura logo no primeiro teste."
+      },
+      "desafio": {
+        "metodo": "LoginIgualAoAnterior",
+        "assinatura": "public static string LoginIgualAoAnterior(List<Usuario> contas)",
+        "enunciado": "A lista chegou de uma importacao e pode ter vindo com duas contas SEGUIDAS usando o mesmo login. Percorra com indice e devolva o primeiro login que for igual ao da conta da posicao anterior. Login repetido longe nao vale: so conta quem esta colado. Se nao houver nenhum, devolva texto vazio.",
+        "dica": "Aqui o foreach nao serve: voce precisa de duas contas ao mesmo tempo, a de agora e a de tras. Com indice isso e contas[i] e contas[i - 1]. Pense em qual valor o i pode ter na primeira volta, porque a primeira conta da lista nao tem ninguem atras dela.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,ana,2;Carla,carla,3",
+            "esperado": "ana",
+            "descricao": "a segunda repete o login da primeira -> devolve ana"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,bruno,3",
+            "esperado": "bruno",
+            "descricao": "o par repetido esta no fim -> o laco precisa chegar la"
+          },
+          {
+            "entrada": "A,ze,1;B,duda,2;C,duda,3;D,bia,4",
+            "esperado": "duda",
+            "descricao": "o par repetido esta no meio de quatro contas"
+          },
+          {
+            "entrada": "A,ana,1;B,ana,2;C,ana,3",
+            "esperado": "ana",
+            "descricao": "tres logins iguais -> vale o primeiro par e o return sai do laco"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,ana,3",
+            "esperado": "",
+            "descricao": "ana repete mas NAO e vizinha -> aqui so vale quem esta colado"
+          },
+          {
+            "entrada": "Ana,ana,1",
+            "esperado": "",
+            "descricao": "uma conta so -> ela nao tem vizinha de tras"
+          },
+          {
+            "entrada": "",
+            "esperado": "",
+            "descricao": "BORDA lista vazia -> o for nem comeca"
+          }
+        ]
+      },
+      "folhaRevisao": "Preciso do item anterior? for com indice comecando em 1 comparando contas[i] com contas[i - 1]."
+    },
+    {
+      "id": "posicao",
+      "numero": 9,
+      "titulo": "A posicao na fila",
+      "subtitulo": "um while com dois motivos de parar",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Ontem o while apareceu quando ninguem sabia quantas tentativas seriam necessarias. Hoje ele volta com uma novidade: o laco anda sobre a lista e pode terminar por dois motivos completamente diferentes.",
+        "O primeiro motivo e a lista acabar. O segundo e voce ter achado o que procurava. Os dois viram uma condicao so, ligada por &&: continue enquanto ainda tiver lista pela frente E enquanto ainda nao tiver achado. Basta um dos dois falhar para o laco parar.",
+        "Esquecer uma das metades da problemas diferentes, e nenhum deles e erro de compilacao. Sem o teste da lista, o indice passa do fim e o programa estoura ao pedir uma posicao que nao existe. Sem o teste de ja achei, o laco continua depois de encontrar e vai guardando as posicoes seguintes por cima, devolvendo a ultima em vez da primeira.",
+        "E de novo a diferenca entre posicao e numero na tela. contas[0] e a primeira conta, mas ninguem diz que entrou em zero lugar na fila. Por isso a resposta e i + 1, e o 0 fica reservado para dizer nao achei - um valor que nenhuma posicao de verdade usa."
+      ],
+      "diagrama": "for-vira-while",
+      "exemplo": {
+        "codigo": "int i = 0;\nint soma = 0;\n\nwhile (i < precos.Count && soma < 100)\n{\n    soma = soma + precos[i];\n    i = i + 1;\n}\n\nreturn soma;",
+        "legenda": "Dois motivos para parar: a lista acabou ou o objetivo foi atingido. Tire a primeira metade e o programa estoura ao passar do fim da lista."
+      },
+      "armadilha": {
+        "titulo": "so metade da condicao",
+        "texto": "Com o while olhando so para ja achei, o indice continua andando quando o login nao existe, passa do fim da lista e o programa para com erro de indice. Com o while olhando so para o tamanho da lista, nao estoura nada, mas a resposta vira a ultima ocorrencia em vez da primeira."
+      },
+      "desafio": {
+        "metodo": "PosicaoDoLogin",
+        "assinatura": "public static int PosicaoDoLogin(List<Usuario> contas,\n                                 string login)",
+        "enunciado": "Descubra em que lugar da fila esta a conta daquele login, contando a partir de 1: a primeira da lista e a posicao 1. Se o login nao estiver na lista, devolva 0. Use while, e faca o laco parar por dois motivos: a lista acabou, ou voce ja achou.",
+        "dica": "Antes do laco: um indice comecando em 0 e a resposta comecando em 0. A condicao do while tem duas partes ligadas por &&. Dentro do corpo, o if guarda a posicao e o indice anda uma casa - e o i = i + 1 tem que acontecer em TODA volta, senao o laco nunca termina e o aplicativo avisa que o desafio ficou preso.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|ana",
+            "esperado": "1",
+            "descricao": "a primeira da fila e a posicao 1 e nao 0"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|bruno",
+            "esperado": "2",
+            "descricao": "a segunda -> o laco precisa dar mais uma volta"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|carla",
+            "esperado": "3",
+            "descricao": "a ultima -> o laco anda ate o fim da lista"
+          },
+          {
+            "entrada": "A,ana,1;B,bruno,2;C,carla,3;D,duda,4|duda",
+            "esperado": "4",
+            "descricao": "quatro contas -> a quarta responde 4"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,ana,2|ana",
+            "esperado": "1",
+            "descricao": "duas contas com o mesmo login -> vale a PRIMEIRA e o laco para ali"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|duda",
+            "esperado": "0",
+            "descricao": "login que nao existe -> 0 e sem estourar ao passar do fim"
+          },
+          {
+            "entrada": "|ana",
+            "esperado": "0",
+            "descricao": "BORDA lista vazia -> o while nao entra nenhuma vez"
+          }
+        ]
+      },
+      "folhaRevisao": "While que percorre lista para por dois motivos: a lista acabou ou eu achei. Os dois no mesmo &&."
+    },
+    {
+      "id": "importar",
+      "numero": 10,
+      "titulo": "Importar",
+      "subtitulo": "duas listas ao mesmo tempo",
+      "novo": false,
+      "livre": true,
+      "explicacao": [
+        "Este e o desafio que junta tudo. Duas listas, um filtro, um contador e a lista crescendo enquanto o laco roda. Cada peca voce ja usou sozinha; hoje elas aparecem na mesma tela.",
+        "Comece separando os papeis. A lista chegando e so leitura: voce passa por ela do comeco ao fim e nao mexe em nada. A lista contas e o destino: e nela que voce acrescenta. Confundir as duas troca o sentido do metodo inteiro.",
+        "O filtro decide quem entra. Ajuda.LoginEmUso ja responde se um login esta ocupado - ele nao e codigo seu, ja esta pronto. A pergunta que voce precisa fazer e a contraria: entra quem NAO estiver em uso. Escreva Ajuda.LoginEmUso(contas, u.Login) == false, que se le e falso. E repare que a pergunta e sempre sobre a lista contas, que e onde os logins de verdade moram.",
+        "E aqui esta a virada: a lista contas muda de tamanho a cada conta que entra, e as duas coisas que dependem dela mudam junto. O Id da proxima conta e a quantidade de agora mais um, calculada na hora, dentro do laco. E o proprio filtro fica mais esperto sozinho: se duas contas da mesma remessa pedirem o mesmo login, a primeira entra, e ai o login passa a estar em uso e a segunda e barrada.",
+        "Uma tranquilidade: acrescentar em contas enquanto o foreach percorre chegando e seguro. O que estourava no desafio Remover de ontem era mexer na MESMA lista que o foreach estava percorrendo. Aqui sao duas listas diferentes."
+      ],
+      "diagrama": "lista-foreach",
+      "exemplo": {
+        "codigo": "int levados = 0;\n\nforeach (Produto p in carrinho)\n{\n    if (p.Preco < 50)\n    {\n        sacola.Add(p);\n        levados = levados + 1;\n    }\n}\n\nreturn levados;",
+        "legenda": "Uma lista e percorrida, a outra recebe. So passa quem o if deixa, e o contador anda junto com o Add. No seu desafio o filtro nao e um preco: e uma pergunta feita a lista de destino."
+      },
+      "armadilha": {
+        "titulo": "o Id calculado antes do laco",
+        "texto": "Guardar contas.Count + 1 numa variavel antes do foreach parece economia e e defeito. O numero congela: a primeira conta da remessa entra com o Id certo e todas as outras entram com o mesmo numero dela. Duas contas com o mesmo Id quebram a busca por Id mais tarde, e o erro so aparece la."
+      },
+      "desafio": {
+        "metodo": "Importar",
+        "assinatura": "public static int Importar(List<Usuario> contas,\n                           List<Usuario> chegando)",
+        "enunciado": "Chegou uma remessa de contas novas para entrar no Conecta. Percorra a lista chegando e, para cada conta cujo login ainda nao estiver em uso, de a ela o proximo Id (a quantidade de contas mais um), acrescente na lista contas e conte. Devolva quantas entraram de verdade. Para saber se um login esta ocupado use Ajuda.LoginEmUso(contas, login).",
+        "dica": "O laco percorre chegando, mas quem cresce e contas: sao duas listas com papeis diferentes. Para perguntar se NAO esta em uso, compare o resultado com false. E calcule o Id dentro do laco, na hora de usar: a lista muda de tamanho a cada conta que entra.",
+        "testes": [
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|Carla,carla,3",
+            "esperado": "1 / 3 / ana=1 - bruno=2 - carla=3",
+            "descricao": "uma chegando com login livre -> entra e recebe o Id 3"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2|Ana Nova,ana,9",
+            "esperado": "0 / 2 / ana=1 - bruno=2",
+            "descricao": "o login ana ja esta em uso -> nao entra ninguem"
+          },
+          {
+            "entrada": "Ana,ana,1|Carla,carla,3;Duda,duda,4",
+            "esperado": "2 / 3 / ana=1 - carla=2 - duda=3",
+            "descricao": "duas entram -> Id 2 e Id 3 e nao o mesmo numero duas vezes"
+          },
+          {
+            "entrada": "Ana,ana,1|Duda,duda,7;Outra,duda,8",
+            "esperado": "1 / 2 / ana=1 - duda=2",
+            "descricao": "duas chegando com o MESMO login -> so a primeira entra"
+          },
+          {
+            "entrada": "|Ana,ana,1;Bruno,bruno,2",
+            "esperado": "2 / 2 / ana=1 - bruno=2",
+            "descricao": "BORDA lista de destino vazia -> a primeira entra com Id 1"
+          },
+          {
+            "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|",
+            "esperado": "0 / 3 / ana=1 - bruno=2 - carla=3",
+            "descricao": "BORDA remessa vazia -> nada entra e nada e alterado"
+          }
+        ]
+      },
+      "folhaRevisao": "Uma lista se percorre, a outra recebe. O Count muda a cada Add, entao leia o Count na hora de usar."
+    }
+  ],
+  "modoProva": false
+}
