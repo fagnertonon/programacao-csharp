@@ -134,17 +134,9 @@ namespace Conecta
                 return "ok";
             }
 
-            if (idTopico == "p1criar")
+            if (idTopico == "p1curtas")
             {
-                int id = 0;
-                int.TryParse(Arg(p, 0), out id);
-                return Achatar(Desafios.CriarUsuario(
-                    id, Arg(p, 1), Arg(p, 2), Arg(p, 3)));
-            }
-
-            if (idTopico == "p1fortes")
-            {
-                return Desafios.ContarSenhasFortes(LerContas(Arg(p, 0))).ToString();
+                return Desafios.ContarSenhasCurtas(LerContas(Arg(p, 0))).ToString();
             }
 
             if (idTopico == "p2menu")
@@ -157,14 +149,14 @@ namespace Conecta
                 return Desafios.LinhaDeParticipantes(LerContas(Arg(p, 0)));
             }
 
-            if (idTopico == "p4frente")
+            if (idTopico == "p4fila")
             {
-                return Desafios.QuantosNaFrente(LerContas(Arg(p, 0)), Arg(p, 1)).ToString();
+                return Desafios.LugarNaFila(LerContas(Arg(p, 0)), Arg(p, 1)).ToString();
             }
 
-            if (idTopico == "p5menor")
+            if (idTopico == "p5maior")
             {
-                return Desafios.MenorNome(LerContas(Arg(p, 0)));
+                return Desafios.MaiorNome(LerContas(Arg(p, 0)));
             }
 
             return "(topico desconhecido: " + idTopico + ")";
@@ -172,14 +164,6 @@ namespace Conecta
 
         // Fora do intervalo devolve texto vazio em vez de estourar: um teste
         // que nao precisa do terceiro argumento simplesmente nao o escreve.
-        // O objeto devolvido vira texto para poder ser comparado com o
-        // esperado. Objeto que nao foi criado vira (null), e nao estoura.
-        private static string Achatar(Usuario u)
-        {
-            if (u == null) { return "(null)"; }
-            return u.Id + "|" + u.Nome + "|" + u.Login + "|" + u.Senha;
-        }
-
         private static string Arg(string[] p, int i)
         {
             return (i < p.Length) ? (p[i] ?? "") : "";

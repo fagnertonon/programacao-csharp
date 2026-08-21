@@ -34,135 +34,95 @@
       }
     },
     {
-      "id": "p1criar",
+      "id": "p1curtas",
       "numero": 1,
-      "titulo": "Criar a conta",
-      "subtitulo": "new, atribuir e devolver",
+      "titulo": "Senhas curtas",
+      "subtitulo": "contar e nao procurar",
       "novo": false,
       "livre": true,
       "desafio": {
-        "metodo": "CriarUsuario",
-        "assinatura": "public static Usuario CriarUsuario(int id, string nome,\n                                           string login, string senha)",
-        "enunciado": "Crie um objeto Usuario com new, guarde nele o id, o nome, o login e a senha que chegaram, e devolva o objeto. Os quatro valores ja vem prontos entre parenteses: nao invente nenhum texto entre aspas.",
+        "metodo": "ContarSenhasCurtas",
+        "assinatura": "public static int ContarSenhasCurtas(List<Usuario> contas)",
+        "enunciado": "Percorra as contas e devolva quantas tem senha curta. Senha curta e a que tem MENOS de 4 caracteres, e senha em branco tambem conta como curta. Se a lista estiver vazia, devolva 0.",
         "testes": [
           {
-            "entrada": "1|Ana Souza|ana|1234",
-            "esperado": "1|Ana Souza|ana|1234",
-            "descricao": "os quatro valores chegam prontos e vao para o objeto"
+            "entrada": "Ana,ana,1234;Bruno,bruno,abc",
+            "esperado": "1",
+            "descricao": "duas contas e so a senha abc tem menos de 4 -> 1"
           },
           {
-            "entrada": "2|Bruno Lima|bruno|abcd",
-            "esperado": "2|Bruno Lima|bruno|abcd",
-            "descricao": "outro objeto, com outros valores"
-          },
-          {
-            "entrada": "7|Carla|carla|",
-            "esperado": "7|Carla|carla|",
-            "descricao": "senha vazia tambem e um valor: guarde do mesmo jeito"
-          },
-          {
-            "entrada": "10|Duda Alves|duda|senha123",
-            "esperado": "10|Duda Alves|duda|senha123",
-            "descricao": "o Id nao e a posicao: e o numero que chegou"
-          },
-          {
-            "entrada": "3|Eva|eva|xyz",
-            "esperado": "3|Eva|eva|xyz",
-            "descricao": "nenhum valor e inventado aqui dentro"
-          }
-        ]
-      }
-    },
-    {
-      "id": "p1fortes",
-      "numero": 2,
-      "titulo": "Senhas fortes",
-      "subtitulo": "contar sem parar no primeiro",
-      "novo": false,
-      "livre": true,
-      "desafio": {
-        "metodo": "ContarSenhasFortes",
-        "assinatura": "public static int ContarSenhasFortes(List<Usuario> contas)",
-        "enunciado": "Percorra as contas e devolva quantas tem senha FORTE. Senha forte e a que tem 4 ou MAIS caracteres. Se a lista estiver vazia, devolva 0.",
-        "testes": [
-          {
-            "entrada": "Ana,ana,1234;Bruno,bruno,abc;Carla,carla,abcd",
+            "entrada": "Ana,ana,1234;Bruno,bruno,ab;Carla,carla,x",
             "esperado": "2",
-            "descricao": "1234 e abcd tem 4 -> fortes; abc tem 3 -> nao"
-          },
-          {
-            "entrada": "Ana,ana,segredo1;Bruno,bruno,abcd;Carla,carla,xy",
-            "esperado": "2",
-            "descricao": "uma senha longa, uma de exatamente 4, e uma de 2"
-          },
-          {
-            "entrada": "Ana,ana,1234;Bruno,bruno,abcde;Carla,carla,senha123",
-            "esperado": "3",
-            "descricao": "as tres sao fortes"
+            "descricao": "a primeira NAO e curta e as duas seguintes sao -> 2"
           },
           {
             "entrada": "Ana,ana,12;Bruno,bruno,ab;Carla,carla,xyz",
-            "esperado": "0",
-            "descricao": "nenhuma chega a 4 -> devolve 0"
+            "esperado": "3",
+            "descricao": "as tres sao curtas -> 3"
           },
           {
-            "entrada": "Ana,ana,;Bruno,bruno,abcd;Carla,carla,xyz",
+            "entrada": "Ana,ana,123;Bruno,bruno,1234",
             "esperado": "1",
-            "descricao": "senha em branco nao e forte"
+            "descricao": "123 e curta e 1234 nao e: a regra e MENOS de 4"
           },
           {
-            "entrada": "Ana,ana,1;Bruno,bruno,12;Carla,carla,123;Duda,duda,1234;Eva,eva,12345",
+            "entrada": "Ana,ana,;Bruno,bruno,ab",
             "esperado": "2",
-            "descricao": "1, 2, 3, 4 e 5 caracteres: so as duas ultimas contam"
+            "descricao": "senha em branco tambem e curta -> as duas contam"
+          },
+          {
+            "entrada": "Ana,ana,1234;Bruno,bruno,abcdef",
+            "esperado": "0",
+            "descricao": "nenhuma curta -> 0 e o contador nunca cresce"
           },
           {
             "entrada": "",
             "esperado": "0",
-            "descricao": "lista vazia -> devolve 0"
+            "descricao": "BORDA lista vazia -> 0 e o foreach nao entra nenhuma vez"
           }
         ]
       }
     },
     {
       "id": "p2menu",
-      "numero": 3,
+      "numero": 2,
       "titulo": "O menu",
-      "subtitulo": "switch, case e default",
+      "subtitulo": "switch case e default",
       "novo": false,
       "livre": true,
       "desafio": {
         "metodo": "MenuPrincipal",
         "assinatura": "public static string MenuPrincipal(string opcao)",
-        "enunciado": "O menu do Conecta recebe o numero que o usuario escolheu e devolve o nome da tela que deve abrir. Use switch: 1 devolve Novo cadastro, 2 devolve Fazer login, 3 devolve Ver o mural e 4 devolve Encerrar. Qualquer outra coisa devolve a frase Opcao inexistente.",
+        "enunciado": "O menu do Conecta recebe o numero que o usuario escolheu e devolve o nome da tela que deve abrir. Use switch: 1 devolve Cadastrar conta, 2 devolve Entrar, 3 devolve Mural e 4 devolve Sair. Qualquer outra coisa devolve a frase Opcao invalida. com o ponto final incluido.",
         "testes": [
           {
             "entrada": "1",
-            "esperado": "Novo cadastro",
+            "esperado": "Cadastrar conta",
             "descricao": "opcao 1 -> a tela de cadastro"
           },
           {
             "entrada": "2",
-            "esperado": "Fazer login",
+            "esperado": "Entrar",
             "descricao": "opcao 2 -> a tela de login"
           },
           {
             "entrada": "3",
-            "esperado": "Ver o mural",
+            "esperado": "Mural",
             "descricao": "opcao 3 -> o mural de recados"
           },
           {
             "entrada": "4",
-            "esperado": "Encerrar",
+            "esperado": "Sair",
             "descricao": "opcao 4 -> o ultimo case e nao esqueca dele"
           },
           {
             "entrada": "9",
-            "esperado": "Opcao inexistente.",
+            "esperado": "Opcao invalida.",
             "descricao": "BORDA numero que nao existe no menu -> cai no default"
           },
           {
             "entrada": "",
-            "esperado": "Opcao inexistente.",
+            "esperado": "Opcao invalida.",
             "descricao": "BORDA texto vazio tambem cai no default"
           }
         ]
@@ -170,19 +130,19 @@
     },
     {
       "id": "p3linha",
-      "numero": 4,
+      "numero": 3,
       "titulo": "Participantes",
-      "subtitulo": "de tras para frente, com separador entre",
+      "subtitulo": "o separador so entre um e outro",
       "novo": false,
       "livre": true,
       "desafio": {
         "metodo": "LinhaDeParticipantes",
         "assinatura": "public static string LinhaDeParticipantes(List<Usuario> contas)",
-        "enunciado": "Monte a linha de participantes do mural com os NOMES das contas, mas do ULTIMO para o PRIMEIRO da lista, separados por espaco hifen espaco. Tres contas na ordem Ana, Bruno e Carla viram o texto Carla - Bruno - Ana. O separador so aparece ENTRE dois nomes: nao sobra no fim. Lista vazia devolve texto vazio.",
+        "enunciado": "Monte a linha de participantes do mural: os NOMES das contas, na ordem da lista, separados por espaco hifen espaco. Tres contas chamadas Ana Bruno e Carla viram o texto Ana - Bruno - Carla. O separador so aparece ENTRE dois nomes: o texto nao comeca com ele e nao termina com ele. Lista vazia devolve texto vazio.",
         "testes": [
           {
             "entrada": "Ana Souza,ana,1;Bruno Lima,bruno,2",
-            "esperado": "Bruno Lima - Ana Souza",
+            "esperado": "Ana Souza - Bruno Lima",
             "descricao": "duas contas -> um separador so no meio"
           },
           {
@@ -192,12 +152,12 @@
           },
           {
             "entrada": "Ana,a,1;Bruno,b,2;Carla,c,3",
-            "esperado": "Carla - Bruno - Ana",
+            "esperado": "Ana - Bruno - Carla",
             "descricao": "tres contas -> dois separadores"
           },
           {
             "entrada": "Zeca,z,1;Ana,a,2",
-            "esperado": "Ana - Zeca",
+            "esperado": "Zeca - Ana",
             "descricao": "a ordem e a da lista e nao a ordem do alfabeto"
           },
           {
@@ -209,75 +169,75 @@
       }
     },
     {
-      "id": "p4frente",
-      "numero": 5,
-      "titulo": "Quantos na frente",
-      "subtitulo": "o indice, e o -1 de nao achou",
+      "id": "p4fila",
+      "numero": 4,
+      "titulo": "O lugar na fila",
+      "subtitulo": "achar o numero da linha",
       "novo": false,
       "livre": true,
       "desafio": {
-        "metodo": "QuantosNaFrente",
-        "assinatura": "public static int QuantosNaFrente(List<Usuario> contas,\n                                        string login)",
-        "enunciado": "Descubra QUANTAS contas estao a frente do login procurado na fila. Se ele for o primeiro da lista, nao ha ninguem na frente: devolva 0. Se for o segundo, devolva 1, e assim por diante. Se nenhuma conta tiver esse login, devolva -1.",
+        "metodo": "LugarNaFila",
+        "assinatura": "public static int LugarNaFila(List<Usuario> contas,\n                              string login)",
+        "enunciado": "Descubra em que linha da lista esta o login procurado. A primeira linha da lista e a numero 1, a segunda e a numero 2, e assim por diante. Se nenhuma conta tiver esse login, devolva 0.",
         "testes": [
           {
             "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|ana",
-            "esperado": "0",
+            "esperado": "1",
             "descricao": "ana esta na primeira linha -> 1 e nao 0"
           },
           {
             "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|bruno",
-            "esperado": "1",
+            "esperado": "2",
             "descricao": "bruno esta na segunda linha -> 2"
           },
           {
             "entrada": "Ana,ana,1;Bruno,bruno,2;Carla,carla,3|carla",
-            "esperado": "2",
+            "esperado": "3",
             "descricao": "carla e a ultima -> o laco tem que ir ate o fim"
           },
           {
             "entrada": "A,ana,1;B,bruno,2;C,carla,3;D,duda,4|duda",
-            "esperado": "3",
+            "esperado": "4",
             "descricao": "quatro contas -> a quarta linha responde 4"
           },
           {
             "entrada": "Ana Souza,ana,1;Bruno Lima,bruno,2|Ana Souza",
-            "esperado": "-1",
+            "esperado": "0",
             "descricao": "o que se procura e o login e nao o nome -> nao achou"
           },
           {
             "entrada": "|ana",
-            "esperado": "-1",
+            "esperado": "0",
             "descricao": "BORDA lista vazia -> 0 e o for nao entra nenhuma vez"
           }
         ]
       }
     },
     {
-      "id": "p5menor",
-      "numero": 6,
-      "titulo": "Nome menor",
-      "subtitulo": "guardar o menor ate agora",
+      "id": "p5maior",
+      "numero": 5,
+      "titulo": "Nome maior",
+      "subtitulo": "o campeao ate agora",
       "novo": false,
       "livre": true,
       "desafio": {
-        "metodo": "MenorNome",
-        "assinatura": "public static string MenorNome(List<Usuario> contas)",
-        "enunciado": "Devolva o Nome mais CURTO da lista, ou seja, o que tem menos caracteres. Se dois nomes empatarem no tamanho, fica o que aparecer primeiro na lista. Se a lista estiver vazia, devolva texto vazio.",
+        "metodo": "MaiorNome",
+        "assinatura": "public static string MaiorNome(List<Usuario> contas)",
+        "enunciado": "Devolva o Nome mais comprido da lista, ou seja, o que tem mais caracteres. Se dois nomes empatarem no tamanho, fica o que aparecer primeiro na lista. Se a lista estiver vazia, devolva texto vazio.",
         "testes": [
           {
             "entrada": "Ana,ana,1;Bruno Lima,bruno,2",
-            "esperado": "Ana",
+            "esperado": "Bruno Lima",
             "descricao": "Bruno Lima tem 10 caracteres e Ana tem 3 -> Bruno Lima"
           },
           {
             "entrada": "Bruno Lima,bruno,1;Ana,ana,2",
-            "esperado": "Ana",
+            "esperado": "Bruno Lima",
             "descricao": "o maior e o PRIMEIRO da lista -> nao vale devolver o ultimo"
           },
           {
             "entrada": "Ana,ana,1;Duda,duda,2;Carla,carla,3",
-            "esperado": "Ana",
+            "esperado": "Carla",
             "descricao": "os nomes vao crescendo -> o campeao troca duas vezes"
           },
           {
@@ -287,7 +247,7 @@
           },
           {
             "entrada": "Zeca,zeca,1;Bia,bia,2;Duda,duda,3",
-            "esperado": "Bia",
+            "esperado": "Zeca",
             "descricao": "BORDA empate de 4 com 4 no fim -> continua valendo o primeiro"
           },
           {
