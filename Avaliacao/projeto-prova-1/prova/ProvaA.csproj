@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Conecta</RootNamespace>
+    <AssemblyName>ProvaA</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O motor. E uma COPIA do motor da Aula 12: mexer aqui nao toca
+         no projeto de ontem. -->
+    <Compile Include="..\comum\*.cs" />
+
+    <!-- A fonte unica do conteudo. O Link achata o arquivo na raiz da
+         saida, que e onde Conteudo.Carregar() procura por ele. -->
+    <Content Include="..\conteudo\conteudo-prova.json"
+             Link="conteudo-prova.json"
+             CopyToOutputDirectory="PreserveNewest" />
+
+    <!-- O proprio Desafios.cs vai junto para a saida: e dele que o envio
+         le o codigo que o aluno escreveu. Copia, nao compilacao dupla. -->
+    <None Include="Desafios.cs" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- MySql.Data e as treze dependencias dele, referenciadas direto da
+         pasta libs. SEM NuGet, de proposito: numa prova, nenhuma maquina
+         pode depender de restaurar pacote as 18h. -->
+    <Reference Include="MySql.Data">
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Cryptography"><HintPath>..\libs\BouncyCastle.Cryptography.dll</HintPath></Reference>
+    <Reference Include="Google.Protobuf"><HintPath>..\libs\Google.Protobuf.dll</HintPath></Reference>
+    <Reference Include="K4os.Compression.LZ4"><HintPath>..\libs\K4os.Compression.LZ4.dll</HintPath></Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams"><HintPath>..\libs\K4os.Compression.LZ4.Streams.dll</HintPath></Reference>
+    <Reference Include="K4os.Hash.xxHash"><HintPath>..\libs\K4os.Hash.xxHash.dll</HintPath></Reference>
+    <Reference Include="System.Configuration.ConfigurationManager"><HintPath>..\libs\System.Configuration.ConfigurationManager.dll</HintPath></Reference>
+    <Reference Include="System.IO.Pipelines"><HintPath>..\libs\System.IO.Pipelines.dll</HintPath></Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData"><HintPath>..\libs\System.Security.Cryptography.ProtectedData.dll</HintPath></Reference>
+    <Reference Include="System.Security.Permissions"><HintPath>..\libs\System.Security.Permissions.dll</HintPath></Reference>
+    <Reference Include="ZstdSharp"><HintPath>..\libs\ZstdSharp.dll</HintPath></Reference>
+  </ItemGroup>
+
+</Project>
