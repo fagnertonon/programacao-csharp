@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Conecta</RootNamespace>
+    <AssemblyName>Login</AssemblyName>
+
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    O MySql.Data ja vem referenciado, e a pasta libs/ ja veio junto.
+    E de proposito: no Bloco 6 ninguem perde tempo instalando pacote.
+    Basta escrever a classe Conexao e o using no topo do arquivo.
+
+    O MySql.Data vem da pasta libs/, e NAO do NuGet.
+    Motivo: o NuGet precisa de internet, e a rede do laboratorio nem sempre
+    deixa. Com a referencia abaixo o projeto compila em maquina desligada da
+    internet - basta a pasta libs/ ter vindo junto.
+
+    As outras treze .dll de libs/ sao dependencias do proprio MySql.Data.
+    Elas nao precisam ser referenciadas: o Copy abaixo poe todas ao lado do
+    executavel, que e onde o .NET vai procura-las em tempo de execucao.
+  -->
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>libs\MySql.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="libs\*.dll" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
