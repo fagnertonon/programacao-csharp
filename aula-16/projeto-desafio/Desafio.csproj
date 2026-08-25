@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Conecta</RootNamespace>
+    <AssemblyName>DesafioMural</AssemblyName>
+
+    <!-- Sem nenhum pacote NuGet: compila em maquina sem internet, igual a
+         todos os projetos deste curso. O System.Text.Json ja vem no .NET. -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- A FONTE UNICA. O mesmo arquivo que gera a folha B impressa.
+         Nao ha copia: mudou aqui, muda no papel. -->
+    <Content Include="..\conteudo\passos-mural.json"
+             Link="passos-mural.json"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
