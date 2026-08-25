@@ -1,0 +1,1422 @@
+{
+  "aula": "16",
+  "data": "25/08/2026",
+  "titulo": "O Mural do Conecta - do Portugol para o C#",
+  "passos": [
+    {
+      "n": 1,
+      "nome": "O molde do recado",
+      "onde": "Recado.cs - TODO 1",
+      "estreia": "uma classe pode ser so um molde de dado: nao tem metodo nenhum",
+      "metodo": false,
+      "linhasEscrita": 6,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "tipo Recado = registro",
+          "   Id: inteiro",
+          "   Autor: caractere",
+          "   Texto: caractere",
+          "   DataHora: data",
+          "fimregistro"
+        ]
+      },
+      "ficha": null,
+      "csharp": [
+        "public class Recado",
+        "{",
+        "    public {1} Id = 0;",
+        "    public {2} Autor = \"\";",
+        "    public {3} Texto = \"\";",
+        "    public {4} DataHora = DateTime.Now;",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "int",
+          "opcoes": [
+            "int",
+            "string",
+            "bool",
+            "double"
+          ],
+          "dica": "O Id e um numero inteiro - quem numera e o banco, com AUTO_INCREMENT."
+        },
+        {
+          "n": 2,
+          "resposta": "string",
+          "opcoes": [
+            "string",
+            "int",
+            "char",
+            "texto"
+          ],
+          "dica": "Texto em C# e string, com s minusculo. 'caractere' e a palavra do Portugol."
+        },
+        {
+          "n": 3,
+          "resposta": "string",
+          "opcoes": [
+            "string",
+            "int",
+            "bool",
+            "double"
+          ],
+          "dica": "O recado tambem e texto."
+        },
+        {
+          "n": 4,
+          "resposta": "DateTime",
+          "opcoes": [
+            "DateTime",
+            "string",
+            "int",
+            "Data"
+          ],
+          "dica": "Data e hora tem tipo proprio: DateTime. Guardar data como texto impede ordenar depois."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "nome": "Descrever",
+      "onde": "frmMural.cs - TODO 2",
+      "estreia": "funcao com parametro - devolve, e nao mexe na tela",
+      "metodo": true,
+      "linhasEscrita": 9,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "funcao Descrever(r: Recado): caractere",
+          "inicio",
+          "   retorne \"[\" + formata(r.DataHora, \"dd/MM HH:mm\")",
+          "           + \"] \" + r.Autor + \": \" + r.Texto",
+          "fimfuncao",
+          "",
+          "// vira:  [25/08 20:14] Ana Souza: alguem tem a apostila?",
+          "//",
+          "// ARMADILHA: usar txtAutor aqui dentro em vez de usar",
+          "// o r que chegou. Vai parecer que funcionou."
+        ]
+      },
+      "ficha": {
+        "recebe": "um recado (Recado)",
+        "faz": "monta o texto de uma linha do mural",
+        "devolve": "um texto (string)"
+      },
+      "csharp": [
+        "private {1} Descrever({2})",
+        "{",
+        "    {3} \"[\" + r.DataHora.ToString(\"dd/MM HH:mm\") + \"] \"",
+        "         + r.Autor + \": \" + r.Texto;",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "string",
+          "opcoes": [
+            "string",
+            "void",
+            "int",
+            "Recado"
+          ],
+          "dica": "A ficha diz DEVOLVE um texto. O que ele devolve vem ANTES do nome."
+        },
+        {
+          "n": 2,
+          "resposta": "Recado r",
+          "opcoes": [
+            "Recado r",
+            "string r",
+            "r",
+            "Recado"
+          ],
+          "dica": "A ficha diz RECEBE um recado. Dentro dos parenteses vai o TIPO e o NOME."
+        },
+        {
+          "n": 3,
+          "resposta": "return",
+          "opcoes": [
+            "return",
+            "retorne",
+            "escreva",
+            "void"
+          ],
+          "dica": "'retorne' e Portugol. Em C# a palavra e return - e ela sai da folha A."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "nome": "CarregarMural",
+      "onde": "frmMural.cs - TODO 3",
+      "estreia": "procedimento que CONSOME o retorno de outros dois metodos",
+      "metodo": true,
+      "linhasEscrita": 8,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "procedimento CarregarMural()",
+          "var recados: vetor de Recado",
+          "inicio",
+          "   recados <- MuralDAO.Listar()",
+          "",
+          "   limpe(lstMural)",
+          "",
+          "   para cada r em recados faca",
+          "      acrescente(lstMural, Descrever(r))",
+          "   fimpara",
+          "",
+          "   lblSaudacao <- Saudacao(tamanho(recados))",
+          "fimprocedimento",
+          "",
+          "// percorre o que EXISTE, sem precisar da posicao: foreach",
+          "// depois de escrever, volte ao frmMural_Shown e CHAME ele"
+        ]
+      },
+      "ficha": {
+        "recebe": "nada",
+        "faz": "busca os recados e poe cada um na tela",
+        "devolve": "nada"
+      },
+      "csharp": [
+        "private {1} CarregarMural()",
+        "{",
+        "    List<Recado> recados = MuralDAO.{2};",
+        "",
+        "    lstMural.Items.{3};",
+        "",
+        "    {4} (Recado r in recados)",
+        "    {",
+        "        lstMural.Items.Add({5});",
+        "    }",
+        "",
+        "    lblSaudacao.Text = Saudacao(recados.{6});",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "void",
+          "opcoes": [
+            "void",
+            "string",
+            "int",
+            "List<Recado>"
+          ],
+          "dica": "A ficha diz DEVOLVE nada. Quem nao devolve nada leva void - o 'procedimento' do Portugol."
+        },
+        {
+          "n": 2,
+          "resposta": "Listar()",
+          "opcoes": [
+            "Listar()",
+            "Gravar()",
+            "Descrever()",
+            "Listar"
+          ],
+          "dica": "Quem sabe onde os recados moram e o DAO. E chamada de metodo leva parenteses."
+        },
+        {
+          "n": 3,
+          "resposta": "Clear()",
+          "opcoes": [
+            "Clear()",
+            "Add()",
+            "Count",
+            "Remove()"
+          ],
+          "dica": "Antes de encher a lista da tela, esvazie - senao os recados aparecem duas vezes."
+        },
+        {
+          "n": 4,
+          "resposta": "foreach",
+          "opcoes": [
+            "foreach",
+            "for",
+            "while",
+            "para cada"
+          ],
+          "dica": "Percorre o que EXISTE e ninguem precisa da posicao: foreach."
+        },
+        {
+          "n": 5,
+          "resposta": "Descrever(r)",
+          "opcoes": [
+            "Descrever(r)",
+            "r",
+            "r.Texto",
+            "Descrever(recados)"
+          ],
+          "dica": "Quem monta o texto da linha e o Descrever - e ele recebe UM recado por vez."
+        },
+        {
+          "n": 6,
+          "resposta": "Count",
+          "opcoes": [
+            "Count",
+            "Length",
+            "tamanho",
+            "Size"
+          ],
+          "dica": "Quantos itens tem uma List: .Count. O .Length e de texto e de vetor fixo."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "nome": "Os campos, e o Gravar",
+      "onde": "MuralDAO.cs - TODO 4",
+      "estreia": "static: a lista tem de ser UMA SO para o programa inteiro",
+      "metodo": true,
+      "linhasEscrita": 8,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "// no alto da classe MuralDAO, fora dos metodos:",
+          "var recados: vetor de Recado",
+          "    proximoId: inteiro <- 1",
+          "",
+          "funcao Gravar(r: Recado): inteiro",
+          "inicio",
+          "   r.Id <- proximoId",
+          "   proximoId <- proximoId + 1",
+          "   acrescente(recados, r)",
+          "   retorne r.Id",
+          "fimfuncao",
+          "",
+          "// quem chama pode ignorar o Id devolvido - e legitimo"
+        ]
+      },
+      "ficha": {
+        "recebe": "um recado (Recado)",
+        "faz": "guarda o recado na lista",
+        "devolve": "o Id que ele recebeu (int)"
+      },
+      "csharp": [
+        "private {1} List<Recado> _recados = new List<Recado>();",
+        "private {2} int _proximoId = 1;",
+        "",
+        "public static {3} Gravar({4})",
+        "{",
+        "    r.Id = _proximoId;",
+        "    _proximoId = _proximoId + 1;",
+        "",
+        "    _recados.{5};",
+        "",
+        "    {6} r.Id;",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "static",
+          "opcoes": [
+            "static",
+            "public",
+            "void",
+            "new"
+          ],
+          "dica": "A lista tem de ser UMA SO para o programa inteiro. Sem static, cada uso cria uma lista vazia."
+        },
+        {
+          "n": 2,
+          "resposta": "static",
+          "opcoes": [
+            "static",
+            "public",
+            "int",
+            "const"
+          ],
+          "dica": "Mesmo motivo do campo de cima: um contador so."
+        },
+        {
+          "n": 3,
+          "resposta": "int",
+          "opcoes": [
+            "int",
+            "void",
+            "string",
+            "Recado"
+          ],
+          "dica": "A ficha diz DEVOLVE o Id, e Id e numero inteiro."
+        },
+        {
+          "n": 4,
+          "resposta": "Recado r",
+          "opcoes": [
+            "Recado r",
+            "int r",
+            "Recado",
+            "r"
+          ],
+          "dica": "A ficha diz RECEBE um recado: tipo e nome, dentro dos parenteses."
+        },
+        {
+          "n": 5,
+          "resposta": "Add(r)",
+          "opcoes": [
+            "Add(r)",
+            "Add()",
+            "Insert(r)",
+            "Add(_recados)"
+          ],
+          "dica": "Acrescentar na List e .Add(), e o que entra e o recado que chegou por parametro."
+        },
+        {
+          "n": 6,
+          "resposta": "return",
+          "opcoes": [
+            "return",
+            "retorne",
+            "devolve",
+            "void"
+          ],
+          "dica": "A palavra do C# e return."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "nome": "Listar",
+      "onde": "MuralDAO.cs - TODO 5",
+      "estreia": "devolve uma COLECAO - e o unico laco que precisa da posicao",
+      "metodo": true,
+      "linhasEscrita": 8,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "funcao Listar(): vetor de Recado",
+          "var mural: vetor de Recado",
+          "    i: inteiro",
+          "inicio",
+          "   mural <- vetor vazio",
+          "",
+          "   para i de tamanho(recados) - 1 ate 0 passo -1 faca",
+          "      acrescente(mural, recados[i])",
+          "   fimpara",
+          "",
+          "   retorne mural",
+          "fimfuncao",
+          "",
+          "// de tras para a frente: o mais NOVO e o ULTIMO que entrou",
+          "// a ultima posicao e tamanho - 1, nunca tamanho"
+        ]
+      },
+      "ficha": {
+        "recebe": "nada",
+        "faz": "monta a lista do mural, do mais novo para o mais velho",
+        "devolve": "uma lista de recados (List<Recado>)"
+      },
+      "csharp": [
+        "public static {1} Listar()",
+        "{",
+        "    List<Recado> mural = new List<Recado>();",
+        "",
+        "    for (int i = _recados.Count {2} 1; i {3} 0; i{4})",
+        "    {",
+        "        mural.Add(_recados[{5}]);",
+        "    }",
+        "",
+        "    {6} mural;",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "List<Recado>",
+          "opcoes": [
+            "List<Recado>",
+            "Recado",
+            "void",
+            "int"
+          ],
+          "dica": "A ficha diz DEVOLVE uma lista de recados. E a primeira vez que um metodo seu devolve uma colecao."
+        },
+        {
+          "n": 2,
+          "resposta": "-",
+          "opcoes": [
+            "-",
+            "+",
+            "*",
+            "="
+          ],
+          "dica": "A primeira posicao e ZERO, entao a ultima e Count - 1. Comecar em Count estoura o programa."
+        },
+        {
+          "n": 3,
+          "resposta": ">=",
+          "opcoes": [
+            ">=",
+            ">",
+            "<=",
+            "=="
+          ],
+          "dica": "O laco tem de chegar ate a posicao 0, entao a condicao inclui o zero."
+        },
+        {
+          "n": 4,
+          "resposta": "--",
+          "opcoes": [
+            "--",
+            "++",
+            "-1",
+            "+1"
+          ],
+          "dica": "De tras para a frente: a cada volta o i DIMINUI um."
+        },
+        {
+          "n": 5,
+          "resposta": "i",
+          "opcoes": [
+            "i",
+            "0",
+            "Count",
+            "r"
+          ],
+          "dica": "Pega o recado que esta na posicao da vez."
+        },
+        {
+          "n": 6,
+          "resposta": "return",
+          "opcoes": [
+            "return",
+            "retorne",
+            "void",
+            "break"
+          ],
+          "dica": "A palavra do C# e return - e ela devolve a lista montada."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "nome": "Publicar  (evento)",
+      "onde": "frmMural.cs - TODO 6",
+      "estreia": "o unico metodo cuja assinatura voce NAO escolhe",
+      "metodo": true,
+      "linhasEscrita": 6,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "procedimento btnPublicar_Click()",
+          "var r: Recado",
+          "inicio",
+          "   se limpa(txtAutor) = \"\" entao",
+          "      avise(\"Escreva o seu nome antes de publicar.\")",
+          "      retorne",
+          "   fimse",
+          "   se limpa(txtTexto) = \"\" entao",
+          "      avise(\"O recado esta vazio.\")",
+          "      retorne",
+          "   fimse",
+          "   se comprimento(limpa(txtAutor)) < 3 entao",
+          "      avise(\"O nome precisa ter pelo menos 3 letras.\")",
+          "      retorne",
+          "   fimse",
+          "",
+          "   r <- novo Recado",
+          "   r.Autor <- limpa(txtAutor)",
+          "   r.Texto <- limpa(txtTexto)",
+          "   r.DataHora <- agora()",
+          "",
+          "   MuralDAO.Gravar(r)",
+          "",
+          "   Limpar()",
+          "   CarregarMural()",
+          "fimprocedimento"
+        ]
+      },
+      "ficha": {
+        "recebe": "o evento (sender, e) - nao e voce quem decide",
+        "faz": "confere, monta o recado, manda gravar e recarrega",
+        "devolve": "nada"
+      },
+      "csharp": [
+        "private {1} btnPublicar_Click(object sender, EventArgs e)",
+        "{",
+        "    if (txtAutor.Text.Trim() {2} \"\")",
+        "    {",
+        "        Avisar(\"Escreva o seu nome antes de publicar.\");",
+        "        {3};",
+        "    }",
+        "",
+        "    // ... as outras duas perguntas, no mesmo molde ...",
+        "",
+        "    Recado r = {4} Recado();",
+        "    r.Autor = txtAutor.Text.Trim();",
+        "    r.Texto = txtTexto.Text.Trim();",
+        "    r.DataHora = {5};",
+        "",
+        "    MuralDAO.{6};",
+        "",
+        "    Limpar();",
+        "    CarregarMural();",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "void",
+          "opcoes": [
+            "void",
+            "string",
+            "int",
+            "bool"
+          ],
+          "dica": "Evento nao devolve nada para ninguem: quem chama e o Windows, e ele nao espera resposta."
+        },
+        {
+          "n": 2,
+          "resposta": "==",
+          "opcoes": [
+            "==",
+            "=",
+            "<>",
+            "!="
+          ],
+          "dica": "UM igual guarda um valor. DOIS iguais perguntam. Aqui a gente pergunta."
+        },
+        {
+          "n": 3,
+          "resposta": "return",
+          "opcoes": [
+            "return",
+            "break",
+            "continue",
+            "exit"
+          ],
+          "dica": "Sai do metodo agora, para nao continuar com dado ruim. Em metodo void, return vai sozinho."
+        },
+        {
+          "n": 4,
+          "resposta": "new",
+          "opcoes": [
+            "new",
+            "novo",
+            "Recado",
+            "create"
+          ],
+          "dica": "'novo' e Portugol. A palavra do C# e new - ela cria o objeto a partir do molde."
+        },
+        {
+          "n": 5,
+          "resposta": "DateTime.Now",
+          "opcoes": [
+            "DateTime.Now",
+            "agora()",
+            "Date.Now",
+            "DateTime.Hoje"
+          ],
+          "dica": "O agora do C# e DateTime.Now."
+        },
+        {
+          "n": 6,
+          "resposta": "Gravar(r)",
+          "opcoes": [
+            "Gravar(r)",
+            "Listar()",
+            "Gravar()",
+            "Add(r)"
+          ],
+          "dica": "Manda o DAO guardar o recado que voce acabou de montar."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "nome": "Saudacao",
+      "onde": "frmMural.cs - TODO 7",
+      "estreia": "o retorno vira texto na tela - se ninguem pegar, some",
+      "metodo": true,
+      "linhasEscrita": 8,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "funcao Saudacao(quantos: inteiro): caractere",
+          "inicio",
+          "   escolha quantos",
+          "      caso 0",
+          "         retorne \"Mural vazio - seja o primeiro a publicar.\"",
+          "      caso 1",
+          "         retorne \"1 recado no mural.\"",
+          "      outrocaso",
+          "         retorne quantos + \" recados no mural.\"",
+          "   fimescolha",
+          "fimfuncao",
+          "",
+          "// UM valor so contra constantes: e escolha, nao se"
+        ]
+      },
+      "ficha": {
+        "recebe": "um numero (int)",
+        "faz": "escolhe a frase certa para essa quantidade",
+        "devolve": "um texto (string)"
+      },
+      "csharp": [
+        "private {1} Saudacao({2} quantos)",
+        "{",
+        "    {3} (quantos)",
+        "    {",
+        "        {4} 0:",
+        "            return \"Mural vazio - seja o primeiro a publicar.\";",
+        "",
+        "        case 1:",
+        "            return \"1 recado no mural.\";",
+        "",
+        "        {5}:",
+        "            return quantos + \" recados no mural.\";",
+        "    }",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "string",
+          "opcoes": [
+            "string",
+            "void",
+            "int",
+            "bool"
+          ],
+          "dica": "A ficha diz DEVOLVE um texto - e esse texto vai para o lblSaudacao.Text."
+        },
+        {
+          "n": 2,
+          "resposta": "int",
+          "opcoes": [
+            "int",
+            "string",
+            "double",
+            "quantos"
+          ],
+          "dica": "Dentro dos parenteses vai o TIPO antes do nome. Quantos recados e numero inteiro."
+        },
+        {
+          "n": 3,
+          "resposta": "switch",
+          "opcoes": [
+            "switch",
+            "escolha",
+            "if",
+            "case"
+          ],
+          "dica": "UM valor so comparado com constantes: switch. 'escolha' e a palavra do Portugol."
+        },
+        {
+          "n": 4,
+          "resposta": "case",
+          "opcoes": [
+            "case",
+            "caso",
+            "if",
+            "when"
+          ],
+          "dica": "Cada valor previsto abre um case, com dois-pontos no fim."
+        },
+        {
+          "n": 5,
+          "resposta": "default",
+          "opcoes": [
+            "default",
+            "outrocaso",
+            "else",
+            "senao"
+          ],
+          "dica": "O caso de qualquer outro numero. 'outrocaso' e Portugol; em C# e default."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "nome": "Procurar",
+      "onde": "frmMural.cs - TODO 8",
+      "estreia": "o acumulador vira o retorno - contar nao e localizar",
+      "metodo": true,
+      "linhasEscrita": 6,
+      "naFolha": true,
+      "esquerda": {
+        "tipo": "portugol",
+        "titulo": "PORTUGOL (VisuAlg)",
+        "linhas": [
+          "funcao Procurar(termo: caractere): inteiro",
+          "var recados: vetor de Recado",
+          "    quantos: inteiro",
+          "inicio",
+          "   recados <- MuralDAO.Listar()",
+          "   quantos <- 0",
+          "",
+          "   limpe(lstMural)",
+          "",
+          "   para cada r em recados faca",
+          "      se contem(minusculo(r.Texto), minusculo(termo)) entao",
+          "         acrescente(lstMural, Descrever(r))",
+          "         quantos <- quantos + 1",
+          "      fimse",
+          "   fimpara",
+          "",
+          "   retorne quantos",
+          "fimfuncao"
+        ]
+      },
+      "ficha": {
+        "recebe": "um texto (string)",
+        "faz": "percorre o mural, mostra so os que combinam e conta",
+        "devolve": "um numero (int)"
+      },
+      "csharp": [
+        "private {1} Procurar({2} termo)",
+        "{",
+        "    List<Recado> recados = MuralDAO.Listar();",
+        "",
+        "    int quantos = {3};",
+        "",
+        "    lstMural.Items.Clear();",
+        "",
+        "    foreach (Recado r in recados)",
+        "    {",
+        "        if (r.Texto.ToLower().{4})",
+        "        {",
+        "            lstMural.Items.Add(Descrever(r));",
+        "            quantos = {5};",
+        "        }",
+        "    }",
+        "",
+        "    {6} quantos;",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "int",
+          "opcoes": [
+            "int",
+            "void",
+            "string",
+            "List<Recado>"
+          ],
+          "dica": "A ficha diz DEVOLVE um numero: quantos recados combinaram."
+        },
+        {
+          "n": 2,
+          "resposta": "string",
+          "opcoes": [
+            "string",
+            "int",
+            "termo",
+            "char"
+          ],
+          "dica": "O que ele recebe e o texto procurado."
+        },
+        {
+          "n": 3,
+          "resposta": "0",
+          "opcoes": [
+            "0",
+            "1",
+            "quantos",
+            "recados.Count"
+          ],
+          "dica": "O acumulador nasce ZERO, antes do laco. Comecar em 1 conta um recado que nao existe."
+        },
+        {
+          "n": 4,
+          "resposta": "Contains(termo.ToLower())",
+          "opcoes": [
+            "Contains(termo.ToLower())",
+            "Contains(termo)",
+            "Equals(termo)",
+            "contem(termo)"
+          ],
+          "dica": "Os DOIS lados em minuscula, senao 'Prova' nao acha 'prova'."
+        },
+        {
+          "n": 5,
+          "resposta": "quantos + 1",
+          "opcoes": [
+            "quantos + 1",
+            "1",
+            "quantos",
+            "quantos - 1"
+          ],
+          "dica": "Cresce SOBRE O PROPRIO VALOR. Escrever quantos = 1 zera a conta a cada volta."
+        },
+        {
+          "n": 6,
+          "resposta": "return",
+          "opcoes": [
+            "return",
+            "retorne",
+            "break",
+            "void"
+          ],
+          "dica": "Devolve DEPOIS que o laco terminou. Contar nao e localizar: nao ha return dentro do laco."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "nome": "O banco - o SELECT e a ordenacao",
+      "onde": "MuralDAO.cs - TODO 9",
+      "estreia": "o corpo muda, a assinatura nao",
+      "metodo": true,
+      "linhasEscrita": 8,
+      "naFolha": false,
+      "esquerda": {
+        "tipo": "csharp",
+        "titulo": "ATE AS 20h45 - com List (o que voce escreveu no passo 5)",
+        "linhas": [
+          "public static List<Recado> Listar()",
+          "{",
+          "    List<Recado> mural = new List<Recado>();",
+          "",
+          "    for (int i = _recados.Count - 1; i >= 0; i--)",
+          "    {",
+          "        mural.Add(_recados[i]);",
+          "    }",
+          "",
+          "    return mural;",
+          "}",
+          "",
+          "// A ordenacao e ESTE laco: de tras para a",
+          "// frente, na mao, posicao por posicao.",
+          "//",
+          "// Repare na primeira linha dos dois lados.",
+          "// Ela e IDENTICA. So o corpo muda."
+        ]
+      },
+      "ficha": {
+        "recebe": "nada",
+        "faz": "busca todos os recados, do mais novo para o mais velho",
+        "devolve": "uma lista de recados (List<Recado>)"
+      },
+      "csharp": [
+        "public static List<Recado> Listar()",
+        "{",
+        "    List<Recado> mural = new List<Recado>();",
+        "    MySqlConnection con = Conexao.Obter();",
+        "",
+        "    try",
+        "    {",
+        "        con.{1};",
+        "",
+        "        string sql = \"SELECT Id, Autor, Texto, DataHora\"",
+        "                   + \"  FROM Recado\"",
+        "                   + \" ORDER BY Id {2}\";",
+        "",
+        "        MySqlCommand cmd = new MySqlCommand(sql, con);",
+        "        MySqlDataReader leitor = cmd.{3}();",
+        "",
+        "        {4} (leitor.Read())",
+        "        {",
+        "            Recado r = new Recado();",
+        "            r.Id    = Convert.ToInt32(leitor[\"Id\"]);",
+        "            r.Autor = Convert.ToString(leitor[\"Autor\"]);",
+        "            r.Texto = Convert.ToString(leitor[\"Texto\"]);",
+        "            r.DataHora = Convert.ToDateTime(leitor[\"DataHora\"]);",
+        "            mural.Add(r);",
+        "        }",
+        "",
+        "        return mural;",
+        "    }",
+        "    {5} { con.Close(); }",
+        "}"
+      ],
+      "lacunas": [
+        {
+          "n": 1,
+          "resposta": "Open()",
+          "opcoes": [
+            "Open()",
+            "Close()",
+            "Obter()",
+            "Start()"
+          ],
+          "dica": "O Obter devolveu a conexao FECHADA. Quem abre e quem chama - e o Open fica DENTRO do try."
+        },
+        {
+          "n": 2,
+          "resposta": "DESC",
+          "opcoes": [
+            "DESC",
+            "ASC",
+            "DOWN",
+            "INVERSO"
+          ],
+          "dica": "Do maior Id para o menor: o mais novo em cima. E este DESC que substituiu o seu laco invertido."
+        },
+        {
+          "n": 3,
+          "resposta": "ExecuteReader",
+          "opcoes": [
+            "ExecuteReader",
+            "ExecuteScalar",
+            "ExecuteNonQuery",
+            "Execute"
+          ],
+          "dica": "A resposta sao VARIAS LINHAS com varias colunas: Reader. Scalar e para um valor so."
+        },
+        {
+          "n": 4,
+          "resposta": "while",
+          "opcoes": [
+            "while",
+            "enquanto",
+            "for",
+            "if"
+          ],
+          "dica": "Enquanto ainda houver linha. E o 'enquanto' do Portugol, com o nome em ingles."
+        },
+        {
+          "n": 5,
+          "resposta": "finally",
+          "opcoes": [
+            "finally",
+            "catch",
+            "else",
+            "fim"
+          ],
+          "dica": "Fecha a conexao tenha dado certo ou nao. Sem ele, a conexao vaza."
+        }
+      ]
+    }
+  ],
+  "perguntas": [
+    {
+      "n": 1,
+      "titulo": "procedimento vira o que?",
+      "portugol": [
+        "procedimento Limpar()",
+        "inicio",
+        "   txtTexto <- \"\"",
+        "fimprocedimento"
+      ],
+      "enunciado": "Este procedimento nao devolve nada. Qual palavra do C# ocupa o lugar do tipo de retorno?",
+      "opcoes": [
+        "void",
+        "string",
+        "return",
+        "private"
+      ],
+      "resposta": "void",
+      "dica": "void e a palavra que diz 'este metodo nao responde nada'. E o procedimento do Portugol, escrito de outro jeito."
+    },
+    {
+      "n": 2,
+      "titulo": "onde entra o que o metodo devolve",
+      "portugol": [
+        "funcao Descrever(r: Recado): caractere",
+        "inicio",
+        "   retorne ...",
+        "fimfuncao"
+      ],
+      "enunciado": "No Portugol o tipo devolvido vem DEPOIS dos parenteses, com dois-pontos. Em C#, onde ele vai?",
+      "opcoes": [
+        "Antes do nome do metodo",
+        "Depois dos parenteses, igual ao Portugol",
+        "Dentro dos parenteses",
+        "Na primeira linha do corpo"
+      ],
+      "resposta": "Antes do nome do metodo",
+      "dica": "private string Descrever(Recado r) - o string vem antes do nome. E a inversao que mais confunde quem vem do Portugol."
+    },
+    {
+      "n": 3,
+      "titulo": "metodo que nao recebe nada",
+      "portugol": [
+        "procedimento CarregarMural()",
+        "inicio",
+        "   ...",
+        "fimprocedimento"
+      ],
+      "enunciado": "Este metodo nao recebe parametro nenhum. Como ficam os parenteses em C#?",
+      "opcoes": [
+        "Ficam vazios, mas continuam existindo",
+        "Somem",
+        "Levam a palavra void dentro",
+        "Levam o nome do metodo dentro"
+      ],
+      "resposta": "Ficam vazios, mas continuam existindo",
+      "dica": "Os parenteses fazem parte do metodo, sempre. Sem eles, o compilador nao ve um metodo - ve um campo."
+    },
+    {
+      "n": 4,
+      "titulo": "parametro ou argumento?",
+      "portugol": [
+        "funcao Saudacao(quantos: inteiro): caractere",
+        "",
+        "// e, mais adiante, no programa:",
+        "lblSaudacao <- Saudacao(7)"
+      ],
+      "enunciado": "Na primeira linha esta 'quantos'. Na ultima esta o 7. Qual dos dois e o PARAMETRO?",
+      "opcoes": [
+        "quantos, porque esta na declaracao",
+        "O 7, porque e o valor de verdade",
+        "Os dois sao parametros",
+        "Nenhum: parametro e o tipo inteiro"
+      ],
+      "resposta": "quantos, porque esta na declaracao",
+      "dica": "Parametro e o nome na DECLARACAO. Argumento e o valor na CHAMADA. O metodo e escrito uma vez e serve para todos os valores."
+    },
+    {
+      "n": 5,
+      "titulo": "o retorno que ninguem pega",
+      "portugol": [
+        "funcao Saudacao(quantos: inteiro): caractere",
+        "",
+        "// o aluno escreveu, no meio do codigo:",
+        "Saudacao(3)"
+      ],
+      "enunciado": "O metodo devolve um texto, e essa linha nao guarda o texto em lugar nenhum. O que acontece?",
+      "opcoes": [
+        "Compila, roda e nao aparece nada",
+        "Da erro de compilacao",
+        "O texto aparece sozinho na tela",
+        "O programa trava"
+      ],
+      "resposta": "Compila, roda e nao aparece nada",
+      "dica": "O retorno se perde. Metodo que devolve e ninguem pega e trabalho jogado fora - o valor tem de ir para algum lugar."
+    },
+    {
+      "n": 6,
+      "titulo": "quem chama o evento",
+      "portugol": [
+        "procedimento btnPublicar_Click()",
+        "inicio",
+        "   ...",
+        "fimprocedimento"
+      ],
+      "enunciado": "Voce nao escreve 'btnPublicar_Click()' em lugar nenhum do seu codigo. Entao quem chama esse metodo?",
+      "opcoes": [
+        "O Windows, quando o usuario clica",
+        "O Program.cs, quando o programa abre",
+        "O CarregarMural",
+        "Ninguem: ele roda sozinho o tempo todo"
+      ],
+      "resposta": "O Windows, quando o usuario clica",
+      "dica": "A ligacao esta no frmMural.Designer.cs: btnPublicar.Click += ... E por isso a assinatura de um evento e a unica que voce nao escolhe."
+    },
+    {
+      "n": 7,
+      "titulo": "o erro CS0161",
+      "portugol": [
+        "funcao Situacao(nota: real): caractere",
+        "inicio",
+        "   se nota >= 6 entao",
+        "      retorne \"aprovado\"",
+        "   fimse",
+        "fimfuncao"
+      ],
+      "enunciado": "Traduzido assim para C#, o compilador acusa CS0161. O que ele esta reclamando?",
+      "opcoes": [
+        "Que nem todos os caminhos devolvem valor",
+        "Que faltou ponto e virgula",
+        "Que o tipo real nao existe",
+        "Que o metodo nao foi chamado"
+      ],
+      "resposta": "Que nem todos os caminhos devolvem valor",
+      "dica": "Se a nota for menor que 6, o metodo chega ao fim sem devolver nada - e ele prometeu devolver um texto. Toda saida precisa de return."
+    },
+    {
+      "n": 8,
+      "titulo": "retorne vira o que",
+      "portugol": [
+        "funcao Procurar(termo: caractere): inteiro",
+        "inicio",
+        "   ...",
+        "   retorne quantos",
+        "fimfuncao"
+      ],
+      "enunciado": "Qual e a palavra do C# que ocupa o lugar de 'retorne'?",
+      "opcoes": [
+        "return",
+        "retorne",
+        "devolve",
+        "break"
+      ],
+      "resposta": "return",
+      "dica": "return, sem o e final. Esta na folha A, na secao dos subprogramas."
+    },
+    {
+      "n": 9,
+      "titulo": "por que static",
+      "portugol": [
+        "var recados: vetor de Recado",
+        "    proximoId: inteiro <- 1",
+        "",
+        "// no alto da classe MuralDAO"
+      ],
+      "enunciado": "No C# esses dois campos levam a palavra static. Por que?",
+      "opcoes": [
+        "Para a lista ser UMA SO no programa inteiro",
+        "Para o metodo poder devolver valor",
+        "Para a lista poder crescer",
+        "Porque toda classe precisa de static"
+      ],
+      "resposta": "Para a lista ser UMA SO no programa inteiro",
+      "dica": "Sem static, cada vez que alguem usasse o DAO apareceria uma lista nova e vazia - e o recado publicado numa tela sumiria na outra."
+    },
+    {
+      "n": 10,
+      "titulo": "tamanho vira o que",
+      "portugol": [
+        "lblSaudacao <- Saudacao(tamanho(recados))"
+      ],
+      "enunciado": "Como se pergunta a uma List quantos itens ela tem, em C#?",
+      "opcoes": [
+        "recados.Count",
+        "recados.Length",
+        "tamanho(recados)",
+        "recados.Size"
+      ],
+      "resposta": "recados.Count",
+      "dica": ".Count e de colecao. O .Length e de texto e de vetor de tamanho fixo - trocar os dois e erro de compilacao."
+    }
+  ],
+  "desafios": [
+    {
+      "n": 1,
+      "titulo": "Criar o recado",
+      "metodo": "public static Recado CriarRecado(string autor, string texto)",
+      "portugol": [
+        "funcao CriarRecado(autor, texto: caractere): Recado",
+        "var r: Recado",
+        "inicio",
+        "   r <- novo Recado",
+        "   r.Autor <- autor",
+        "   r.Texto <- texto",
+        "   retorne r",
+        "fimfuncao"
+      ],
+      "dica": "Use os PARAMETROS. Escrever um nome fixo entre aspas faz todo recado sair com o mesmo autor - e o corretor pega isso.",
+      "ficha": {
+        "recebe": "um autor e um texto",
+        "faz": "monta um Recado novo",
+        "devolve": "o Recado (Recado)"
+      }
+    },
+    {
+      "n": 2,
+      "titulo": "Descrever",
+      "metodo": "public static string Descrever(Recado r)",
+      "portugol": [
+        "funcao Descrever(r: Recado): caractere",
+        "inicio",
+        "   retorne r.Autor + \": \" + r.Texto",
+        "fimfuncao",
+        "",
+        "// vira:  Ana Souza: alguem tem a apostila?"
+      ],
+      "dica": "Concatenar em C# e com +. Repare onde ficam as aspas: os dois pontos e o espaco fazem parte do texto do meio.",
+      "ficha": {
+        "recebe": "um recado (Recado)",
+        "faz": "monta o texto de uma linha do mural",
+        "devolve": "um texto (string)"
+      }
+    },
+    {
+      "n": 3,
+      "titulo": "A saudacao",
+      "metodo": "public static string Saudacao(int quantos)",
+      "portugol": [
+        "funcao Saudacao(quantos: inteiro): caractere",
+        "inicio",
+        "   escolha quantos",
+        "      caso 0",
+        "         retorne \"Mural vazio\"",
+        "      caso 1",
+        "         retorne \"1 recado\"",
+        "      outrocaso",
+        "         retorne quantos + \" recados\"",
+        "   fimescolha",
+        "fimfuncao"
+      ],
+      "dica": "Um valor so contra constantes: switch. O default existe porque 'qualquer outro numero' e um caso de verdade.",
+      "ficha": {
+        "recebe": "um numero (int)",
+        "faz": "escolhe a frase certa",
+        "devolve": "um texto (string)"
+      }
+    },
+    {
+      "n": 4,
+      "titulo": "O nome vale?",
+      "metodo": "public static bool NomeValido(string autor)",
+      "portugol": [
+        "funcao NomeValido(autor: caractere): logico",
+        "inicio",
+        "   se comprimento(limpa(autor)) >= 3 entao",
+        "      retorne verdadeiro",
+        "   senao",
+        "      retorne falso",
+        "   fimse",
+        "fimfuncao"
+      ],
+      "dica": "Tire os espacos das pontas ANTES de contar as letras - senao tres espacos passam por um nome. Em C#: autor.Trim().Length",
+      "ficha": {
+        "recebe": "um texto (string)",
+        "faz": "diz se o nome serve",
+        "devolve": "sim ou nao (bool)"
+      }
+    },
+    {
+      "n": 5,
+      "titulo": "Gravar no mural",
+      "metodo": "public static int Gravar(List<Recado> mural, Recado r)",
+      "portugol": [
+        "funcao Gravar(mural: vetor de Recado, r: Recado): inteiro",
+        "inicio",
+        "   r.Id <- tamanho(mural) + 1",
+        "   acrescente(mural, r)",
+        "   retorne r.Id",
+        "fimfuncao"
+      ],
+      "dica": "Numere ANTES de acrescentar. Depois do Add a quantidade ja mudou, e o segundo recado sairia com o Id do terceiro.",
+      "ficha": {
+        "recebe": "o mural e um recado",
+        "faz": "guarda o recado e numera",
+        "devolve": "o Id que ele recebeu (int)"
+      }
+    },
+    {
+      "n": 6,
+      "titulo": "Listar do mais novo",
+      "metodo": "public static List<Recado> Listar(List<Recado> mural)",
+      "portugol": [
+        "funcao Listar(mural: vetor de Recado): vetor de Recado",
+        "var saida: vetor de Recado",
+        "    i: inteiro",
+        "inicio",
+        "   saida <- vetor vazio",
+        "",
+        "   para i de tamanho(mural) - 1 ate 0 passo -1 faca",
+        "      acrescente(saida, mural[i])",
+        "   fimpara",
+        "",
+        "   retorne saida",
+        "fimfuncao"
+      ],
+      "dica": "A ultima posicao e Count - 1, e o laco desce ate 0 INCLUSIVE. Comecar em Count estoura em tempo de execucao.",
+      "ficha": {
+        "recebe": "o mural",
+        "faz": "monta a lista ao contrario",
+        "devolve": "uma lista de recados (List<Recado>)"
+      }
+    },
+    {
+      "n": 7,
+      "titulo": "Procurar uma palavra",
+      "metodo": "public static int Procurar(List<Recado> mural, string termo)",
+      "portugol": [
+        "funcao Procurar(mural: vetor de Recado,",
+        "                termo: caractere): inteiro",
+        "var quantos: inteiro",
+        "inicio",
+        "   quantos <- 0",
+        "",
+        "   para cada r em mural faca",
+        "      se contem(minusculo(r.Texto), minusculo(termo)) entao",
+        "         quantos <- quantos + 1",
+        "      fimse",
+        "   fimpara",
+        "",
+        "   retorne quantos",
+        "fimfuncao"
+      ],
+      "dica": "Contar nao e localizar: nao existe return dentro deste laco. E os DOIS lados em minuscula, senao 'Prova' nao acha 'prova'.",
+      "ficha": {
+        "recebe": "o mural e um texto",
+        "faz": "conta quantos contem o termo",
+        "devolve": "um numero (int)"
+      }
+    },
+    {
+      "n": 8,
+      "titulo": "O primeiro de um autor",
+      "metodo": "public static Recado PrimeiroDoAutor(List<Recado> mural, string autor)",
+      "portugol": [
+        "funcao PrimeiroDoAutor(mural: vetor de Recado,",
+        "                       autor: caractere): Recado",
+        "inicio",
+        "   para cada r em mural faca",
+        "      se r.Autor = autor entao",
+        "         retorne r",
+        "      fimse",
+        "   fimpara",
+        "",
+        "   retorne nulo",
+        "fimfuncao"
+      ],
+      "dica": "O return de ACHOU fica DENTRO do laco. O de nao achou fica DEPOIS dele - la dentro, ele desiste no primeiro que nao serve.",
+      "ficha": {
+        "recebe": "o mural e um autor",
+        "faz": "acha o primeiro recado dele",
+        "devolve": "o Recado, ou null se nao achar"
+      }
+    },
+    {
+      "n": 9,
+      "titulo": "Resumir o texto",
+      "metodo": "public static string Resumir(string texto, int limite)",
+      "portugol": [
+        "funcao Resumir(texto: caractere, limite: inteiro): caractere",
+        "inicio",
+        "   se comprimento(texto) <= limite entao",
+        "      retorne texto",
+        "   fimse",
+        "",
+        "   retorne pedaco(texto, 0, limite) + \"...\"",
+        "fimfuncao"
+      ],
+      "dica": "Confira ANTES de cortar: pedir um pedaco maior que o texto estoura. Em C#, pedaco e texto.Substring(0, limite).",
+      "ficha": {
+        "recebe": "um texto e um limite",
+        "faz": "corta o texto se passar do limite",
+        "devolve": "um texto (string)"
+      }
+    },
+    {
+      "n": 10,
+      "titulo": "O mais recente",
+      "metodo": "public static Recado MaisRecente(List<Recado> mural)",
+      "portugol": [
+        "funcao MaisRecente(mural: vetor de Recado): Recado",
+        "var melhor: Recado",
+        "inicio",
+        "   melhor <- nulo",
+        "",
+        "   para cada r em mural faca",
+        "      se melhor = nulo ou r.DataHora > melhor.DataHora entao",
+        "         melhor <- r",
+        "      fimse",
+        "   fimpara",
+        "",
+        "   retorne melhor",
+        "fimfuncao"
+      ],
+      "dica": "Guarde o melhor ate agora numa variavel que comeca nula. A ordem do OU importa: conferir o nulo primeiro evita estourar.",
+      "ficha": {
+        "recebe": "o mural",
+        "faz": "acha o recado de data mais nova",
+        "devolve": "o Recado, ou null se o mural estiver vazio"
+      }
+    }
+  ]
+}
