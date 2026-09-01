@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Masmorra</RootNamespace>
+    <AssemblyName>Masmorra</AssemblyName>
+
+    <!--
+      Sem nenhum pacote NuGet, igual ao Conecta.
+      Este projeto compila numa maquina SEM INTERNET.
+      Nao tem banco de dados: a noite e de logica, nao de MySQL.
+    -->
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
