@@ -23,7 +23,8 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static void MostrarTitulo(string texto)
         {
-            // <<< ESCREVA AQUI
+            Console.WriteLine();
+            Console.WriteLine("=== " + texto + " ===");
         }
 
         // -----------------------------------------------------------------
@@ -31,7 +32,8 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static void MostrarLinha(string texto)
         {
-            // <<< ESCREVA AQUI
+            Console.WriteLine(texto);
+
         }
 
         // -----------------------------------------------------------------
@@ -40,7 +42,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static void MostrarErro(string mensagem)
         {
-            // <<< ESCREVA AQUI
+            Console.WriteLine(">> " + mensagem);
         }
 
         // -----------------------------------------------------------------
@@ -52,7 +54,9 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static void Pausar()
         {
-            // <<< ESCREVA AQUI
+            Console.WriteLine();
+            Console.WriteLine("Tecle ENTER para voltar ao menu...");
+            Console.ReadLine();
         }
 
         // =================================================================
@@ -75,7 +79,11 @@ namespace Calculadora
         //
         // Para as duas casas decimais, use .ToString("N2") no resultado.
         // -----------------------------------------------------------------
-
+        public static void MostrarResultado(double a, string sinal, double b, double resultado)
+        {
+            Console.WriteLine();
+            Console.WriteLine("   " + a + " " + sinal + " " + b + " = " + resultado.ToString("N2"));
+        }
 
         // =================================================================
         //  GRAU 3 - so o problema.
@@ -101,6 +109,20 @@ namespace Calculadora
         // "Escolha: ". Existe um metodo do console que escreve SEM pular
         // linha; e o irmao do WriteLine.
         // -----------------------------------------------------------------
+        public static void MostrarMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("=====================================");
+            Console.WriteLine("   CALCULADORA - Curso Tecnico");
+            Console.WriteLine("=====================================");
+            Console.WriteLine(" 1 - Somar             6 - Media");
+            Console.WriteLine(" 2 - Subtrair          7 - Potencia");
+            Console.WriteLine(" 3 - Multiplicar       8 - Fatorial");
+            Console.WriteLine(" 4 - Dividir           9 - Comparar");
+            Console.WriteLine(" 5 - Porcentagem       0 - Sair");
+            Console.WriteLine("=====================================");
+            Console.Write("Escolha: ");
+        }
 
     }
 }

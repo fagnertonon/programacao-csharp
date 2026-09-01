@@ -26,7 +26,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static double Somar(double a, double b)
         {
-            return 0;   // <<< APAGUE esta linha e escreva a sua
+            return a + b;   // <<< APAGUE esta linha e escreva a sua
         }
 
         // -----------------------------------------------------------------
@@ -34,7 +34,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static double Subtrair(double a, double b)
         {
-            return 0;   // <<< APAGUE esta linha
+            return a-b;   // <<< APAGUE esta linha
         }
 
         // -----------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static double Multiplicar(double a, double b)
         {
-            return 0;   // <<< APAGUE esta linha
+            return a*b;   // <<< APAGUE esta linha
         }
 
         // -----------------------------------------------------------------
@@ -54,7 +54,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static bool PodeDividir(double b)
         {
-            return false;   // <<< APAGUE esta linha
+            return b != 0;   // <<< APAGUE esta linha
         }
 
         // -----------------------------------------------------------------
@@ -66,7 +66,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static double Dividir(double a, double b)
         {
-            return 0;   // <<< APAGUE esta linha
+            return a /b;   // <<< APAGUE esta linha
         }
 
         // -----------------------------------------------------------------
@@ -76,7 +76,7 @@ namespace Calculadora
         // -----------------------------------------------------------------
         public static bool EhPar(int n)
         {
-            return false;   // <<< APAGUE esta linha
+            return n % 2 == 0;
         }
 
         // =================================================================
@@ -99,15 +99,22 @@ namespace Calculadora
         // pede para o seu Dividir dividir. Dois metodos seus, chamados por
         // um terceiro metodo seu.
         // -----------------------------------------------------------------
-
-
+        //Media(double a, double b)
+        public static double Media(double a, double b)
+        {
+            double soma = Somar(a, b);
+            return Dividir(soma, 2);
+        }
         // -----------------------------------------------------------------
         // TODO 12 - Porcentagem
         //
         // Recebe um valor e um percentual, e devolve quanto e esse
         // percentual do valor. 15 por cento de 200 tem que dar 30.
         // -----------------------------------------------------------------
-
+        public static double Porcentagem(double valor, double percentual)
+        {
+            return valor * percentual / 100;
+        }
 
         // -----------------------------------------------------------------
         // TODO 13 - Maior
@@ -117,14 +124,30 @@ namespace Calculadora
         // Pense no caso dos dois iguais ANTES de escrever: 5 e 5 devolve o
         // que? Um if com return nos dois ramos resolve.
         // -----------------------------------------------------------------
+        public static double Maior(double a, double b)
+        {
+            if (a > b)
+            {
+                return a;
+            }
 
+            return b;
+        }
 
         // -----------------------------------------------------------------
         // TODO 14 - Menor
         //
         // O irmao do Maior, ao contrario.
         // -----------------------------------------------------------------
+        public static double Menor(double a, double b)
+        {
+            if (a < b)
+            {
+                return a;
+            }
 
+            return b;
+        }
 
         // -----------------------------------------------------------------
         // TODO 15 - Potencia
@@ -138,7 +161,22 @@ namespace Calculadora
         //
         // Expoente 0 tem que dar 1. Confira se o seu da.
         // -----------------------------------------------------------------
+        public static double Potencia(double numero, int expoente)
+        {
+            if (expoente < 0)
+            {
+                return 0;
+            }
 
+            double resultado = 1;
+
+            for (int i = 0; i < expoente; i++)
+            {
+                resultado = Multiplicar(resultado, numero);
+            }
+
+            return resultado;
+        }
 
         // -----------------------------------------------------------------
         // TODO 16 - Fatorial
@@ -149,7 +187,22 @@ namespace Calculadora
         // Mesmo molde do Potencia. E fatorial de 0 da 1 - se o seu for
         // comecar no 2, isso se resolve sozinho.
         // -----------------------------------------------------------------
+        public static double Fatorial(int n)
+        {
+            if (n < 0)
+            {
+                return 0;
+            }
 
+            double resultado = 1;
+
+            for (int i = 2; i <= n; i++)
+            {
+                resultado = Multiplicar(resultado, i);
+            }
+
+            return resultado;
+        }
 
         // =================================================================
         //  GRAU 3 - so o problema. Nem assinatura, nem dica de estrutura.

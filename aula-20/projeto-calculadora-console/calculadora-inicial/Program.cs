@@ -31,11 +31,15 @@ namespace Calculadora
         // -----------------------------------------------------------------
         static void Main()
         {
-            Console.WriteLine("Calculadora - o projeto de hoje comeca aqui.");
-            Console.WriteLine();
-            Console.WriteLine("Nada funciona ainda: sao 24 metodos para escrever.");
-            Console.WriteLine("Procure por TODO - Exibir > Lista de Tarefas, ou Ctrl+F.");
-            Console.ReadLine();
+            bool sair = false;
+
+            while (sair == false)
+            {
+                Tela.MostrarMenu();
+
+                int opcao = Entrada.LerOpcao();
+                
+            }
         }
     }
 }

@@ -33,7 +33,26 @@ namespace Calculadora
         // Para avisar o erro, chame o MostrarErro que voce escreveu no
         // Tela.cs - nao escreva a mensagem na mao aqui.
         // -----------------------------------------------------------------
+        public static double LerNumero(string mensagem)
+        {
+            double valor = 0;
+            bool deuCerto = false;
 
+            while (deuCerto == false)
+            {
+                Console.Write(mensagem);
+                string texto = Console.ReadLine();
+
+                deuCerto = double.TryParse(texto, out valor);
+
+                if (deuCerto == false)
+                {
+                    Tela.MostrarErro("Isso nao e um numero. Tente de novo.");
+                }
+            }
+
+            return valor;
+        }
 
         // -----------------------------------------------------------------
         // TODO 18 - LerInteiro
@@ -41,7 +60,26 @@ namespace Calculadora
         // O mesmo do LerNumero, trocando numero com virgula por numero
         // inteiro. Duas palavras mudam no corpo inteiro. Descubra quais.
         // -----------------------------------------------------------------
+        public static int LerInteiro(string mensagem)
+        {
+            int valor = 0;
+            bool deuCerto = false;
 
+            while (deuCerto == false)
+            {
+                Console.Write(mensagem);
+                string texto = Console.ReadLine();
+
+                deuCerto = int.TryParse(texto, out valor);
+
+                if (deuCerto == false)
+                {
+                    Tela.MostrarErro("Isso nao e um numero inteiro. Tente de novo.");
+                }
+            }
+
+            return valor;
+        }
 
         // =================================================================
         //  GRAU 3 - so o problema.
@@ -58,7 +96,23 @@ namespace Calculadora
         // Copiar codigo que ja existe e o erro que esta aula existe para
         // tirar de voce.
         // -----------------------------------------------------------------
+        public static int LerOpcao()
+        {
+            int opcao = -1;
 
+            while (opcao < 0 || opcao > 9)
+            {
+                opcao = LerInteiro("");
+
+                if (opcao < 0 || opcao > 9)
+                {
+                    Tela.MostrarErro("Escolha um numero de 0 a 9.");
+                    Console.Write("Escolha: ");
+                }
+            }
+
+            return opcao;
+        }
 
         // -----------------------------------------------------------------
         // TODO 22 - Confirmar
