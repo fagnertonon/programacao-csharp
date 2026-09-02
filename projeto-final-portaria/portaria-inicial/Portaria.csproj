@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Portaria</RootNamespace>
+    <AssemblyName>Portaria</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Biblioteca de acesso ao MySQL. Voce NAO escreve esta linha a mao:
+      ela aparece sozinha quando o pacote e instalado por
+      Projeto > Gerenciar Pacotes NuGet > Procurar > MySql.Data
+    -->
+    <PackageReference Include="MySql.Data" Version="8.4.0" />
+  </ItemGroup>
+
+</Project>
