@@ -1,0 +1,444 @@
+{
+  "titulo": "Mundo de Cubos",
+  "subtitulo": "oito métodos em C# - cada um resolvido liga uma coisa nova no mundo 3D",
+  "desafios": [
+    {
+      "id": "mover",
+      "numero": 1,
+      "titulo": "Andar",
+      "revisa": "if",
+      "tecla": "W A S D",
+      "destrava": "O boneco anda pelo mundo com W A S D - e sobe degrau de um cubo sozinho.",
+      "metodo": "Mover",
+      "assinatura": "public static Pos Mover(Mundo mundo, Pos onde, int dx, int dz)",
+      "enunciado": "Devolva a posicao para onde o jogador vai. Ele so anda se o destino estiver DENTRO do mundo e couber o corpo dele, que tem dois cubos de altura. Se tiver um bloco de UM cubo na frente e espaco em cima, ele sobe o degrau. Parede de dois cubos ou mais: fica onde estava.",
+      "explicacao": [
+        "O mundo e uma caixa de 24 x 20 x 24 cubinhos. X vai para os lados, Z vai para o fundo, e Y vai para CIMA.",
+        "O jogador ocupa DUAS casas: os pes em Y e a cabeca em Y + 1. Por isso toda checagem de passagem e dupla - so olhar os pes deixaria ele entrar de cabeca na pedra.",
+        "A ordem das perguntas e a aula inteira. Primeiro: existe essa casa? mundo.Dentro(x, y, z). Pedir bloco fora da caixa e o erro mais comum aqui.",
+        "Depois: da para passar reto? Precisa de mundo.Vazio nas duas casas, a dos pes e a da cabeca.",
+        "Depois: da para subir um degrau? Se tem bloco na frente mas as duas casas UMA ACIMA estao livres, ele sobe. Sem isso, andar num morro vira um inferno de ficar pulando.",
+        "E se nada disso valeu, e parede: devolva a posicao que voce recebeu, sem mudar nada."
+      ],
+      "dica": "Quatro if, um embaixo do outro, cada um com seu return. Use mundo.Dentro para a caixa e mundo.Vazio para as casas. Para devolver um lugar novo: Pos.Nova(x, y, z).",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|1|0",
+          "esperado": "6/9/5",
+          "descricao": "anda para o leste no chao plano"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|0|1",
+          "esperado": "5/9/6",
+          "descricao": "anda para o sul"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|0|0",
+          "esperado": "5/9/5",
+          "descricao": "sem direcao nenhuma, fica onde esta"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "0|9|5|-1|0",
+          "esperado": "0/9/5",
+          "descricao": "na borda oeste, nao sai da caixa do mundo"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "23|9|5|1|0",
+          "esperado": "23/9/5",
+          "descricao": "na borda leste, nao sai da caixa do mundo"
+        },
+        {
+          "cenario": "degrau",
+          "entrada": "5|9|5|1|0",
+          "esperado": "6/10/5",
+          "descricao": "sobe o degrau de um cubo"
+        },
+        {
+          "cenario": "parede",
+          "entrada": "5|9|5|1|0",
+          "esperado": "5/9/5",
+          "descricao": "parede de dois cubos barra a passagem"
+        }
+      ]
+    },
+    {
+      "id": "pular",
+      "numero": 2,
+      "titulo": "Pular",
+      "revisa": "while",
+      "tecla": "ESPAÇO",
+      "destrava": "O espaço faz o boneco pular - e bater a cabeça no teto, se tiver teto.",
+      "metodo": "Pular",
+      "assinatura": "public static int Pular(Mundo mundo, Pos onde, int forca)",
+      "enunciado": "Devolva a altura Y em que o jogador para depois de pular. Ele sobe um cubo por vez, no maximo 'forca' cubos, e para antes se bater a cabeca. Quem tem teto logo acima nao sobe nada.",
+      "explicacao": [
+        "Aqui voce nao sabe de antemao quantas voltas o laco vai dar: depende da forca do pulo E do teto. Isso e while, e nao for.",
+        "O desenho e sempre o mesmo: uma variavel que anda (o Y), um contador (quantos cubos ja subiu), e uma condicao que uma hora fica falsa.",
+        "Sao DUAS condicoes ligadas por &&: ainda tem forca, E ainda tem ar acima da cabeca.",
+        "A casa que precisa estar livre e Y + 2, e nao Y + 1. Motivo: Y sao os pes e Y + 1 e a cabeca. Para o corpo inteiro subir um cubo, quem tem de estar vazio e a casa ACIMA da cabeca. Errar isso e o defeito classico deste desafio - o boneco atravessa o teto.",
+        "Se a forca for zero, o while nao entra nenhuma vez e o Y volta igual ao que entrou. Nao precisa de if para isso: o while ja testa antes de rodar. E a diferenca entre while e do-while.",
+        "Quem faz o boneco CAIR e o motor do jogo, nao voce. Voce so decide ate onde ele sobe."
+      ],
+      "dica": "int y = onde.Y; int subiu = 0; e um while com duas condicoes. Dentro dele, some 1 no y e 1 no subiu. Se voce esquecer de somar, o laco nunca termina - e o servidor avisa em 2 segundos.",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|2",
+          "esperado": "11",
+          "descricao": "pulo normal de dois cubos"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|1",
+          "esperado": "10",
+          "descricao": "pulo curto de um cubo"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|0",
+          "esperado": "9",
+          "descricao": "forca zero: nao sai do lugar, e o while nem entra"
+        },
+        {
+          "cenario": "teto",
+          "entrada": "5|9|5|3",
+          "esperado": "9",
+          "descricao": "teto colado na cabeca: nao sobe nada"
+        },
+        {
+          "cenario": "tetoalto",
+          "entrada": "5|9|5|5",
+          "esperado": "11",
+          "descricao": "forca 5 mas o teto so deixa subir 2"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|8",
+          "esperado": "17",
+          "descricao": "pulo alto, e o topo do mundo tambem e um limite"
+        }
+      ]
+    },
+    {
+      "id": "minerar",
+      "numero": 3,
+      "titulo": "Minerar",
+      "revisa": "switch",
+      "tecla": "clique esquerdo",
+      "destrava": "O clique esquerdo quebra o bloco da mira - e o que cai nem sempre é o que estava lá.",
+      "metodo": "Minerar",
+      "assinatura": "public static string Minerar(Mundo mundo, int x, int y, int z, int picareta)",
+      "enunciado": "Quebre o bloco e devolva o NOME do que caiu. Recuse quando: a posicao esta fora do mundo, nao tem bloco nenhum, o bloco e bedrock, ou a picareta e mais fraca que a dureza. Se quebrou: pedra vira cascalho, grama vira terra, folha nao deixa nada, e todo o resto cai como e.",
+      "explicacao": [
+        "Este metodo faz duas coisas: TIRA o bloco do mundo e DIZ o que caiu na mao do jogador. As duas importam, e o corretor confere as duas.",
+        "As quatro recusas vem antes de tudo, e a ordem nao e opcional: nao da para perguntar a dureza de um bloco que nem existe. Primeiro Dentro, depois se tem bloco, depois se e bedrock, depois a dureza.",
+        "O bedrock e o chao do mundo. Se desse para quebrar, o jogador cairia da caixa para sempre.",
+        "A dureza voce nao decora: pergunte com mundo.Dureza(tipo). Assim os blocos que VOCE inventar no desafio 6 ja funcionam sozinhos aqui.",
+        "Depois de tirar o bloco vem o switch, e ele e o coracao do desafio: comparar um valor contra varias opcoes fixas e exatamente para o que o switch existe.",
+        "Cada case termina com return, entao nao precisa de break - o return ja sai do metodo inteiro. E o default NAO e enfeite: e ele que faz os seus blocos novos cairem com o proprio nome, sem voce escrever um case para cada um."
+      ],
+      "dica": "Quatro if de recusa, depois mundo.Tirar(x, y, z), depois o switch com case pedra, case grama, case folha e default. Repare que a folha devolve texto vazio: ela some, mas o bloco sai do mundo do mesmo jeito.",
+      "testes": [
+        {
+          "cenario": "torre",
+          "entrada": "5|9|5|1",
+          "esperado": "terra / ar",
+          "descricao": "grama quebra facil e cai como terra"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|10|5|3",
+          "esperado": "cascalho / ar",
+          "descricao": "pedra com picareta 3 cai como cascalho"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|10|5|2",
+          "esperado": "(nada) / pedra",
+          "descricao": "picareta fraca demais: a pedra continua la"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|11|5|1",
+          "esperado": "(nada) / ar",
+          "descricao": "a folha some do mundo sem deixar nada na mao"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|12|5|2",
+          "esperado": "tronco / ar",
+          "descricao": "tronco cai como tronco - e o default"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|13|5|1",
+          "esperado": "areia / ar",
+          "descricao": "areia tambem cai pelo default"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|0|5|9",
+          "esperado": "(nada) / bedrock",
+          "descricao": "bedrock nao quebra nem com a melhor picareta"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "5|15|5|3",
+          "esperado": "(nada) / ar",
+          "descricao": "mirar no ar nao quebra nada"
+        },
+        {
+          "cenario": "torre",
+          "entrada": "99|9|5|3",
+          "esperado": "(nada) / ar",
+          "descricao": "mirar fora do mundo nao estoura"
+        }
+      ]
+    },
+    {
+      "id": "cavar",
+      "numero": 4,
+      "titulo": "Cavar",
+      "revisa": "for",
+      "tecla": "tecla C",
+      "destrava": "A tecla C abre um poço para baixo, de vários cubos de uma vez.",
+      "metodo": "Cavar",
+      "assinatura": "public static int Cavar(Mundo mundo, int x, int y, int z, int profundidade)",
+      "enunciado": "Cave para BAIXO a partir de (x, y, z), no maximo 'profundidade' cubos, e devolva quantos blocos voce realmente tirou. Pare na hora se sair do mundo ou se achar bedrock. Casa que ja estava vazia nao conta.",
+      "explicacao": [
+        "Aqui voce sabe o numero maximo de voltas antes de comecar - e a profundidade. Numero conhecido de voltas e for.",
+        "A cada volta voce desce um cubo. Se o laco conta i de 0 ate a profundidade, a casa da vez e y - i. Comecar em y e nao em y - 1 e de proposito: o primeiro cubo que sai e o de baixo dos pes.",
+        "Duas paradas de emergencia, com return dentro do for: sair do mundo e achar bedrock. Nos dois casos voce devolve o que JA tinha cavado, e nao zero.",
+        "O contador nasce ANTES do for. Se voce declarar dentro, ele nasce de novo a cada volta e volta sempre zerado - o compilador nao reclama, e o numero sai errado.",
+        "Casa vazia NAO conta. Se voce cavar em cima de uma caverna, a profundidade e 5 mas o numero devolvido pode ser 3. E o teste do cenario com buraco existe exatamente para isso."
+      ],
+      "dica": "int quantos = 0; antes do for. Dentro: int alvo = y - i; depois os dois return de emergencia, e so entao o if que tira o bloco e soma 1.",
+      "testes": [
+        {
+          "cenario": "poco",
+          "entrada": "5|8|5|3",
+          "esperado": "3 / bppppp......",
+          "descricao": "cava tres cubos de terra"
+        },
+        {
+          "cenario": "poco",
+          "entrada": "5|8|5|0",
+          "esperado": "0 / bpppppttt...",
+          "descricao": "profundidade zero nao cava nada"
+        },
+        {
+          "cenario": "poco",
+          "entrada": "5|8|5|20",
+          "esperado": "8 / b...........",
+          "descricao": "cava ate o bedrock e para nele"
+        },
+        {
+          "cenario": "buraco",
+          "entrada": "5|8|5|5",
+          "esperado": "3 / bppp........",
+          "descricao": "atravessa uma caverna: 5 de profundidade, so 3 blocos tirados"
+        },
+        {
+          "cenario": "poco",
+          "entrada": "99|8|5|3",
+          "esperado": "0 / ............",
+          "descricao": "cavar fora do mundo nao estoura"
+        }
+      ]
+    },
+    {
+      "id": "colocar",
+      "numero": 5,
+      "titulo": "Colocar bloco",
+      "revisa": "if",
+      "tecla": "clique direito",
+      "destrava": "O clique direito coloca o bloco escolhido na paleta. Dá para construir.",
+      "metodo": "Colocar",
+      "assinatura": "public static bool Colocar(Mundo mundo, int x, int y, int z, string tipo, Pos jogador)",
+      "enunciado": "Coloque o bloco e devolva true. Recuse, devolvendo false, quando: a posicao esta fora do mundo, ja tem bloco ali, o tipo veio vazio, ou a casa e uma das duas que o proprio jogador ocupa.",
+      "explicacao": [
+        "Este metodo devolve true ou false, e nao um lugar. Quem chama precisa saber se deu certo, para avisar na tela.",
+        "Tres recusas obvias: fora da caixa, casa ocupada, e tipo vazio. Nenhuma delas precisa de else - sao if soltos, um embaixo do outro, cada um com seu return false.",
+        "A quarta recusa e a interessante, e ela e sobre o jogador: se desse para colocar bloco em cima de si mesmo, daria para se emparedar dentro da pedra e o jogo acabava ali.",
+        "O jogador ocupa DUAS casas, os pes em jogador.Y e a cabeca em jogador.Y + 1. Entao a recusa e: mesmo X, mesmo Z, e Y igual a um dos dois.",
+        "Repare que colocar bloco ACIMA da cabeca e permitido. E assim que se constroi para cima."
+      ],
+      "dica": "Tres if de recusa, depois o if do jogador comparando X e Z e as duas alturas. Se passou por todos, mundo.Por(x, y, z, tipo) e return true.",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "6|9|5|pedra|5|9|5",
+          "esperado": "true / pedra",
+          "descricao": "coloca no ar, ao lado do jogador"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|11|5|pedra|5|9|5",
+          "esperado": "true / pedra",
+          "descricao": "acima da cabeca vale - e assim que se constroi para cima"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|pedra|5|9|5",
+          "esperado": "false / ar",
+          "descricao": "em cima dos proprios pes, nao"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|10|5|pedra|5|9|5",
+          "esperado": "false / ar",
+          "descricao": "em cima da propria cabeca, nao"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|8|5|pedra|5|9|5",
+          "esperado": "false / grama",
+          "descricao": "casa ocupada nao aceita outro bloco"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "99|9|5|pedra|5|9|5",
+          "esperado": "false / ar",
+          "descricao": "fora do mundo nao estoura"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "6|9|5||5|9|5",
+          "esperado": "false / ar",
+          "descricao": "tipo vazio nao vira bloco"
+        }
+      ]
+    },
+    {
+      "id": "blocos",
+      "numero": 6,
+      "titulo": "Criar os seus blocos",
+      "revisa": "List<T>",
+      "tecla": "teclas 1 a 9",
+      "destrava": "Os SEUS blocos entram na paleta, com o nome e a cor que você deu. O mundo vira seu.",
+      "metodo": "CriarBlocos",
+      "assinatura": "public static List<Bloco> CriarBlocos()",
+      "enunciado": "Devolva uma lista com DE 1 A 10 blocos inventados por voce. Cada um tem nome (sem espaco, e diferente dos de fabrica), cor em hexadecimal no formato #RRGGBB, e dureza de 1 a 5.",
+      "explicacao": [
+        "Este e o desafio da assinatura. Os cinco blocos de fabrica sao iguais na tela de todo mundo; estes aqui sao os SEUS, e aparecem na paleta com o nome que voce escolher.",
+        "O desenho e o mesmo de sempre: cria a lista vazia, vai dando Add, devolve a lista.",
+        "Voce NAO escreve new Bloco(alguma coisa) com valores dentro dos parenteses - isso e construtor, e a turma nao viu construtor. Use a fabrica: Bloco.Novo(nome, cor, dureza). E um metodo estatico, igual a todos que voce ja escreveu.",
+        "A cor e hexadecimal da web: um # e seis digitos de 0 a 9 ou de A a F. Os dois primeiros sao vermelho, os dois do meio verde, os dois ultimos azul. #FF0000 e vermelho puro, #39FF14 e verde neon, #241633 e roxo quase preto.",
+        "A dureza vale de 1 a 5, e ela conversa com o desafio 3: bloco de dureza 4 precisa de picareta 4. Um bloco durissimo que voce mesmo inventou e um bloco que voce mesmo nao consegue quebrar ainda.",
+        "Nome repetido, nome com espaco, nome igual a um de fabrica, cor torta ou dureza fora de 1 a 5 fazem o teste recusar - e ele diz exatamente qual bloco tem o problema."
+      ],
+      "dica": "List<Bloco> meus = new List<Bloco>(); depois um meus.Add(Bloco.Novo(...)) por bloco, e return meus no fim. Comece com um so, veja aparecer na paleta, e depois va acrescentando.",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "",
+          "esperado": "ok",
+          "descricao": "de 1 a 10 blocos, cada um com nome proprio, cor #RRGGBB e dureza de 1 a 5"
+        }
+      ]
+    },
+    {
+      "id": "inimigos",
+      "numero": 7,
+      "titulo": "Soltar os monstros",
+      "revisa": "List<T>",
+      "tecla": "aparecem sozinhos",
+      "destrava": "Os SEUS monstros aparecem no mundo - inclusive o que você desenhou.",
+      "metodo": "CriarInimigos",
+      "assinatura": "public static List<Inimigo> CriarInimigos()",
+      "enunciado": "Devolva uma lista com DE 1 A 6 monstros. Cada um tem um desenho - \"gosma\", \"fantasma\", \"aranha\", \"robo\" ou \"meumonstro\" - e um lugar (x, z) de 0 a 23. O Y voce nao escreve: o motor solta o monstro do ceu e deixa cair ate o chao.",
+      "explicacao": [
+        "E o mesmo molde do desafio anterior, e de proposito: cria a lista vazia, vai dando Add, devolve a lista. Voce ja sabe fazer isto - a unica coisa que muda e a fabrica.",
+        "Inimigo.Novo(desenho, x, z) monta um monstro. Como no Bloco.Novo, e um metodo estatico, e nao um construtor.",
+        "Sao cinco desenhos possiveis. Quatro vem de fabrica: gosma, fantasma, aranha e robo. O quinto e \"meumonstro\", e esse e o SEU - aquele que voce desenhou no arquivo MeuMonstro.cs, com as suas cores.",
+        "Se voce ainda nao desenhou o seu, use \"meumonstro\" assim mesmo: vem um bichinho de fabrica, e voce troca depois sem mexer neste metodo.",
+        "Um conselho de jogo: ponha os monstros LONGE do meio, que e onde voce nasce. Os cantos, como (5, 5) e (19, 19), dao tempo de voce se preparar antes de eles chegarem.",
+        "Comece com UM monstro so, rode, veja ele aparecer - e so entao acrescente os outros."
+      ],
+      "dica": "List<Inimigo> meus = new List<Inimigo>(); depois um meus.Add(Inimigo.Novo(\"gosma\", 5, 5)) por monstro, e return meus no fim.",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "",
+          "esperado": "ok",
+          "descricao": "de 1 a 6 monstros, cada um com um desenho conhecido e um lugar dentro do mundo"
+        }
+      ]
+    },
+    {
+      "id": "perseguir",
+      "numero": 8,
+      "titulo": "A caçada",
+      "revisa": "if / else if",
+      "tecla": "a cada passo seu",
+      "destrava": "Os monstros passam a te caçar. Cada passo seu é um passo deles.",
+      "metodo": "PerseguirJogador",
+      "assinatura": "public static Pos PerseguirJogador(Mundo mundo, Pos inimigo, Pos jogador)",
+      "enunciado": "Devolva para onde o monstro anda para chegar mais perto de voce. Um passo por vez, nunca na diagonal: primeiro ele se alinha no eixo X, e so quando ja esta na mesma coluna e que vem pelo Z. Depois de decidir o passo, o resto e igual ao seu Mover: duas casas livres ele anda, um cubo na frente com espaco em cima ele sobe o degrau, e parede de dois cubos ele fica onde esta.",
+      "explicacao": [
+        "Este e o metodo que transforma o mundo num jogo. Ate agora nada te ameacava; a partir daqui, cada passo seu e um passo deles.",
+        "Comece com dois numeros zerados: dx e dz, o passo que ele vai dar em cada eixo. Se nenhum if pegar, os dois ficam zero e o monstro nao sai do lugar - e e exatamente o que tem de acontecer quando voce ja esta em cima dele.",
+        "A cadeia tem quatro ramos, e a ORDEM e a graca: se voce esta a leste, dx vale 1; se a oeste, dx vale -1; SO ENTAO, se ele ja esta na mesma coluna, ele olha o Z.",
+        "Repare no efeito disso na tela: o monstro primeiro se alinha com voce de lado, e depois avanca de frente. Parece perseguicao de desenho animado, e sai de graca da ordem dos else if.",
+        "Depois de decidir o passo, confira se cabe. O monstro tem dois cubos de altura, como voce: a casa dos pes e a da cabeca precisam estar vazias.",
+        "E aqui vem a melhor parte: depois de decidir a direcao, o resto e IGUALZINHO ao Mover que voce ja escreveu no desafio 1 - o monstro tem dois cubos de altura e sobe degrau como voce. Ou seja, uma parede de um cubo nao segura ele: precisa de DOIS. E assim que o desafio 5 vira a sua defesa."
+      ],
+      "dica": "int dx = 0; int dz = 0; depois a cadeia if / else if / else if / else if comparando jogador.X com inimigo.X e depois jogador.Z com inimigo.Z. Do nx e nz para baixo, copie o desenho do seu Mover: um if para andar reto e outro para subir o degrau.",
+      "testes": [
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|8|9|5",
+          "esperado": "6/9/5",
+          "descricao": "voce a leste: o monstro anda para o leste"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "8|9|5|5|9|5",
+          "esperado": "7/9/5",
+          "descricao": "voce a oeste: o monstro anda para o oeste"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|5|9|8",
+          "esperado": "5/9/6",
+          "descricao": "ja alinhado no X: agora ele vem pelo Z"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|8|5|9|5",
+          "esperado": "5/9/7",
+          "descricao": "ja alinhado no X, e voce ao norte"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|8|9|8",
+          "esperado": "6/9/5",
+          "descricao": "voce na diagonal: ele acerta o X PRIMEIRO - e o teste da ordem"
+        },
+        {
+          "cenario": "plano",
+          "entrada": "5|9|5|5|9|5",
+          "esperado": "5/9/5",
+          "descricao": "ja esta em cima de voce: fica parado"
+        },
+        {
+          "cenario": "parede",
+          "entrada": "5|9|5|8|9|5",
+          "esperado": "5/9/5",
+          "descricao": "parede de dois cubos: essa segura o bicho - e a sua defesa"
+        },
+        {
+          "cenario": "degrau",
+          "entrada": "5|9|5|8|9|5",
+          "esperado": "6/10/5",
+          "descricao": "degrau de um cubo: o monstro SOBE, igual a voce"
+        }
+      ]
+    }
+  ]
+}

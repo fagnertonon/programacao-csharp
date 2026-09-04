@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mundo de Cubos</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <canvas id="tela"></canvas>
+
+  <!-- ================= barra de cima ================= -->
+  <header id="topo">
+    <div class="marca">
+      <span class="cubo"></span>
+      <div>
+        <h1>MUNDO DE CUBOS</h1>
+        <p id="subtitulo">o mundo e desenhado pelo navegador, mas quem manda nele e o seu C#</p>
+      </div>
+    </div>
+
+    <div class="acoes">
+      <span id="placar" class="placar">0 / 8</span>
+      <span id="pegou" class="placar pego" hidden>0</span>
+      <span id="vida" class="vida" title="a sua vida"></span>
+      <label class="semente">
+        semente
+        <input id="semente" type="number" value="7" min="1" max="999">
+      </label>
+      <button id="btnReiniciar" class="botao">Novo mundo</button>
+      <button id="btnPainel" class="botao destaque">Desafios</button>
+    </div>
+  </header>
+
+  <!-- ================= painel dos desafios ================= -->
+  <aside id="painel" class="aberto">
+    <div class="painel-topo">
+      <h2 id="tituloPainel">Os desafios</h2>
+      <button id="btnConferir" class="botao destaque largo">
+        Conferir de novo
+        <small>so muda depois que voce parar e rodar de novo com F5</small>
+      </button>
+      <p class="aviso" id="avisoBuild"></p>
+    </div>
+    <div id="listaDesafios"></div>
+  </aside>
+
+  <!-- ================= mira ================= -->
+  <div id="mira"><span></span><span></span></div>
+
+  <!-- ================= recado ================= -->
+  <div id="recado"></div>
+
+  <!-- ================= comandos ================= -->
+  <div id="comandos">
+    <div class="linha" data-trava="mover"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> andar</div>
+    <div class="linha" data-trava="pular"><kbd>espaco</kbd> pular</div>
+    <div class="linha" data-trava="minerar"><kbd>clique esq.</kbd> minerar</div>
+    <div class="linha" data-trava="cavar"><kbd>C</kbd> cavar um poco</div>
+    <div class="linha" data-trava="colocar"><kbd>clique dir.</kbd> colocar bloco</div>
+    <div class="linha" data-trava="blocos"><kbd>1</kbd>..<kbd>9</kbd> escolher bloco</div>
+    <div class="linha" data-trava="inimigos">os seus monstros aparecem</div>
+    <div class="linha" data-trava="perseguir">eles andam SOZINHOS - e machucam</div>
+    <div class="linha sempre"><kbd>arrastar</kbd> girar a camera &nbsp; <kbd>roda</kbd> zoom</div>
+  </div>
+
+  <!-- ================= paleta ================= -->
+  <div id="paleta"></div>
+
+  <!-- ================= tela de erro ================= -->
+  <div id="pane" class="escondido">
+    <div class="caixa">
+      <h2 id="paneTitulo">Nao consegui abrir o mundo</h2>
+      <p id="paneTexto"></p>
+    </div>
+  </div>
+
+  <script src="bichos.js"></script>
+  <script src="render.js"></script>
+  <script src="painel.js"></script>
+  <script src="jogo.js"></script>
+</body>
+</html>

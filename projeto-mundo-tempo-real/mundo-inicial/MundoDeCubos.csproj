@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>MundoDeCubos</RootNamespace>
+    <AssemblyName>MundoDeCubos</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- Sem pagina de erro bonita do ASP.NET: numa aula, a tela preta do
+         console com a mensagem em portugues ajuda mais. -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- ISTO NAO E OPCIONAL, e custou um susto para descobrir.
+         O SDK web liga um carregador de "static web assets" que, em
+         modo Development, procura uma pasta wwwroot DENTRO do projeto.
+         Aqui o wwwroot mora um nivel acima, compartilhado pelos dois
+         projetos, e e COPIADO para a pasta de saida na compilacao.
+         Com o carregador ligado, o F5 do Visual Studio estourava logo
+         na abertura:
+             DirectoryNotFoundException: ...\mundo-inicial\wwwroot         Rodar o .exe direto da pasta bin funcionava e escondia o
+         problema. Nao usamos nada do pipeline de static web assets -
+         nao ha biblioteca de componentes nem Razor -, entao ele sai. -->
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O motor, o corretor e o servidor. Voce nao mexe em nada daqui:
+         o que voce escreve e o Desafios.cs desta pasta. -->
+    <Compile Include="..\comum\*.cs" />
+
+    <!-- A fonte unica dos enunciados e dos testes. O Link achata o
+         arquivo na raiz da saida, que e onde Conteudo.Carregar procura. -->
+    <Content Include="..\conteudo\desafios-mundo.json"
+             Link="desafios-mundo.json"
+             CopyToOutputDirectory="PreserveNewest" />
+
+    <!-- A tela do jogo: HTML, CSS e o desenhista em WebGL. Tudo isso vem
+         pronto - a turma nunca viu web, e nao precisa ver hoje. -->
+    <Content Include="..\wwwroot\**\*.*"
+             LinkBase="wwwroot"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
