@@ -1,0 +1,34 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginTela", "login-tela\LoginTela.csproj", "{C6ABEF77-8A72-4829-9703-88BA4477F70E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "login-defeituoso\Login.csproj", "{262A7E2A-F853-4C5A-B5D4-341610061C1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginTestes", "login-testes\LoginTestes.csproj", "{FE9E0809-AE83-4EEA-91EA-04B3BC031AC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6ABEF77-8A72-4829-9703-88BA4477F70E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6ABEF77-8A72-4829-9703-88BA4477F70E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6ABEF77-8A72-4829-9703-88BA4477F70E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6ABEF77-8A72-4829-9703-88BA4477F70E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{262A7E2A-F853-4C5A-B5D4-341610061C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{262A7E2A-F853-4C5A-B5D4-341610061C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{262A7E2A-F853-4C5A-B5D4-341610061C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{262A7E2A-F853-4C5A-B5D4-341610061C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9E0809-AE83-4EEA-91EA-04B3BC031AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9E0809-AE83-4EEA-91EA-04B3BC031AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9E0809-AE83-4EEA-91EA-04B3BC031AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9E0809-AE83-4EEA-91EA-04B3BC031AC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>SistemaLoginTestes</RootNamespace>
+    <AssemblyName>SistemaLoginTestes</AssemblyName>
+
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- Projeto de TESTE: nao vira .exe e nao vai para o cliente. -->
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <!--
+    Os tres pacotes do MSTest. Eles vem do nuget.org na primeira compilacao:
+    e por isso que a maquina precisa de internet UMA VEZ, ou do cache do
+    NuGet ja povoado. Depois disso roda offline.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.6.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.1" />
+  </ItemGroup>
+
+  <!--
+    A REFERENCIA DE PROJETO. E esta linha que faz o teste enxergar a classe
+    Cadastro. Sem ela o compilador nao acha o nome e reclama CS0246.
+
+    Troque "login-defeituoso" por OUTRA PASTA que tenha um Cadastro.cs e a
+    mesma suite, sem mudar uma linha de teste, passa a rodar contra outro
+    programa. E o exemplo mais curto de PARAMETRIZACAO que existe, e ele
+    volta na Aula 2.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\login-defeituoso\Login.csproj" />
+  </ItemGroup>
+
+</Project>
