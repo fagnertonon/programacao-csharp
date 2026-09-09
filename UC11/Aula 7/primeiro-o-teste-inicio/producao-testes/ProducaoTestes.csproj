@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <!--
+    Os tres pacotes do MSTest. Eles vem do nuget.org na PRIMEIRA
+    compilacao e depois ficam no cache da maquina.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.6.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.1" />
+  </ItemGroup>
+
+  <!--
+    E esta linha que faz o teste enxergar a Calculadora e a Conta.
+    Sem ela o projeto de teste nem compila.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\producao\Producao.csproj" />
+  </ItemGroup>
+
+</Project>

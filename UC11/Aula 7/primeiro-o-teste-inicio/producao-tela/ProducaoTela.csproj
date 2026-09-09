@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>PrimeiroOTeste</RootNamespace>
+    <AssemblyName>PrimeiroOTesteTela</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    A LINHA QUE ESCOLHE O ALVO.
+
+    A janela nao tem copia nenhuma das regras: ela usa os MESMOS
+    arquivos que o projeto de teste usa. E o mesmo Calculadora.cs e o
+    mesmo Conta.cs, em um lugar so - entao o que voce escrever aqui
+    aparece na janela e na barra ao mesmo tempo.
+  -->
+  <ItemGroup>
+    <Compile Include="..\producao\Calculadora.cs" Link="Calculadora.cs" />
+    <Compile Include="..\producao\Conta.cs" Link="Conta.cs" />
+  </ItemGroup>
+
+</Project>

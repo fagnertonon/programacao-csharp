@@ -1,0 +1,33 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProducaoTela", "producao-tela\ProducaoTela.csproj", "{70D659C7-2EA3-4611-A43C-C4701CDA1D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producao", "producao\Producao.csproj", "{8BB656D5-5506-491E-BCDC-C580AF8EE58A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProducaoTestes", "producao-testes\ProducaoTestes.csproj", "{DDF3D441-84BD-4F6C-8D52-0EC109A91CCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70D659C7-2EA3-4611-A43C-C4701CDA1D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D659C7-2EA3-4611-A43C-C4701CDA1D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D659C7-2EA3-4611-A43C-C4701CDA1D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D659C7-2EA3-4611-A43C-C4701CDA1D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BB656D5-5506-491E-BCDC-C580AF8EE58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB656D5-5506-491E-BCDC-C580AF8EE58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB656D5-5506-491E-BCDC-C580AF8EE58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB656D5-5506-491E-BCDC-C580AF8EE58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF3D441-84BD-4F6C-8D52-0EC109A91CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF3D441-84BD-4F6C-8D52-0EC109A91CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF3D441-84BD-4F6C-8D52-0EC109A91CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF3D441-84BD-4F6C-8D52-0EC109A91CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

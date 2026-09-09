@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    O projeto de producao da Aula 7.
+
+    Nenhum PackageReference de proposito: ele compila em maquina sem
+    internet nenhuma. So o projeto de TESTE precisa baixar pacote.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>PrimeiroOTeste</RootNamespace>
+    <AssemblyName>Producao</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
