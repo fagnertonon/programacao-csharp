@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>Acesso</RootNamespace>
+    <AssemblyName>Desafios</AssemblyName>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!--
+    A JANELA E net8.0-windows E PODE referenciar os dois projetos net8.0.
+    O contrario e que o MSBuild recusa. E essa referencia ao projeto de
+    teste que deixa o corretor inspecionar o teste do aluno por reflexao.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\regras\Regras.csproj" />
+    <ProjectReference Include="..\regras-testes\RegrasTestes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\comum\Conteudo.cs" Link="comum\Conteudo.cs" />
+    <Compile Include="..\..\comum\Corretor.cs" Link="comum\Corretor.cs" />
+    <Compile Include="..\..\comum\Sandbox.cs" Link="comum\Sandbox.cs" />
+    <Compile Include="..\..\comum\frmDesafios.cs" Link="comum\frmDesafios.cs" />
+    <Compile Include="..\..\comum\Programa.cs" Link="comum\Programa.cs" />
+  </ItemGroup>
+
+</Project>
